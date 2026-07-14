@@ -1,7 +1,7 @@
-<h1 align="center">Hi, I'm Jacques 👋</h1>
+<h1 align="center">Hi, I'm J 👋</h1>
 
 <p align="center">
-  Physics student exploring code, simulations, and the universe.
+  Physics student exploring AI, simulations, and the universe.
 </p>
 
 <p align="center">
