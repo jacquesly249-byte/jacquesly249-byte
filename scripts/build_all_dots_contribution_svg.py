@@ -64,6 +64,7 @@ SHOT_INTERVAL = 0.26
 LOAD_TIME = 0.52
 FLIGHT_TIME = 0.80
 END_PAUSE = 1.50
+MIN_DURATION = 7.0
 
 
 @dataclass(frozen=True)
@@ -126,7 +127,7 @@ def timeline(active_count: int) -> tuple[list[Timing], float]:
         impact = loaded + FLIGHT_TIME
         timings.append(Timing(take=take, loaded=loaded, impact=impact))
     final_impact = timings[-1].impact if timings else START_DELAY
-    duration = max(6.0, final_impact + END_PAUSE)
+    duration = max(MIN_DURATION, final_impact + END_PAUSE)
     return timings, duration
 
 
