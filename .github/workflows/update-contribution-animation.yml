@@ -4,6 +4,13 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "15 0 * * *"
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/update-contribution-animation.yml"
+      - "scripts/build_all_dots_contribution_svg.py"
+      - "assets/plants-vs-contributions-base.svg"
 
 permissions:
   contents: write
