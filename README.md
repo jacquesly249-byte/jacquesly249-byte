@@ -5,9 +5,9 @@
 </p>
 
 <p align="center">
-  <img src="./assets/plants-vs-contributions.svg" alt="Peashooter uses every GitHub contribution to fight a zombie" width="100%" />
+  <img src="./assets/plants-vs-contributions.svg" alt="A contribution-powered Peashooter defends its brain from a zombie" width="100%" />
 </p>
 
 <p align="center">
-  <sub>Contribution animation inspired by <a href="https://github.com/Platane/snk">Platane/snk</a>.</sub>
+  <sub>Reach the contribution target before the zombie reaches the plant. Inspired by <a href="https://github.com/Platane/snk">Platane/snk</a>.</sub>
 </p>

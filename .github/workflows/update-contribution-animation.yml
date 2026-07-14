@@ -27,6 +27,9 @@ jobs:
           --base-svg assets/plants-vs-contributions-base.svg
           --out-svg assets/plants-vs-contributions.svg
           --login "${{ github.repository_owner }}"
+          --target-contributions "${{ vars.TARGET_CONTRIBUTIONS || '60' }}"
+          --window-days "${{ vars.WINDOW_DAYS || '365' }}"
+          --battle-seconds "${{ vars.BATTLE_SECONDS || '18' }}"
         env:
           GH_TOKEN: ${{ secrets.PROFILE_TOKEN || github.token }}
 
