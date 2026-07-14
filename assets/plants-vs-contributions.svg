@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300" role="img" aria-labelledby="title desc">
   <title id="title">Plants versus contributions</title>
-  <desc id="desc">@jacquesly249-byte has 2 contributions across 2 active-day dots. Every identical green dot is loaded into the plant and fired at the zombie before the loop resets.</desc>
+  <desc id="desc">@jacquesly249-byte has 6 contributions across 2 active-day dots. Every identical green dot is loaded into the plant and fired at the zombie before the loop resets.</desc>
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#050a18"/><stop offset=".62" stop-color="#0a1c2b"/><stop offset="1" stop-color="#12342e"/>
@@ -52,7 +52,7 @@
   </g>
 
   <!-- GitHub Contribution Calendar UI: 11px cells with 4px border spacing. -->
-  <text x="190" y="77" fill="#c9d1d9" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13">2 contributions in the last year</text>
+  <text x="190" y="77" fill="#c9d1d9" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13">6 contributions in the last year</text>
   <rect x="190" y="84" width="891" height="143" rx="6" fill="#0d1117" fill-opacity=".9" stroke="#30363d"/>
   <g id="github-month-labels">
     <text x="237" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jul</text>
@@ -445,7 +445,7 @@
     <rect x="1017" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-12: 0 contributions</title></rect>
     <rect x="1017" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-13: 0 contributions</title></rect>
     <rect x="1017" y="137" width="11" height="11" rx="2" fill="#39d353">
-      <title>2026-07-14: 1 contributions</title>
+      <title>2026-07-14: 5 contributions</title>
       <animate attributeName="opacity" values="1;0;0" keyTimes="0;0.13714;1" calcMode="discrete" dur="7s" repeatCount="indefinite"/>
     </rect>
   </g>
