@@ -11,6 +11,7 @@ on:
       - ".github/workflows/update-contribution-animation.yml"
       - "scripts/build_all_dots_contribution_svg.py"
       - "assets/plants-vs-contributions-base.svg"
+      - "assets/sprites/*"
 
 permissions:
   contents: write

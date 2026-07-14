@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import re
@@ -104,10 +105,19 @@ INTRO_TIME = 1.20
 LOAD_TIME = 0.45
 FLIGHT_TIME = 0.80
 MAX_SHOT_INTERVAL = 0.55
-OUTCOME_TIME = 4.0
+OUTCOME_TIME = 5.0
 RESET_TIME = 1.5
 SUCCESS_TRANSLATE = -620.0
-FAILURE_TRANSLATE = -865.0
+FAILURE_TRANSLATE = -895.0
+
+# Each bite is staged as anticipation, snap, hold, and recovery. The damage
+# lands on the snap so the missing plant chunks read as a direct consequence.
+BITE_PHASES = (
+    (0.34, 0.54, 0.68, 0.91),
+    (1.06, 1.26, 1.40, 1.63),
+    (1.78, 1.98, 2.12, 2.35),
+)
+BLACKOUT_OFFSET = 2.52
 
 
 @dataclass(frozen=True)
@@ -169,6 +179,12 @@ def fmt(value: float) -> str:
 
 def key(time_value: float, duration: float) -> str:
     return fmt(min(1.0, max(0.0, time_value / duration)))
+
+
+def image_data_uri(path: Path) -> str:
+    mime_by_suffix = {".gif": "image/gif", ".png": "image/png", ".webp": "image/webp"}
+    mime = mime_by_suffix[path.suffix.lower()]
+    return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode("ascii")
 
 
 def timeline(active_count: int, battle_seconds: float, zombie_translate: float) -> tuple[list[Timing], float, float, float]:
@@ -312,27 +328,172 @@ def ammo_markup(ordered_active: list[Day], timings: list[Timing], duration: floa
     return "\n".join(peas)
 
 
-def plant_group_open(success: bool, battle_end: float, outcome_end: float, duration: float) -> str:
+def frame_animation(
+    frame_positions: tuple[int, ...],
+    frame_seconds: float,
+    stop_time: float,
+    duration: float,
+    hold_position: int,
+) -> str:
+    times = [0.0]
+    positions = [frame_positions[0]]
+    frame_index = 1
+    current = frame_seconds
+    while current < stop_time - 0.001:
+        times.append(current)
+        positions.append(frame_positions[frame_index % len(frame_positions)])
+        current += frame_seconds
+        frame_index += 1
+    if stop_time > times[-1] + 0.001:
+        times.append(stop_time)
+        positions.append(hold_position)
+    else:
+        positions[-1] = hold_position
+    times.append(duration)
+    positions.append(frame_positions[0])
+    return (
+        f'<animate attributeName="x" values="{";".join(str(value) for value in positions)}" '
+        f'keyTimes="{";".join(key(value, duration) for value in times)}" calcMode="discrete" '
+        f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
+    )
+
+
+def plant_frame_animation(ammo_out: float, duration: float) -> str:
+    # Stop on the neutral frame once the last contribution dot has been fired.
+    return frame_animation((4, -226, -456, -686, -916, -1146), 0.175, ammo_out, duration, 4)
+
+
+def zombie_frame_animation(battle_end: float, duration: float) -> str:
+    # Walking ends when the zombie reaches its attack position; the bite pose is
+    # then supplied by the ImageGen attack frames.
+    return frame_animation((1030, 790, 550, 310, 70, -170), 0.2, battle_end, duration, 1030)
+
+
+def original_sprite_visibility(hide_at: float, outcome_end: float, duration: float) -> str:
+    return (
+        '      <animate attributeName="visibility" values="visible;visible;hidden;hidden;visible" '
+        f'keyTimes="0;{key(hide_at, duration)};{key(hide_at + 0.01, duration)};{key(outcome_end, duration)};1" '
+        f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>'
+    )
+
+
+def scheduled_frame_images(
+    prefix: str,
+    frames: list[Path],
+    events: list[tuple[float, int | None]],
+    x: int,
+    y: int,
+    width: int,
+    height: int,
+    duration: float,
+    indent: str,
+) -> str:
+    """Switch ImageGen GIF frames; binary transparency is robust in SVG image mode."""
+    key_times = ";".join(key(time_value, duration) for time_value, _frame in events)
+    images: list[str] = []
+    for frame_index, frame_path in enumerate(frames):
+        values = ";".join(
+            "inline" if active_frame == frame_index else "none"
+            for _time, active_frame in events
+        )
+        images.extend(
+            [
+                f'{indent}<image id="{prefix}-{frame_index}" x="{x}" y="{y}" width="{width}" height="{height}" preserveAspectRatio="none" href="{image_data_uri(frame_path)}" display="none">',
+                f'{indent}  <animate attributeName="display" values="{values}" keyTimes="{key_times}" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f"{indent}</image>",
+            ]
+        )
+    return "\n".join(images)
+
+
+def plant_imagegen_sprites(
+    cry_frames: list[Path],
+    damage_frames: list[Path],
+    ammo_out: float,
+    battle_end: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
+    damage_times = [battle_end + phase[2] for phase in BITE_PHASES]
+    blackout = battle_end + BLACKOUT_OFFSET
+    cry_start = ammo_out + 0.01
+    cry_events = [
+        (0.0, None),
+        (cry_start, 0),
+        (cry_start + 0.28, 1),
+        (cry_start + 0.72, 2),
+        (damage_times[0], None),
+        (duration, None),
+    ]
+    damage_events = [
+        (0.0, None),
+        (damage_times[0], 1),
+        (damage_times[1], 2),
+        (damage_times[2], 3),
+        (damage_times[2] + 0.13, 4),
+        (blackout - 0.18, 5),
+        (blackout, None),
+        (duration, None),
+    ]
+    return "\n".join(
+        [
+            '    <!-- ImageGen: six-frame out-of-ammo and crying sequence. -->',
+            scheduled_frame_images("plant-cry-imagegen", cry_frames, cry_events, 4, 30, 230, 230, duration, "    "),
+            '    <!-- ImageGen: each bite switches to a genuinely damaged plant frame. -->',
+            scheduled_frame_images("plant-damage-imagegen", damage_frames, damage_events, 4, 30, 230, 230, duration, "    "),
+        ]
+    )
+
+
+def plant_group_open(
+    success: bool,
+    ammo_out: float,
+    battle_end: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
     lines = [
-        '  <g id="plant-sprite" clip-path="url(#plant-window)" filter="url(#shadow)" style="image-rendering:pixelated">'
+        '  <g id="plant-sprite" clip-path="url(#plant-window)" style="image-rendering:pixelated">'
     ]
     if not success:
-        bite1 = battle_end + 0.45
-        bite2 = battle_end + 1.00
-        bite3 = battle_end + 1.55
-        gone = battle_end + 2.05
+        cry_settle = min(battle_end + BITE_PHASES[0][0] - 0.08, ammo_out + 0.32)
+        phase_times: list[float] = [0.0, ammo_out, cry_settle]
+        transforms = ["0 0", "0 0", "-2 5"]
+        for anticipation, snap, _damage, recovery in BITE_PHASES:
+            phase_times.extend(
+                [
+                    battle_end + anticipation,
+                    battle_end + snap,
+                    battle_end + recovery,
+                ]
+            )
+            transforms.extend(["-2 5", "-12 4", "-2 7"])
+        blackout = battle_end + BLACKOUT_OFFSET
+        phase_times.extend([blackout, outcome_end, duration])
+        transforms.extend(["-2 10", "-2 10", "0 0"])
         lines.extend(
             [
                 '    <animateTransform attributeName="transform" type="translate" '
-                'values="0 0;0 0;-5 0;5 0;-6 1;6 1;-4 2;4 2;0 0;0 0" '
-                f'keyTimes="0;{key(battle_end, duration)};{key(bite1, duration)};{key(bite1 + 0.16, duration)};{key(bite2, duration)};{key(bite2 + 0.16, duration)};{key(bite3, duration)};{key(bite3 + 0.16, duration)};{key(gone, duration)};1" '
+                f'values="{";".join(transforms)}" keyTimes="{";".join(key(value, duration) for value in phase_times)}" '
                 f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                '    <animate attributeName="opacity" values="1;1;.72;.72;.38;.38;0;0;1" '
-                f'keyTimes="0;{key(bite1, duration)};{key(bite1 + 0.18, duration)};{key(bite2, duration)};{key(bite2 + 0.18, duration)};{key(bite3, duration)};{key(gone, duration)};{key(outcome_end, duration)};1" '
+                '    <animate attributeName="opacity" values="1;1;0;0;1" '
+                f'keyTimes="0;{key(blackout, duration)};{key(blackout + 0.08, duration)};{key(outcome_end, duration)};1" '
                 f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
             ]
         )
     return "\n".join(lines)
+
+
+def plant_emotion_markup(
+    success: bool,
+    ammo_out: float,
+    battle_end: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
+    if success:
+        return "  <!-- The successful plant holds after spending its final contribution dot. -->"
+    return "  <!-- ImageGen crying frames communicate that the plant has run out of contribution dots. -->"
 
 
 def zombie_animation(success: bool, battle_end: float, outcome_end: float, duration: float) -> str:
@@ -351,14 +512,51 @@ def zombie_animation(success: bool, battle_end: float, outcome_end: float, durat
             ]
         )
 
-    bite1 = battle_end + 0.45
-    bite2 = battle_end + 1.00
-    bite3 = battle_end + 1.55
+    blackout = battle_end + BLACKOUT_OFFSET
     return (
         '    <animateTransform attributeName="transform" type="translate" '
-        f'values="0 0;{fmt(FAILURE_TRANSLATE)} 0;-845 0;-865 0;-845 0;-865 0;-865 0;0 0" '
-        f'keyTimes="0;{key(battle_end, duration)};{key(bite1, duration)};{key(bite2, duration)};{key(bite3, duration)};{key(bite3 + 0.28, duration)};{key(outcome_end, duration)};1" '
+        f'values="0 0;{fmt(FAILURE_TRANSLATE)} 0;{fmt(FAILURE_TRANSLATE)} 0;{fmt(FAILURE_TRANSLATE)} 0;0 0" '
+        f'keyTimes="0;{key(battle_end, duration)};{key(blackout, duration)};{key(outcome_end, duration)};1" '
         f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
+    )
+
+
+def zombie_imagegen_attack(
+    attack_frames: list[Path],
+    battle_end: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
+    blackout = battle_end + BLACKOUT_OFFSET
+    events: list[tuple[float, int | None]] = [(0.0, None), (battle_end, 0)]
+    for anticipation, snap, damage, recovery in BITE_PHASES:
+        pre = battle_end + anticipation
+        events.extend(
+            [
+                (pre, 0),
+                (pre + 0.06, 1),
+                (battle_end + snap, 2),
+                (battle_end + damage, 3),
+                (battle_end + recovery - 0.05, 4),
+                (battle_end + recovery, 5),
+            ]
+        )
+    events.extend([(blackout, None), (duration, None)])
+    return "\n".join(
+        [
+            '  <!-- ImageGen: anticipation, open jaw, lunge, chew, pull, recovery. -->',
+            scheduled_frame_images(
+                "zombie-imagegen-bite",
+                attack_frames,
+                events,
+                int(ZOMBIE_X + FAILURE_TRANSLATE),
+                27,
+                240,
+                230,
+                duration,
+                "  ",
+            ),
+        ]
     )
 
 
@@ -371,6 +569,14 @@ def zombie_shadow(success: bool, battle_end: float, outcome_end: float, duration
         f'<animate attributeName="cx" values="{values}" keyTimes="0;{key(battle_end, duration)};{key(outcome_end, duration)};1" '
         f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
         '</ellipse>'
+    )
+
+
+def bite_action_markup(success: bool, battle_end: float, outcome_end: float, duration: float) -> str:
+    return (
+        "  <!-- Bite poses and plant damage are rendered entirely from ImageGen sprite frames. -->"
+        if not success
+        else "  <!-- No bite sequence: the target was reached in time. -->"
     )
 
 
@@ -450,6 +656,54 @@ def message_points(line: str, y: float, step: float = 5.0) -> list[tuple[float, 
     return points
 
 
+BRAIN_PIXELS = (
+    "00011100111000",
+    "01122211222110",
+    "12222211222221",
+    "12232211223221",
+    "12222111122221",
+    "12222111122221",
+    "12232211223221",
+    "01122211222110",
+    "00112211221100",
+    "00011100111000",
+)
+
+
+def brain_icon_markup(
+    success: bool,
+    reveal: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
+    cell = 5
+    width = len(BRAIN_PIXELS[0]) * cell
+    start_x = 640 - width / 2
+    start_y = 22
+    palette = (
+        ("#0e4429", "#39d353", "#b7ff72", "#f0fff4")
+        if success
+        else ("#6e0f14", "#f85149", "#ff7b72", "#fff0ee")
+    )
+    pixels: list[str] = [
+        f'  <g id="{"saved" if success else "eaten"}-brain-icon" opacity="0" style="image-rendering:pixelated">',
+        f'    <title>{"Brain saved" if success else "Brain eaten"} 🧠</title>',
+        '    <animate attributeName="opacity" values="0;0;1;1;0" '
+        f'keyTimes="0;{key(reveal, duration)};{key(reveal + 0.12, duration)};{key(outcome_end, duration)};1" '
+        f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+    ]
+    for row_index, row in enumerate(BRAIN_PIXELS):
+        for col_index, value in enumerate(row):
+            if value == "0":
+                continue
+            color = palette[int(value)]
+            pixels.append(
+                f'    <rect x="{fmt(start_x + col_index * cell)}" y="{start_y + row_index * cell}" width="{cell}" height="{cell}" fill="{color}"/>'
+            )
+    pixels.append("  </g>")
+    return "\n".join(pixels)
+
+
 def victory_message(
     ordered_active: list[Day], total: int, target: int, battle_end: float, outcome_end: float, duration: float
 ) -> str:
@@ -480,19 +734,29 @@ def victory_message(
 
 
 def failure_message(total: int, target: int, battle_end: float, outcome_end: float, duration: float) -> str:
-    lines = ["TARGET MISSED", f"{total} OF {target} CONTRIBS", "ZOMBIE ATE YOUR BRAIN"]
-    palette = ("#ff7b72", "#f85149", "#f85149", "#da3633")
+    lines = ["YOUR BRAIN WAS EATEN", f"{total} OF {target} CONTRIBUTIONS", "RUN TERMINATED"]
+    line_palettes = (
+        ("#fff0ee", "#ffb3ad", "#ff7b72", "#fff0ee"),
+        ("#f0f6fc", "#ffb3ad", "#f0f6fc", "#ff7b72"),
+        ("#ff7b72", "#f85149", "#ffb3ad", "#f85149"),
+    )
+    blackout = battle_end + BLACKOUT_OFFSET
     dots: list[str] = []
     dot_index = 0
-    for line_index, (line, y) in enumerate(zip(lines, (97.0, 141.0, 185.0))):
+    for line_index, (line, y) in enumerate(zip(lines, (91.0, 148.0, 205.0))):
         for x, target_y, row, col in message_points(line, y):
-            start = battle_end + 2.05 + (dot_index % 22) * 0.024
-            settled = start + 0.36
-            color = palette[(line_index + row + col) % len(palette)]
+            start = blackout + 0.16 + (dot_index % 26) * 0.019
+            settled = start + 0.28
+            color = line_palettes[line_index][(row + col) % 4]
             dots.extend(
                 [
-                    f'    <rect x="{fmt(x - 2)}" y="{fmt(target_y - 12)}" width="4" height="4" rx=".6" fill="{color}" stroke="#6e0f14" stroke-width=".45" opacity="0">',
-                    f'      <animate attributeName="y" values="{fmt(target_y - 12)};{fmt(target_y - 12)};{fmt(target_y)};{fmt(target_y)};{fmt(target_y)}" keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                    f'    <rect x="{fmt(x)}" y="{fmt(target_y - 17)}" width="5" height="5" fill="#4c0710" opacity="0">',
+                    f'      <animate attributeName="y" values="{fmt(target_y - 17)};{fmt(target_y - 17)};{fmt(target_y + 2)};{fmt(target_y + 2)};{fmt(target_y + 2)}" keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                    '      <animate attributeName="opacity" values="0;0;.88;.88;0" '
+                    f'keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                    "    </rect>",
+                    f'    <rect x="{fmt(x - 2)}" y="{fmt(target_y - 19)}" width="4" height="4" rx=".35" fill="{color}" stroke="#6e0f14" stroke-width=".4" opacity="0">',
+                    f'      <animate attributeName="y" values="{fmt(target_y - 19)};{fmt(target_y - 19)};{fmt(target_y)};{fmt(target_y)};{fmt(target_y)}" keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                     '      <animate attributeName="opacity" values="0;0;1;1;0" '
                     f'keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                     "    </rect>",
@@ -500,12 +764,23 @@ def failure_message(total: int, target: int, battle_end: float, outcome_end: flo
             )
             dot_index += 1
 
-    drip_specs = ((310, 218, 13), (407, 213, 8), (568, 217, 15), (731, 214, 10), (892, 216, 14), (968, 211, 7))
+    drip_specs = (
+        (274, 238, 26),
+        (340, 231, 14),
+        (421, 239, 31),
+        (503, 232, 18),
+        (578, 237, 34),
+        (650, 234, 22),
+        (727, 239, 29),
+        (806, 231, 17),
+        (884, 238, 32),
+        (963, 233, 20),
+    )
     for index, (x, y, height) in enumerate(drip_specs):
-        start = battle_end + 2.45 + index * 0.08
+        start = blackout + 0.55 + index * 0.045
         dots.extend(
             [
-                f'    <rect x="{x}" y="{y}" width="3" height="0" rx="1.5" fill="#b62324" opacity="0">',
+                f'    <rect x="{x}" y="{y}" width="4" height="0" rx="1.5" fill="#b62324" opacity="0">',
                 f'      <animate attributeName="height" values="0;0;{height};{height};0" keyTimes="0;{key(start, duration)};{key(start + 0.55, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 f'      <animate attributeName="opacity" values="0;0;.9;.9;0" keyTimes="0;{key(start, duration)};{key(start + 0.2, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 "    </rect>",
@@ -514,31 +789,54 @@ def failure_message(total: int, target: int, battle_end: float, outcome_end: flo
     return "\n".join(dots)
 
 
-def eaten_particles(battle_end: float, outcome_end: float, duration: float) -> str:
-    particles: list[str] = ['  <g id="eaten-plant-pixels">']
-    specs = (
-        (105, 145, -35, -22, "#7ee787"),
-        (125, 132, 18, -31, "#39d353"),
-        (145, 153, 39, -12, "#26a641"),
-        (109, 178, -29, 20, "#39d353"),
-        (137, 184, 31, 26, "#0e4429"),
-        (154, 165, 47, 8, "#7ee787"),
-        (119, 204, -14, 27, "#26a641"),
-        (149, 211, 26, 18, "#39d353"),
+def failure_atmosphere(battle_end: float, outcome_end: float, duration: float) -> str:
+    blackout = battle_end + BLACKOUT_OFFSET
+    reveal = blackout + 0.11
+    splatters = (
+        (36, 34, 13),
+        (69, 19, 7),
+        (113, 51, 10),
+        (1198, 31, 12),
+        (1241, 58, 8),
+        (1160, 72, 6),
+        (40, 251, 9),
+        (84, 276, 13),
+        (1218, 244, 11),
+        (1254, 272, 7),
     )
-    start = battle_end + 0.72
-    for index, (x, y, dx, dy, color) in enumerate(specs):
-        launch = start + index * 0.045
-        particles.extend(
+    parts = [
+        '  <g id="failure-blackout">',
+        '    <rect x="0" y="0" width="1280" height="300" rx="18" fill="#020203" opacity="0">',
+        '      <animate attributeName="opacity" values="0;0;1;1;0" '
+        f'keyTimes="0;{key(blackout, duration)};{key(blackout + 0.08, duration)};{key(outcome_end, duration)};1" '
+        f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+        "    </rect>",
+        '    <g fill="#7a1118" opacity="0">',
+        '      <animate attributeName="opacity" values="0;0;.82;.82;0" '
+        f'keyTimes="0;{key(reveal, duration)};{key(reveal + 0.12, duration)};{key(outcome_end, duration)};1" '
+        f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+        '      <path d="M0 0h1280v7H1120l-18 11-48-11H765l-29 15-37-15H392l-25 10-42-10H0Z"/>',
+        '      <path d="M0 300v-6h176l21-14 39 14h285l31-18 42 18h327l22-12 31 12h306v6Z"/>',
+    ]
+    for x, y, size in splatters:
+        parts.extend(
             [
-                f'    <rect x="{x}" y="{y}" width="6" height="6" rx="1" fill="{color}" opacity="0">',
-                f'      <animateTransform attributeName="transform" type="translate" values="0 0;0 0;{dx} {dy};{dx} {dy}" keyTimes="0;{key(launch, duration)};{key(launch + 0.72, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'      <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;{key(launch, duration)};{key(launch + 0.08, duration)};{key(launch + 0.78, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                "    </rect>",
+                f'      <rect x="{x}" y="{y}" width="{size}" height="{size}"/>',
+                f'      <rect x="{x + size + 5}" y="{y + size // 2}" width="{max(3, size // 2)}" height="{max(3, size // 2)}"/>',
             ]
         )
-    particles.append("  </g>")
-    return "\n".join(particles)
+    parts.extend(
+        [
+            "    </g>",
+            '    <rect x="0" y="0" width="1280" height="300" rx="18" fill="none" stroke="#7a1118" stroke-width="4" opacity="0">',
+            '      <animate attributeName="opacity" values="0;0;.9;.35;.9;.75;0" '
+            f'keyTimes="0;{key(reveal, duration)};{key(reveal + 0.03, duration)};{key(reveal + 0.08, duration)};{key(reveal + 0.13, duration)};{key(outcome_end, duration)};1" '
+            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            "    </rect>",
+            "  </g>",
+        ]
+    )
+    return "\n".join(parts)
 
 
 def outcome_markup(
@@ -550,22 +848,26 @@ def outcome_markup(
     outcome_end: float,
     duration: float,
 ) -> str:
-    accent = "#39d353" if success else "#f85149"
-    background = "#07140d" if success else "#19090d"
     message = (
         victory_message(ordered_active, total, target, battle_end, outcome_end, duration)
         if success
         else failure_message(total, target, battle_end, outcome_end, duration)
     )
-    overlay_start = battle_end + (0.40 if success else 1.95)
-    parts = [
-        f'  <rect x="190" y="84" width="891" height="143" rx="6" fill="{background}" stroke="{accent}" stroke-width="2" opacity="0">',
-        '    <animate attributeName="opacity" values="0;0;.96;.96;0" '
-        f'keyTimes="0;{key(overlay_start, duration)};{key(overlay_start + 0.18, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-        "  </rect>",
-    ]
-    if not success:
-        parts.append(eaten_particles(battle_end, outcome_end, duration))
+    if success:
+        overlay_start = battle_end + 0.40
+        parts = [
+            '  <rect x="0" y="0" width="1280" height="300" rx="18" fill="#020604" opacity="0">',
+            '    <animate attributeName="opacity" values="0;0;.98;.98;0" '
+            f'keyTimes="0;{key(overlay_start, duration)};{key(overlay_start + 0.18, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            "  </rect>",
+            brain_icon_markup(True, overlay_start + 0.16, outcome_end, duration),
+        ]
+    else:
+        blackout = battle_end + BLACKOUT_OFFSET
+        parts = [
+            failure_atmosphere(battle_end, outcome_end, duration),
+            brain_icon_markup(False, blackout + 0.12, outcome_end, duration),
+        ]
     parts.extend([f'  <g id="{"victory" if success else "failure"}-pixel-message">', message, "  </g>"])
     return "\n".join(parts)
 
@@ -596,11 +898,17 @@ def positive_int(value: str) -> int:
 
 
 def main() -> None:
+    project_root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(
         description="Turn contribution-day dots into a configurable zombie brain-defense challenge."
     )
     parser.add_argument("--base-svg", required=True, type=Path)
     parser.add_argument("--out-svg", required=True, type=Path)
+    parser.add_argument(
+        "--sprite-dir",
+        type=Path,
+        default=project_root / "assets" / "sprites",
+    )
     parser.add_argument("--login")
     parser.add_argument(
         "--target-contributions",
@@ -626,6 +934,16 @@ def main() -> None:
         parser.error("--battle-seconds must be at least 6")
     if args.force_total is not None and args.force_total < 0:
         parser.error("--force-total cannot be negative")
+    plant_cry_frames = [args.sprite_dir / f"plant-cry-imagegen-{index}.gif" for index in range(6)]
+    plant_damage_frames = [args.sprite_dir / f"plant-damage-imagegen-{index}.gif" for index in range(6)]
+    zombie_bite_frames = [args.sprite_dir / f"zombie-bite-imagegen-{index}.gif" for index in range(6)]
+    for sprite_path in (
+        *plant_cry_frames,
+        *plant_damage_frames,
+        *zombie_bite_frames,
+    ):
+        if not sprite_path.is_file():
+            parser.error(f"missing ImageGen sprite strip: {sprite_path}")
 
     login = args.login or gh_json("api", "user")["login"]
     today = datetime.now(timezone.utc).date()
@@ -656,6 +974,7 @@ def main() -> None:
     timings, duration, battle_end, outcome_end = timeline(
         len(ordered_active), args.battle_seconds, zombie_translate
     )
+    ammo_out = timings[-1].impact if timings else INTRO_TIME + 0.9
 
     source = args.base_svg.read_text(encoding="utf-8")
     source = re.sub(
@@ -679,18 +998,46 @@ def main() -> None:
     )
     source = source.replace(
         '  <g clip-path="url(#plant-window)" filter="url(#shadow)" style="image-rendering:pixelated">',
-        plant_group_open(success, battle_end, outcome_end, duration),
+        plant_group_open(success, ammo_out, battle_end, outcome_end, duration),
         1,
     )
+    if not success:
+        source = source.replace(
+            '    <g clip-path="url(#zombie-window)" filter="url(#shadow)" style="image-rendering:pixelated">',
+            '    <g clip-path="url(#zombie-window)" style="image-rendering:pixelated">',
+            1,
+        )
     source = re.sub(
         r'<animate attributeName="x" values="4;-226;-456;-686;-916;-1146" calcMode="discrete" dur="2s" repeatCount="indefinite"/>',
-        '<animate attributeName="x" values="4;-226;-456;-686;-916;-1146" calcMode="discrete" dur="1.05s" repeatCount="indefinite"/>',
+        plant_frame_animation(ammo_out, duration)
+        + (
+            "\n" + original_sprite_visibility(ammo_out + 0.01, outcome_end, duration)
+            if not success
+            else ""
+        ),
         source,
         count=1,
     )
+    if not success:
+        source = source.replace(
+            "    </image>\n  </g>",
+            "    </image>\n  </g>\n"
+            + plant_imagegen_sprites(
+                plant_cry_frames,
+                plant_damage_frames,
+                ammo_out,
+                battle_end,
+                outcome_end,
+                duration,
+            )
+            + "",
+            1,
+        )
     source = source.replace(
         '<ellipse cx="1150" cy="247" rx="72" ry="11" fill="#020a09" opacity=".55"/>',
-        zombie_shadow(success, battle_end, outcome_end, duration),
+        plant_emotion_markup(success, ammo_out, battle_end, outcome_end, duration)
+        + "\n"
+        + zombie_shadow(success, battle_end, outcome_end, duration),
         1,
     )
     source = re.sub(
@@ -698,6 +1045,35 @@ def main() -> None:
         zombie_animation(success, battle_end, outcome_end, duration),
         source,
         count=1,
+    )
+    source = re.sub(
+        r'<animate attributeName="x" values="1030;790;550;310;70;-170" calcMode="discrete" dur="1\.2s" repeatCount="indefinite"/>',
+        zombie_frame_animation(battle_end, duration)
+        + (
+            "\n" + original_sprite_visibility(battle_end, outcome_end, duration)
+            if not success
+            else ""
+        ),
+        source,
+        count=1,
+    )
+    if not success:
+        source = source.replace(
+            "      </image>\n    </g>\n  </g>",
+            "      </image>\n    </g>\n  </g>\n"
+            + zombie_imagegen_attack(
+                zombie_bite_frames,
+                battle_end,
+                outcome_end,
+                duration,
+            ),
+            1,
+        )
+    source = source.replace(
+        "  <!-- Health and hits stay deterministic -->",
+        bite_action_markup(success, battle_end, outcome_end, duration)
+        + "\n\n  <!-- Health and hits stay deterministic -->",
+        1,
     )
     source = re.sub(
         r'  <!-- Health and hits stay deterministic -->.*?(?=  <rect x="1\.5")',
@@ -732,7 +1108,7 @@ def main() -> None:
     )
     source = re.sub(
         r'<desc id="desc">.*?</desc>',
-        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. The zombie {"is defeated and the brain is saved" if success else "reaches the plant and eats the brain"}. Only contribution dates and counts are used.</desc>',
+        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. The plant stops after its final contribution dot. The zombie {"is defeated and the brain is saved" if success else "performs a three-bite ImageGen sprite sequence that progressively eats the plant before a black game-over screen"}. Only contribution dates and counts are used.</desc>',
         source,
     )
 
