@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="./assets/plants-vs-contributions.svg" alt="A contribution-powered Peashooter defends its brain from a zombie" width="100%" />
+  <img src="./assets/plants-vs-contributions.svg" alt="A contribution-powered Peashooter defends the lawn from a zombie" width="100%" />
 </p>
 
 <p align="center">

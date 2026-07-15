@@ -104,11 +104,45 @@ ZOMBIE_Y = 151
 INTRO_TIME = 1.20
 LOAD_TIME = 0.45
 FLIGHT_TIME = 0.80
-MAX_SHOT_INTERVAL = 0.55
+# The original Peashooter fires roughly once every 1.5 seconds. When there are
+# more contribution dots than fit at that cadence, the interval compresses so
+# every dot is still consumed before contact.
+PVZ_SHOT_INTERVAL = 1.50
 OUTCOME_TIME = 5.0
 RESET_TIME = 1.5
 SUCCESS_TRANSLATE = -620.0
 FAILURE_TRANSLATE = -895.0
+ARM_LOSS_RATIO = 0.50
+CRITICAL_RATIO = 0.85
+# Sprite sheets use different canvas sizes and transparent padding, so matching
+# their outer <image> boxes makes the character visibly change size.  These
+# placements are derived from the alpha bounds of the neutral reference poses:
+#
+#   original frame 0: 164 x 222 at 240 / 256 display scale
+#   generated frame 0: 183 px tall on a 240 x 230 canvas
+#   dismember frame 0: 258 px tall on a 457 x 430 canvas
+#
+# Every reference pose therefore lands at the original zombie's visible height
+# (208.125 px), visual centre (x=1150), and foot baseline (y=252.625).
+ZOMBIE_REFERENCE_HEIGHT = 222 * 240 / 256
+ZOMBIE_REFERENCE_CENTER_X = 1150.0
+ZOMBIE_REFERENCE_BASELINE_Y = 22 + 246 * 240 / 256
+
+GENERATED_ZOMBIE_SCALE = ZOMBIE_REFERENCE_HEIGHT / 183
+GENERATED_ZOMBIE_Y = ZOMBIE_REFERENCE_BASELINE_Y - 212 * GENERATED_ZOMBIE_SCALE
+GENERATED_ZOMBIE_WIDTH = 240 * GENERATED_ZOMBIE_SCALE
+GENERATED_ZOMBIE_HEIGHT = 230 * GENERATED_ZOMBIE_SCALE
+DAMAGED_WALK_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 124.5 * GENERATED_ZOMBIE_SCALE
+CRITICAL_WALK_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 120.0 * GENERATED_ZOMBIE_SCALE
+INTACT_BITE_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 128.5 * GENERATED_ZOMBIE_SCALE
+DAMAGED_BITE_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 137.5 * GENERATED_ZOMBIE_SCALE
+CRITICAL_BITE_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 138.0 * GENERATED_ZOMBIE_SCALE
+
+DISMEMBER_ZOMBIE_SCALE = ZOMBIE_REFERENCE_HEIGHT / 258
+DISMEMBER_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 228.5 * DISMEMBER_ZOMBIE_SCALE
+DISMEMBER_ZOMBIE_Y = ZOMBIE_REFERENCE_BASELINE_Y - 366 * DISMEMBER_ZOMBIE_SCALE
+DISMEMBER_ZOMBIE_WIDTH = 457 * DISMEMBER_ZOMBIE_SCALE
+DISMEMBER_ZOMBIE_HEIGHT = 430 * DISMEMBER_ZOMBIE_SCALE
 
 # Each bite is staged as anticipation, snap, hold, and recovery. The damage
 # lands on the snap so the missing plant chunks read as a direct consequence.
@@ -159,6 +193,14 @@ class Timing:
     impact_y: float
 
 
+@dataclass(frozen=True)
+class CombatPhases:
+    arm_loss: float | None
+    critical: float | None
+    lethal: float | None
+    failure_state: str
+
+
 def gh_json(*args: str) -> dict:
     result = subprocess.run(
         ["gh", *args],
@@ -191,15 +233,18 @@ def timeline(active_count: int, battle_seconds: float, zombie_translate: float) 
     battle_end = INTRO_TIME + battle_seconds
     outcome_end = battle_end + OUTCOME_TIME
     duration = outcome_end + RESET_TIME
-    shot_start = INTRO_TIME + 0.45
-    available = max(0.1, battle_seconds - LOAD_TIME - FLIGHT_TIME - 0.75)
+    earliest_take = INTRO_TIME + 0.45
+    latest_take = battle_end - LOAD_TIME - FLIGHT_TIME
     interval = 0.0
+    first_take = latest_take
     if active_count > 1:
-        interval = min(MAX_SHOT_INTERVAL, available / (active_count - 1))
+        available = max(0.1, latest_take - earliest_take)
+        interval = min(PVZ_SHOT_INTERVAL, available / (active_count - 1))
+        first_take = latest_take - interval * (active_count - 1)
 
     timings: list[Timing] = []
     for index in range(active_count):
-        take = shot_start + index * interval
+        take = first_take + index * interval
         loaded = take + LOAD_TIME
         impact = loaded + FLIGHT_TIME
         progress = min(1.0, max(0.0, impact / battle_end))
@@ -215,6 +260,47 @@ def timeline(active_count: int, battle_seconds: float, zombie_translate: float) 
             )
         )
     return timings, duration, battle_end, outcome_end
+
+
+def combat_phases(
+    ordered_active: list[Day],
+    timings: list[Timing],
+    total: int,
+    target: int,
+    success: bool,
+    battle_end: float,
+) -> CombatPhases:
+    """Map cumulative contribution damage to PvZ-like visible degradation."""
+    actual_sum = sum(day.count for day in ordered_active)
+    scale = total / actual_sum if actual_sum else 0.0
+    damage_budget = float(total if success and total > 0 else target)
+    cumulative = 0.0
+    arm_loss: float | None = None
+    critical: float | None = None
+
+    for day, timing in zip(ordered_active, timings):
+        cumulative += day.count * scale
+        ratio = cumulative / max(1.0, damage_budget)
+        if arm_loss is None and ratio >= ARM_LOSS_RATIO:
+            arm_loss = timing.impact
+        if critical is None and ratio >= CRITICAL_RATIO:
+            critical = timing.impact
+
+    progress = total / max(1.0, float(target))
+    failure_state = (
+        "critical"
+        if progress >= CRITICAL_RATIO
+        else "damaged"
+        if progress >= ARM_LOSS_RATIO
+        else "intact"
+    )
+    lethal = (timings[-1].impact if timings else battle_end) if success else None
+    return CombatPhases(
+        arm_loss=arm_loss,
+        critical=critical,
+        lethal=lethal,
+        failure_state=failure_state,
+    )
 
 
 def month_labels(days: list[Day]) -> list[str]:
@@ -243,11 +329,13 @@ def calendar_markup(
     days: list[Day],
     ordered_active: list[Day],
     timings: list[Timing],
+    board_empty_at: float,
     duration: float,
     total: int,
     window_days: int,
 ) -> str:
     timing_by_date = {day.date: timing for day, timing in zip(ordered_active, timings)}
+    shot_index_by_date = {day.date: index for index, day in enumerate(ordered_active, start=1)}
     cells: list[str] = []
 
     for day in days:
@@ -261,12 +349,58 @@ def calendar_markup(
             continue
 
         timing = timing_by_date[day.date]
+        pulse_peak = timing.take + 0.10
+        pulse_squash = timing.take + 0.20
+        pulse_settle = timing.take + 0.30
+        fade_start = timing.loaded - 0.08
+        pulse_times = (
+            0.0,
+            timing.take,
+            pulse_peak,
+            pulse_squash,
+            pulse_settle,
+            fade_start,
+            timing.loaded,
+            duration - 0.02,
+            duration,
+        )
+        pulse_keys = ";".join(key(moment, duration) for moment in pulse_times)
         cells.extend(
             [
-                f'    <rect x="{fmt(day.x)}" y="{fmt(day.y)}" width="{CELL_SIZE}" height="{CELL_SIZE}" rx="2" fill="{fill}">',
-                f'      <title>{title}</title>',
-                '      <animate attributeName="opacity" values="1;1;0;0;1" '
-                f'keyTimes="0;{key(timing.take - 0.02, duration)};{key(timing.take, duration)};{key(duration - 0.02, duration)};1" '
+                f'    <g id="contribution-ammo-{day.date}" transform="translate({fmt(day.cx)} {fmt(day.cy)})">',
+                f'      <title>{title}; pulses in place while the Peashooter prepares shot {shot_index_by_date[day.date]}</title>',
+                '      <g>',
+                f'        <rect x="{-CELL_SIZE / 2}" y="{-CELL_SIZE / 2}" width="{CELL_SIZE}" height="{CELL_SIZE}" rx="2" fill="{fill}" stroke="{AMMO_COLOR}" stroke-width="1">',
+                '          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" '
+                f'keyTimes="{pulse_keys}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" '
+                f'keyTimes="{pulse_keys}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                "        </rect>",
+                "      </g>",
+                '      <g>',
+                '        <animateTransform attributeName="transform" type="scale" '
+                'values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" '
+                f'keyTimes="{pulse_keys}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'        <circle r="{fmt(CELL_SIZE / 2 + 1)}" fill="none" stroke="{AMMO_COLOR}" stroke-width="1.5" opacity="0">',
+                '          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" '
+                f'keyTimes="{pulse_keys}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                "        </circle>",
+                "      </g>",
+                "    </g>",
+            ]
+        )
+
+    legend_swatches = [
+        f'    <rect x="946" y="211" width="10" height="10" rx="2" fill="{GITHUB_DARK_COLORS[0]}"/>'
+    ]
+    for level, x in enumerate((960, 974, 988, 1002), start=1):
+        color = GITHUB_DARK_COLORS[level]
+        empty = GITHUB_DARK_COLORS[0]
+        legend_swatches.extend(
+            [
+                f'    <rect x="{x}" y="211" width="10" height="10" rx="2" fill="{color}">',
+                f'      <animate attributeName="fill" values="{color};{color};{empty};{empty};{color}" '
+                f'keyTimes="0;{key(board_empty_at - 0.02, duration)};{key(board_empty_at, duration)};{key(duration - 0.02, duration)};1" '
                 f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 "    </rect>",
             ]
@@ -291,11 +425,7 @@ def calendar_markup(
             "  </g>",
             '  <g id="github-contribution-legend" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10" fill="#8b949e">',
             '    <text x="918" y="220">Less</text>',
-            f'    <rect x="946" y="211" width="10" height="10" rx="2" fill="{GITHUB_DARK_COLORS[0]}"/>',
-            f'    <rect x="960" y="211" width="10" height="10" rx="2" fill="{GITHUB_DARK_COLORS[1]}"/>',
-            f'    <rect x="974" y="211" width="10" height="10" rx="2" fill="{GITHUB_DARK_COLORS[2]}"/>',
-            f'    <rect x="988" y="211" width="10" height="10" rx="2" fill="{GITHUB_DARK_COLORS[3]}"/>',
-            f'    <rect x="1002" y="211" width="10" height="10" rx="2" fill="{GITHUB_DARK_COLORS[4]}"/>',
+            *legend_swatches,
             '    <text x="1019" y="220">More</text>',
             "  </g>",
         ]
@@ -307,20 +437,28 @@ def ammo_markup(ordered_active: list[Day], timings: list[Timing], duration: floa
         return "  <!-- No active contribution dots: the plant remains idle. -->"
 
     peas: list[str] = [
-        "  <!-- Every non-empty contribution cell becomes one equally bright pea. -->",
+        "  <!-- Contribution cells pulse in place; peas are born only at the muzzle. -->",
         '  <g id="plant-uses-every-contribution-dot" filter="url(#glow)">',
     ]
     for index, (day, timing) in enumerate(zip(ordered_active, timings), start=1):
+        charge_peak = timing.take + 0.20
+        charge_settle = timing.loaded - 0.04
         peas.extend(
             [
+                f'    <circle id="muzzle-charge-{index}" cx="{PLANT_X}" cy="{PLANT_Y}" r="2" fill="none" stroke="{AMMO_COLOR}" stroke-width="1.5" opacity="0">',
+                '      <animate attributeName="r" values="2;2;8;5.5;5.5;2" '
+                f'keyTimes="0;{key(timing.take, duration)};{key(charge_peak, duration)};{key(charge_settle, duration)};{key(timing.loaded, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '      <animate attributeName="opacity" values="0;0;.72;1;0;0" '
+                f'keyTimes="0;{key(timing.take, duration)};{key(charge_peak, duration)};{key(charge_settle, duration)};{key(timing.loaded, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                "    </circle>",
                 f'    <circle id="ammo-{index}" r="{fmt(AMMO_RADIUS)}" fill="{AMMO_COLOR}" stroke="#006d32" stroke-width="1" opacity="0">',
-                f'      <title>{escape(day.date)}: {day.count} contributions loaded as pea {index}</title>',
-                f'      <animate attributeName="cx" values="{fmt(day.cx)};{fmt(day.cx)};{PLANT_X};{fmt(timing.impact_x)};{fmt(timing.impact_x)}" '
-                f'keyTimes="0;{key(timing.take, duration)};{key(timing.loaded, duration)};{key(timing.impact, duration)};1" calcMode="linear" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'      <animate attributeName="cy" values="{fmt(day.cy)};{fmt(day.cy)};{PLANT_Y};{fmt(timing.impact_y)};{fmt(timing.impact_y)}" '
-                f'keyTimes="0;{key(timing.take, duration)};{key(timing.loaded, duration)};{key(timing.impact, duration)};1" calcMode="linear" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                '      <animate attributeName="opacity" values="0;1;1;0;0" '
-                f'keyTimes="0;{key(timing.take, duration)};{key(timing.loaded, duration)};{key(timing.impact, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'      <title>{escape(day.date)}: {day.count} contributions launched from the muzzle as pea {index}</title>',
+                f'      <animate attributeName="cx" values="{PLANT_X};{PLANT_X};{fmt(timing.impact_x)};{fmt(timing.impact_x)};{PLANT_X}" '
+                f'keyTimes="0;{key(timing.loaded, duration)};{key(timing.impact, duration)};{key(duration - 0.02, duration)};1" calcMode="linear" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'      <animate attributeName="cy" values="{PLANT_Y};{PLANT_Y};{fmt(timing.impact_y)};{fmt(timing.impact_y)};{PLANT_Y}" '
+                f'keyTimes="0;{key(timing.loaded, duration)};{key(timing.impact, duration)};{key(duration - 0.02, duration)};1" calcMode="linear" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '      <animate attributeName="opacity" values="0;0;1;1;0;0" '
+                f'keyTimes="0;{key(timing.loaded - 0.01, duration)};{key(timing.loaded, duration)};{key(timing.impact - 0.01, duration)};{key(timing.impact, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 "    </circle>",
             ]
         )
@@ -358,9 +496,28 @@ def frame_animation(
     )
 
 
-def plant_frame_animation(ammo_out: float, duration: float) -> str:
-    # Stop on the neutral frame once the last contribution dot has been fired.
-    return frame_animation((4, -226, -456, -686, -916, -1146), 0.175, ammo_out, duration, 4)
+def plant_frame_animation(timings: list[Timing], duration: float) -> str:
+    """Pose-to-pose firing: anticipate, compress, flash, recoil, settle."""
+    frame_positions = (4, -226, -456, -686, -916, -1146)
+    events: list[tuple[float, int]] = [(0.0, frame_positions[0])]
+    for timing in timings:
+        events.extend(
+            [
+                (timing.take, frame_positions[5]),
+                (timing.take + 0.10, frame_positions[1]),
+                (timing.loaded - 0.08, frame_positions[1]),
+                (timing.loaded, frame_positions[4]),
+                (timing.loaded + 0.08, frame_positions[5]),
+                (timing.loaded + 0.18, frame_positions[0]),
+            ]
+        )
+    events.sort(key=lambda event: event[0])
+    events.append((duration, frame_positions[0]))
+    return (
+        f'<animate attributeName="x" values="{";".join(str(position) for _, position in events)}" '
+        f'keyTimes="{";".join(key(moment, duration) for moment, _ in events)}" calcMode="discrete" '
+        f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
+    )
 
 
 def zombie_frame_animation(battle_end: float, duration: float) -> str:
@@ -381,29 +538,209 @@ def scheduled_frame_images(
     prefix: str,
     frames: list[Path],
     events: list[tuple[float, int | None]],
-    x: int,
-    y: int,
-    width: int,
-    height: int,
+    x: float,
+    y: float,
+    width: float,
+    height: float,
     duration: float,
     indent: str,
+    frame_y_offsets: tuple[float, ...] | None = None,
 ) -> str:
-    """Switch ImageGen GIF frames; binary transparency is robust in SVG image mode."""
+    """Switch pre-cropped ImageGen frames with browser-stable discrete timing."""
     key_times = ";".join(key(time_value, duration) for time_value, _frame in events)
     images: list[str] = []
     for frame_index, frame_path in enumerate(frames):
+        frame_y = y + (frame_y_offsets[frame_index] if frame_y_offsets else 0.0)
         values = ";".join(
             "inline" if active_frame == frame_index else "none"
             for _time, active_frame in events
         )
         images.extend(
             [
-                f'{indent}<image id="{prefix}-{frame_index}" x="{x}" y="{y}" width="{width}" height="{height}" preserveAspectRatio="none" href="{image_data_uri(frame_path)}" display="none">',
+                f'{indent}<image id="{prefix}-{frame_index}" x="{fmt(x)}" y="{fmt(frame_y)}" width="{fmt(width)}" height="{fmt(height)}" preserveAspectRatio="none" href="{image_data_uri(frame_path)}" display="none">',
                 f'{indent}  <animate attributeName="display" values="{values}" keyTimes="{key_times}" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 f"{indent}</image>",
             ]
         )
     return "\n".join(images)
+
+
+def cycling_events(
+    start: float | None,
+    end: float,
+    frame_count: int,
+    duration: float,
+    frame_seconds: float,
+) -> list[tuple[float, int | None]]:
+    events: list[tuple[float, int | None]] = [(0.0, None)]
+    if start is not None and start < end - 0.001:
+        current = start
+        frame_index = 0
+        while current < end - 0.001:
+            events.append((current, frame_index % frame_count))
+            current += frame_seconds
+            frame_index += 1
+        events.append((end, None))
+    events.append((duration, None))
+    return events
+
+
+def zombie_generated_combat(
+    damaged_walk_frames: list[Path],
+    critical_walk_frames: list[Path],
+    death_frames: list[Path],
+    phases: CombatPhases,
+    success: bool,
+    battle_end: float,
+    failure_attack_start: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
+    """Render hit-triggered damage states on the same path as the moving zombie."""
+    motion_end = phases.lethal if success and phases.lethal is not None else battle_end
+    translate = SUCCESS_TRANSLATE if success else FAILURE_TRANSLATE
+    walk_end = (
+        phases.lethal
+        if success and phases.lethal is not None
+        else failure_attack_start
+    )
+    arm_loss = phases.arm_loss
+    full_death = bool(
+        success
+        and phases.lethal is not None
+        and (arm_loss is None or phases.lethal - arm_loss < 0.36)
+    )
+    parts = [
+        '  <g id="zombie-generated-combat" filter="url(#shadow)" style="image-rendering:pixelated">',
+        '    <animateTransform attributeName="transform" type="translate" '
+        f'values="0 0;{fmt(translate)} 0;{fmt(translate)} 0;0 0" '
+        f'keyTimes="0;{key(motion_end, duration)};{key(outcome_end, duration)};1" '
+        f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+    ]
+
+    walk_start: float | None = None
+    if arm_loss is not None and not full_death:
+        transition_end = min(walk_end, arm_loss + 0.30)
+        if transition_end - arm_loss >= 0.16:
+            arm_events = [
+                (0.0, None),
+                (arm_loss, 0),
+                (min(arm_loss + 0.12, transition_end - 0.01), 1),
+                (transition_end, None),
+                (duration, None),
+            ]
+            parts.extend(
+                [
+                    '    <!-- The 50% hit visibly tears off the arm while the battle is still running. -->',
+                    scheduled_frame_images(
+                        "zombie-arm-loss",
+                        death_frames[:2],
+                        arm_events,
+                        DISMEMBER_ZOMBIE_X,
+                        DISMEMBER_ZOMBIE_Y,
+                        DISMEMBER_ZOMBIE_WIDTH,
+                        DISMEMBER_ZOMBIE_HEIGHT,
+                        duration,
+                        "    ",
+                    ),
+                ]
+            )
+            walk_start = transition_end
+        else:
+            walk_start = arm_loss
+
+    if walk_start is not None and walk_start < walk_end - 0.001:
+        critical_start = (
+            phases.critical
+            if phases.critical is not None and phases.critical > walk_start + 0.001
+            else None
+        )
+        damaged_end = critical_start if critical_start is not None else walk_end
+        parts.extend(
+            [
+                '    <!-- Half-health zombie keeps advancing with the detached arm still missing. -->',
+                scheduled_frame_images(
+                    "zombie-damaged-walk",
+                    damaged_walk_frames,
+                    cycling_events(walk_start, damaged_end, len(damaged_walk_frames), duration, 0.24),
+                    DAMAGED_WALK_ZOMBIE_X,
+                    GENERATED_ZOMBIE_Y,
+                    GENERATED_ZOMBIE_WIDTH,
+                    GENERATED_ZOMBIE_HEIGHT,
+                    duration,
+                    "    ",
+                ),
+            ]
+        )
+        if critical_start is not None and critical_start < walk_end - 0.001:
+            parts.extend(
+                [
+                    '    <!-- At 85% damage the attached head bruises and the walk becomes a stagger. -->',
+                    scheduled_frame_images(
+                        "zombie-critical-walk",
+                        critical_walk_frames,
+                        cycling_events(critical_start, walk_end, len(critical_walk_frames), duration, 0.30),
+                        CRITICAL_WALK_ZOMBIE_X,
+                        GENERATED_ZOMBIE_Y,
+                        GENERATED_ZOMBIE_WIDTH,
+                        GENERATED_ZOMBIE_HEIGHT,
+                        duration,
+                        "    ",
+                    ),
+                ]
+            )
+
+    if success and phases.lethal is not None:
+        death_time = phases.lethal
+        if full_death:
+            final_frames = death_frames
+            death_y_offsets = (0.0, 0.0, 0.0, 15.0, 15.0, 15.0, 15.0, 15.0)
+            death_events: list[tuple[float, int | None]] = [
+                (0.0, None),
+                (death_time, 0),
+                (death_time + 0.12, 1),
+                (death_time + 0.26, 2),
+                (death_time + 0.42, 3),
+                (death_time + 0.60, 4),
+                (death_time + 0.82, 5),
+                (death_time + 1.08, 6),
+                (death_time + 1.36, 7),
+                (death_time + 2.02, None),
+                (duration, None),
+            ]
+        else:
+            final_frames = death_frames[3:]
+            death_y_offsets = (15.0,) * len(final_frames)
+            death_events = [
+                (0.0, None),
+                (death_time, 0),
+                (death_time + 0.18, 1),
+                (death_time + 0.42, 2),
+                (death_time + 0.72, 3),
+                (death_time + 1.04, 4),
+                (death_time + 2.02, None),
+                (duration, None),
+            ]
+        parts.extend(
+            [
+                '    <!-- Only the lethal final pea removes the head and drives the body to the ground. -->',
+                scheduled_frame_images(
+                    "zombie-lethal-hit",
+                    final_frames,
+                    death_events,
+                    DISMEMBER_ZOMBIE_X,
+                    DISMEMBER_ZOMBIE_Y,
+                    DISMEMBER_ZOMBIE_WIDTH,
+                    DISMEMBER_ZOMBIE_HEIGHT,
+                    duration,
+                    "    ",
+                    frame_y_offsets=death_y_offsets,
+                ),
+            ]
+        )
+
+    parts.append("  </g>")
+    return "\n".join(parts)
 
 
 def plant_imagegen_sprites(
@@ -421,7 +758,7 @@ def plant_imagegen_sprites(
         (0.0, None),
         (cry_start, 0),
         (cry_start + 0.28, 1),
-        (cry_start + 0.72, 2),
+        (cry_start + 0.52, 2),
         (damage_times[0], None),
         (duration, None),
     ]
@@ -525,89 +862,90 @@ def zombie_animation(success: bool, battle_end: float, outcome_end: float, durat
 
 def zombie_imagegen_attack(
     attack_frames: list[Path],
+    frame_order: tuple[int, int, int, int, int, int],
+    phase_label: str,
     battle_end: float,
+    visible_start: float,
     outcome_end: float,
     duration: float,
 ) -> str:
     blackout = battle_end + BLACKOUT_OFFSET
-    events: list[tuple[float, int | None]] = [(0.0, None), (battle_end, 0)]
+    events: list[tuple[float, int | None]] = [
+        (0.0, None),
+        (visible_start, frame_order[0]),
+    ]
     for anticipation, snap, damage, recovery in BITE_PHASES:
         pre = battle_end + anticipation
         events.extend(
             [
-                (pre, 0),
-                (pre + 0.06, 1),
-                (battle_end + snap, 2),
-                (battle_end + damage, 3),
-                (battle_end + recovery - 0.05, 4),
-                (battle_end + recovery, 5),
+                (pre, frame_order[0]),
+                (pre + 0.06, frame_order[1]),
+                (battle_end + snap, frame_order[2]),
+                (battle_end + damage, frame_order[3]),
+                (battle_end + recovery - 0.05, frame_order[4]),
+                (battle_end + recovery, frame_order[5]),
             ]
         )
     events.extend([(blackout, None), (duration, None)])
+    lunge_events: list[tuple[float, float]] = [(0.0, 0.0), (visible_start, 0.0)]
+    for anticipation, snap, damage, recovery in BITE_PHASES:
+        pre = battle_end + anticipation
+        lunge_events.extend(
+            [
+                (pre, 0.0),
+                (pre + 0.06, 0.0),
+                (battle_end + snap, -24.0),
+                (battle_end + damage, -38.0),
+                (battle_end + recovery - 0.05, -12.0),
+                (battle_end + recovery, 0.0),
+            ]
+        )
+    lunge_events.extend([(blackout, 0.0), (duration, 0.0)])
+    lunge_values = ";".join(f"{fmt(offset)} 0" for _, offset in lunge_events)
+    lunge_times = ";".join(key(moment, duration) for moment, _ in lunge_events)
+    attack_x = {
+        "intact": INTACT_BITE_ZOMBIE_X,
+        "damaged": DAMAGED_BITE_ZOMBIE_X,
+        "critical": CRITICAL_BITE_ZOMBIE_X,
+    }[phase_label]
     return "\n".join(
         [
-            '  <!-- ImageGen: anticipation, open jaw, lunge, chew, pull, recovery. -->',
+            f'  <!-- ImageGen {phase_label} bite: anticipation, open jaw, lunge, chew, pull, recovery. -->',
+            f'  <g id="zombie-{phase_label}-bite-lunge">',
+            '    <animateTransform attributeName="transform" type="translate" '
+            f'values="{lunge_values}" keyTimes="{lunge_times}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
             scheduled_frame_images(
-                "zombie-imagegen-bite",
+                f"zombie-{phase_label}-bite",
                 attack_frames,
                 events,
-                int(ZOMBIE_X + FAILURE_TRANSLATE),
-                27,
-                240,
-                230,
+                attack_x + FAILURE_TRANSLATE,
+                GENERATED_ZOMBIE_Y,
+                GENERATED_ZOMBIE_WIDTH,
+                GENERATED_ZOMBIE_HEIGHT,
                 duration,
-                "  ",
+                "    ",
             ),
+            "  </g>",
         ]
     )
 
 
-def zombie_imagegen_death(
-    death_frames: list[Path],
+def zombie_shadow(
+    success: bool,
     battle_end: float,
+    death_time: float | None,
     outcome_end: float,
     duration: float,
 ) -> str:
-    events: list[tuple[float, int | None]] = [
-        (0.0, None),
-        (battle_end, 0),
-        (battle_end + 0.14, 1),
-        (battle_end + 0.32, 2),
-        (battle_end + 0.52, 3),
-        (battle_end + 0.74, 4),
-        (battle_end + 0.98, 5),
-        (battle_end + 1.24, 6),
-        (battle_end + 1.52, 7),
-        (battle_end + 2.02, None),
-        (duration, None),
-    ]
-    return "\n".join(
-        [
-            "  <!-- ImageGen: pea impact, detached arm, decapitation, collapse, bare skull remnant. -->",
-            scheduled_frame_images(
-                "zombie-imagegen-death",
-                death_frames,
-                events,
-                int(ZOMBIE_X + SUCCESS_TRANSLATE - 82),
-                17,
-                275,
-                240,
-                duration,
-                "  ",
-            ),
-        ]
-    )
-
-
-def zombie_shadow(success: bool, battle_end: float, outcome_end: float, duration: float) -> str:
     if success:
+        collapse_start = death_time if death_time is not None else battle_end
         end_x = 1150 + SUCCESS_TRANSLATE
         return "\n".join(
             [
-                '<ellipse cy="247" rx="72" ry="11" fill="#020a09" opacity=".55">',
-                f'  <animate attributeName="cx" values="1150;{fmt(end_x)};{fmt(end_x)};{fmt(end_x)};1150" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'  <animate attributeName="rx" values="72;72;64;48;26;11;0;0;72" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 0.52, duration)};{key(battle_end + 0.98, duration)};{key(battle_end + 1.24, duration)};{key(battle_end + 1.52, duration)};{key(battle_end + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'  <animate attributeName="opacity" values=".55;.55;.48;.34;.20;.12;0;0;.55" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 0.52, duration)};{key(battle_end + 0.98, duration)};{key(battle_end + 1.24, duration)};{key(battle_end + 1.52, duration)};{key(battle_end + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '<ellipse cy="247" rx="80" ry="12" fill="#020a09" opacity=".55">',
+                f'  <animate attributeName="cx" values="1150;{fmt(end_x)};{fmt(end_x)};{fmt(end_x)};1150" keyTimes="0;{key(collapse_start, duration)};{key(collapse_start + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'  <animate attributeName="rx" values="80;80;70;52;29;12;0;0;80" keyTimes="0;{key(collapse_start, duration)};{key(collapse_start + 0.42, duration)};{key(collapse_start + 0.72, duration)};{key(collapse_start + 1.04, duration)};{key(collapse_start + 1.36, duration)};{key(collapse_start + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'  <animate attributeName="opacity" values=".55;.55;.48;.34;.20;.12;0;0;.55" keyTimes="0;{key(collapse_start, duration)};{key(collapse_start + 0.42, duration)};{key(collapse_start + 0.72, duration)};{key(collapse_start + 1.04, duration)};{key(collapse_start + 1.36, duration)};{key(collapse_start + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 "</ellipse>",
             ]
         )
@@ -615,7 +953,7 @@ def zombie_shadow(success: bool, battle_end: float, outcome_end: float, duration
     end_x = 1150 + end_translate
     values = f"1150;{fmt(end_x)};{fmt(end_x)};1150"
     return (
-        '<ellipse cy="247" rx="72" ry="11" fill="#020a09" opacity=".55">'
+        '<ellipse cy="247" rx="80" ry="12" fill="#020a09" opacity=".55">'
         f'<animate attributeName="cx" values="{values}" keyTimes="0;{key(battle_end, duration)};{key(outcome_end, duration)};1" '
         f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
         '</ellipse>'
@@ -754,44 +1092,6 @@ def brain_icon_markup(
     return "\n".join(pixels)
 
 
-def victory_energy_stream(
-    ordered_active: list[Day], battle_end: float, outcome_end: float, duration: float
-) -> str:
-    particles: list[str] = ['  <g id="victory-contribution-energy">']
-    palette = ("#7ee787", "#56f06a", "#39d353", "#b7ffbf")
-    sources = ordered_active or [None]
-    for index, source in enumerate(sources):
-        source_x = source.cx if source else PLANT_X
-        source_y = source.cy if source else PLANT_Y
-        start = battle_end + 1.18 + (index % 12) * 0.025
-        bend = start + 0.22
-        gather = battle_end + 1.96 + (index % 4) * 0.018
-        burst = battle_end + 2.24 + (index % 5) * 0.012
-        fade = battle_end + 2.72
-        rail_y = 116 if index % 2 == 0 else 196
-        gather_x = 42 + (index % 6) * 6
-        gather_y = rail_y + ((index % 3) - 1) * 4
-        burst_x = 1210 + (index % 7) * 10
-        burst_y = rail_y + ((index % 5) - 2) * 3
-        bend_x = (source_x + gather_x) / 2 - 24 - (index % 3) * 8
-        bend_y = min(source_y, gather_y) - 18 - (index % 4) * 7
-        color = palette[index % len(palette)]
-        particles.extend(
-            [
-                f'    <circle cx="{fmt(source_x)}" cy="{fmt(source_y)}" r="3.2" fill="{color}" stroke="#0e4429" stroke-width=".7" opacity="0">',
-                f'      <animate attributeName="cx" values="{fmt(source_x)};{fmt(source_x)};{fmt(bend_x)};{fmt(gather_x)};{fmt(burst_x)};{fmt(burst_x)};{fmt(burst_x)};{fmt(source_x)}" keyTimes="0;{key(start, duration)};{key(bend, duration)};{key(gather, duration)};{key(burst, duration)};{key(fade, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'      <animate attributeName="cy" values="{fmt(source_y)};{fmt(source_y)};{fmt(bend_y)};{fmt(gather_y)};{fmt(burst_y)};{fmt(burst_y)};{fmt(burst_y)};{fmt(source_y)}" keyTimes="0;{key(start, duration)};{key(bend, duration)};{key(gather, duration)};{key(burst, duration)};{key(fade, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                '      <animate attributeName="r" values="3.2;3.2;4;5.2;2.4;1;1;3.2" '
-                f'keyTimes="0;{key(start, duration)};{key(bend, duration)};{key(gather, duration)};{key(burst, duration)};{key(fade, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                '      <animate attributeName="opacity" values="0;1;1;1;1;0;0;0" '
-                f'keyTimes="0;{key(start, duration)};{key(bend, duration)};{key(gather, duration)};{key(burst, duration)};{key(fade, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                "    </circle>",
-            ]
-        )
-    particles.append("  </g>")
-    return "\n".join(particles)
-
-
 def success_atmosphere(battle_end: float, outcome_end: float, duration: float) -> str:
     # The skull gets a readable hold before the left-to-right victory sweep begins.
     overlay_start = battle_end + 2.02
@@ -825,7 +1125,7 @@ def success_title_imagegen(
     source = image_data_uri(image_path)
     return "\n".join(
         [
-            "  <!-- ImageGen LAWN CLEAR typography is fired onto the screen from left to right. -->",
+            "  <!-- The lethal impact reveals LAWN CLEAR; no spent contribution dots respawn. -->",
             "  <defs>",
             f'    <image id="success-title-imagegen-source" x="80" y="0" width="1120" height="300" preserveAspectRatio="none" href="{source}"/>',
             '    <clipPath id="success-title-reveal-clip"><rect x="80" y="0" width="0" height="300">',
@@ -838,16 +1138,6 @@ def success_title_imagegen(
             '    <animateTransform attributeName="transform" type="translate" values="-36 7;-36 7;8 -2;0 0;0 0;-36 7" '
             f'keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
             '    <use href="#success-title-imagegen-source"/>',
-            "  </g>",
-            '  <g id="success-title-projectiles" filter="url(#glow)">',
-            '    <circle cy="116" r="7" fill="#b7ff72" stroke="#26a641" stroke-width="2" opacity="0">',
-            f'      <animate attributeName="cx" values="-35;-35;1315;1315;-35" keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            f'      <animate attributeName="opacity" values="0;1;0;0;0" keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            "    </circle>",
-            '    <circle cy="196" r="7" fill="#b7ff72" stroke="#26a641" stroke-width="2" opacity="0">',
-            f'      <animate attributeName="cx" values="-65;-65;1285;1285;-65" keyTimes="0;{key(reveal + 0.06, duration)};{key(expanded + 0.06, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            f'      <animate attributeName="opacity" values="0;1;0;0;0" keyTimes="0;{key(reveal + 0.06, duration)};{key(expanded + 0.06, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            "    </circle>",
             "  </g>",
         ]
     )
@@ -1054,7 +1344,6 @@ def failure_atmosphere(battle_end: float, outcome_end: float, duration: float) -
 
 
 def outcome_markup(
-    ordered_active: list[Day],
     total: int,
     target: int,
     success: bool,
@@ -1067,7 +1356,6 @@ def outcome_markup(
     if success:
         parts = [
             success_atmosphere(battle_end, outcome_end, duration),
-            victory_energy_stream(ordered_active, battle_end, outcome_end, duration),
             success_title_imagegen(success_title_path, battle_end, outcome_end, duration),
             success_stats(total, target, battle_end, outcome_end, duration),
         ]
@@ -1108,7 +1396,7 @@ def positive_int(value: str) -> int:
 def main() -> None:
     project_root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(
-        description="Turn contribution-day dots into a configurable zombie brain-defense challenge."
+        description="Turn contribution-day dots into a configurable zombie lawn-defense challenge."
     )
     parser.add_argument("--base-svg", required=True, type=Path)
     parser.add_argument("--out-svg", required=True, type=Path)
@@ -1145,6 +1433,18 @@ def main() -> None:
     plant_cry_frames = [args.sprite_dir / f"plant-cry-imagegen-{index}.gif" for index in range(6)]
     plant_damage_frames = [args.sprite_dir / f"plant-damage-imagegen-{index}.gif" for index in range(6)]
     zombie_bite_frames = [args.sprite_dir / f"zombie-bite-imagegen-{index}.gif" for index in range(6)]
+    zombie_damaged_bite_frames = [
+        args.sprite_dir / f"zombie-damaged-bite-imagegen-{index}.png" for index in range(6)
+    ]
+    zombie_critical_bite_frames = [
+        args.sprite_dir / f"zombie-critical-bite-imagegen-{index}.png" for index in range(6)
+    ]
+    zombie_damaged_walk_frames = [
+        args.sprite_dir / f"zombie-damaged-walk-imagegen-{index}.png" for index in range(4)
+    ]
+    zombie_critical_walk_frames = [
+        args.sprite_dir / f"zombie-critical-walk-imagegen-{index}.png" for index in range(4)
+    ]
     failure_title_path = args.sprite_dir / "failure-title-imagegen.png"
     zombie_death_frames = [args.sprite_dir / f"zombie-dismember-imagegen-{index}.png" for index in range(8)]
     success_title_path = args.sprite_dir / "success-title-lawn-clear-imagegen.png"
@@ -1152,6 +1452,10 @@ def main() -> None:
         *plant_cry_frames,
         *plant_damage_frames,
         *zombie_bite_frames,
+        *zombie_damaged_bite_frames,
+        *zombie_critical_bite_frames,
+        *zombie_damaged_walk_frames,
+        *zombie_critical_walk_frames,
         failure_title_path,
         *zombie_death_frames,
         success_title_path,
@@ -1188,7 +1492,24 @@ def main() -> None:
     timings, duration, battle_end, outcome_end = timeline(
         len(ordered_active), args.battle_seconds, zombie_translate
     )
+    phases = combat_phases(
+        ordered_active,
+        timings,
+        total,
+        args.target_contributions,
+        success,
+        battle_end,
+    )
     ammo_out = timings[-1].impact if timings else INTRO_TIME + 0.9
+    board_empty_at = timings[-1].loaded if timings else INTRO_TIME + 0.9
+    zombie_original_hide = phases.arm_loss if phases.arm_loss is not None else battle_end
+    failure_attack_start = (
+        battle_end + 0.30
+        if not success
+        and phases.arm_loss is not None
+        and battle_end - phases.arm_loss < 0.30
+        else battle_end
+    )
 
     source = args.base_svg.read_text(encoding="utf-8")
     source = re.sub(
@@ -1197,6 +1518,7 @@ def main() -> None:
             days,
             ordered_active,
             timings,
+            board_empty_at,
             duration,
             total,
             args.window_days,
@@ -1223,7 +1545,7 @@ def main() -> None:
         )
     source = re.sub(
         r'<animate attributeName="x" values="4;-226;-456;-686;-916;-1146" calcMode="discrete" dur="2s" repeatCount="indefinite"/>',
-        plant_frame_animation(ammo_out, duration)
+        plant_frame_animation(timings, duration)
         + (
             "\n" + original_sprite_visibility(ammo_out + 0.01, outcome_end, duration)
             if not success
@@ -1251,7 +1573,7 @@ def main() -> None:
         '<ellipse cx="1150" cy="247" rx="72" ry="11" fill="#020a09" opacity=".55"/>',
         plant_emotion_markup(success, ammo_out, battle_end, outcome_end, duration)
         + "\n"
-        + zombie_shadow(success, battle_end, outcome_end, duration),
+        + zombie_shadow(success, battle_end, phases.lethal, outcome_end, duration),
         1,
     )
     source = re.sub(
@@ -1264,34 +1586,45 @@ def main() -> None:
         r'<animate attributeName="x" values="1030;790;550;310;70;-170" calcMode="discrete" dur="1\.2s" repeatCount="indefinite"/>',
         zombie_frame_animation(battle_end, duration)
         + "\n"
-        + original_sprite_visibility(battle_end, outcome_end, duration),
+        + original_sprite_visibility(zombie_original_hide, outcome_end, duration),
         source,
         count=1,
     )
-    if success:
-        source = source.replace(
-            "      </image>\n    </g>\n  </g>",
-            "      </image>\n    </g>\n  </g>\n"
-            + zombie_imagegen_death(
-                zombie_death_frames,
-                battle_end,
-                outcome_end,
-                duration,
-            ),
-            1,
+    combat_layers = zombie_generated_combat(
+        zombie_damaged_walk_frames,
+        zombie_critical_walk_frames,
+        zombie_death_frames,
+        phases,
+        success,
+        battle_end,
+        failure_attack_start,
+        outcome_end,
+        duration,
+    )
+    if not success:
+        if phases.failure_state == "critical":
+            attack_frames = zombie_critical_bite_frames
+            attack_order = (0, 1, 2, 2, 4, 5)
+        elif phases.failure_state == "damaged":
+            attack_frames = zombie_damaged_bite_frames
+            attack_order = (0, 1, 2, 2, 4, 5)
+        else:
+            attack_frames = zombie_bite_frames
+            attack_order = (0, 1, 2, 3, 4, 5)
+        combat_layers += "\n" + zombie_imagegen_attack(
+            attack_frames,
+            attack_order,
+            phases.failure_state,
+            battle_end,
+            failure_attack_start,
+            outcome_end,
+            duration,
         )
-    else:
-        source = source.replace(
-            "      </image>\n    </g>\n  </g>",
-            "      </image>\n    </g>\n  </g>\n"
-            + zombie_imagegen_attack(
-                zombie_bite_frames,
-                battle_end,
-                outcome_end,
-                duration,
-            ),
-            1,
-        )
+    source = source.replace(
+        "      </image>\n    </g>\n  </g>",
+        "      </image>\n    </g>\n  </g>\n" + combat_layers,
+        1,
+    )
     source = source.replace(
         "  <!-- Health and hits stay deterministic -->",
         bite_action_markup(success, battle_end, outcome_end, duration)
@@ -1312,7 +1645,6 @@ def main() -> None:
         )
         + "\n\n"
         + outcome_markup(
-            ordered_active,
             total,
             args.target_contributions,
             success,
@@ -1333,7 +1665,7 @@ def main() -> None:
     )
     source = re.sub(
         r'<desc id="desc">.*?</desc>',
-        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. The plant stops after its final contribution dot. The zombie {"plays an eight-frame ImageGen dismemberment sequence—arm, head, body, then skull—before the LAWN CLEAR victory sweep" if success else "performs a three-bite ImageGen sprite sequence that progressively eats the plant before an animated ImageGen horror title card"}. Only contribution dates and counts are used.</desc>',
+        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. Every non-empty contribution cell pulses in place during the Peashooter anticipation, disappears at muzzle flash, and stays empty until the loop resets; the pea itself is born at the muzzle. At half damage the zombie loses an arm; at critical damage it staggers; {"the final pea removes its head and knocks the body down before LAWN CLEAR" if success else f"the surviving {phases.failure_state} zombie uses a matching three-bite eating animation"}. Only contribution dates and counts are used.</desc>',
         source,
     )
 
@@ -1349,6 +1681,10 @@ def main() -> None:
                 "windowDays": args.window_days,
                 "battleSeconds": args.battle_seconds,
                 "outcome": "success" if success else "failure",
+                "damagePhase": "lethal" if success else phases.failure_state,
+                "armLossAt": phases.arm_loss,
+                "criticalAt": phases.critical,
+                "lethalAt": phases.lethal,
                 "ammoDots": len(ordered_active),
                 "cycleSeconds": duration,
                 "firstDot": ordered_active[0].date if ordered_active else None,
