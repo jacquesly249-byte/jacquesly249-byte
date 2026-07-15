@@ -824,10 +824,14 @@ def detached_parts_markup(
     if phases.arm_loss is not None:
         start = phases.arm_loss
         land = min(outcome_end - 0.02, start + 0.58)
-        origin_x = body_center(start) - 56
-        origin_y = 68.0
-        land_x = origin_x + 58
-        land_y = 170.0
+        # Part sprites use a 160 x 120 canvas. Render them at native canvas
+        # scale so the hand/sleeve matches the generated body's anatomy. The
+        # origin offsets preserve the initial centre; the wider landing path
+        # keeps the correctly scaled arm clear of the detached head.
+        origin_x = body_center(start) - 76
+        origin_y = 53.0
+        land_x = origin_x + 76
+        land_y = 144.0
         flight_times = [0.0, start, start + 0.12, start + 0.32, land, duration]
         parts.extend(
             [
@@ -836,17 +840,17 @@ def detached_parts_markup(
                 f'keyTimes="0;{key(start, duration)};{key(start + 0.01, duration)};{key(land - 0.01, duration)};{key(land, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 f'      <g transform="translate({fmt(origin_x)} {fmt(origin_y)})">',
                 '        <g>',
-                '          <animateTransform attributeName="transform" type="translate" values="0 0;0 0;14 -22;39 2;58 95;0 0" '
+                '          <animateTransform attributeName="transform" type="translate" values="0 0;0 0;14 -22;48 2;76 95;0 0" '
                 f'keyTimes="{";".join(key(moment, duration) for moment in flight_times)}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 '          <g>',
-                '            <animateTransform attributeName="transform" type="rotate" values="0 60 45;0 60 45;78 60 45;205 60 45;322 60 45;0 60 45" '
+                '            <animateTransform attributeName="transform" type="rotate" values="0 80 60;0 80 60;78 80 60;205 80 60;322 80 60;0 80 60" '
                 f'keyTimes="{";".join(key(moment, duration) for moment in flight_times)}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'            <image x="0" y="0" width="120" height="90" preserveAspectRatio="none" href="{image_data_uri(arm_air_path)}"/>',
+                f'            <image x="0" y="0" width="160" height="120" preserveAspectRatio="none" href="{image_data_uri(arm_air_path)}"/>',
                 '          </g>',
                 '        </g>',
                 '      </g>',
                 '    </g>',
-                f'    <image id="detached-arm-ground" x="{fmt(land_x)}" y="{fmt(land_y)}" width="120" height="90" preserveAspectRatio="none" href="{image_data_uri(arm_ground_path)}" opacity="0">',
+                f'    <image id="detached-arm-ground" x="{fmt(land_x)}" y="{fmt(land_y)}" width="160" height="120" preserveAspectRatio="none" href="{image_data_uri(arm_ground_path)}" opacity="0">',
                 '      <animate attributeName="opacity" values="0;0;1;1;0" '
                 f'keyTimes="0;{key(land, duration)};{key(land + 0.01, duration)};{key(outcome_end, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 '    </image>',
@@ -856,10 +860,12 @@ def detached_parts_markup(
     if success and phases.head_loss is not None:
         start = phases.head_loss
         land = min(outcome_end - 0.02, start + 0.68)
-        origin_x = body_center(start) - 62
-        origin_y = 22.0
+        # Match the detached head's visible dimensions to the attached head.
+        # The 80 x 60 pivot preserves its anchors; a shallow apex avoids clipping.
+        origin_x = body_center(start) - 82
+        origin_y = 7.0
         land_x = origin_x + 75
-        land_y = 166.0
+        land_y = 140.0
         flight_times = [0.0, start, start + 0.15, start + 0.38, land, duration]
         parts.extend(
             [
@@ -868,17 +874,17 @@ def detached_parts_markup(
                 f'keyTimes="0;{key(start, duration)};{key(start + 0.01, duration)};{key(land - 0.01, duration)};{key(land, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 f'      <g transform="translate({fmt(origin_x)} {fmt(origin_y)})">',
                 '        <g>',
-                '          <animateTransform attributeName="transform" type="translate" values="0 0;0 0;25 -24;62 16;75 136;0 0" '
+                '          <animateTransform attributeName="transform" type="translate" values="0 0;0 0;25 -14;62 16;75 136;0 0" '
                 f'keyTimes="{";".join(key(moment, duration) for moment in flight_times)}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 '          <g>',
-                '            <animateTransform attributeName="transform" type="rotate" values="0 60 45;0 60 45;96 60 45;238 60 45;372 60 45;0 60 45" '
+                '            <animateTransform attributeName="transform" type="rotate" values="0 80 60;0 80 60;96 80 60;238 80 60;372 80 60;0 80 60" '
                 f'keyTimes="{";".join(key(moment, duration) for moment in flight_times)}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'            <image x="0" y="0" width="120" height="90" preserveAspectRatio="none" href="{image_data_uri(head_air_path)}"/>',
+                f'            <image x="0" y="0" width="160" height="120" preserveAspectRatio="none" href="{image_data_uri(head_air_path)}"/>',
                 '          </g>',
                 '        </g>',
                 '      </g>',
                 '    </g>',
-                f'    <image id="detached-head-ground" x="{fmt(land_x)}" y="{fmt(land_y)}" width="120" height="90" preserveAspectRatio="none" href="{image_data_uri(head_ground_path)}" opacity="0">',
+                f'    <image id="detached-head-ground" x="{fmt(land_x)}" y="{fmt(land_y)}" width="160" height="120" preserveAspectRatio="none" href="{image_data_uri(head_ground_path)}" opacity="0">',
                 '      <animate attributeName="opacity" values="0;0;1;1;0" '
                 f'keyTimes="0;{key(land, duration)};{key(land + 0.01, duration)};{key(outcome_end, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 f'      <animate attributeName="y" values="{fmt(land_y)};{fmt(land_y)};{fmt(land_y - 6)};{fmt(land_y)};{fmt(land_y)};{fmt(land_y)}" '
