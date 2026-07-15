@@ -712,40 +712,6 @@ def append_frame_event(
         events.append((moment, frame))
 
 
-def critical_brain_patch(
-    prefix: str,
-    x: float,
-    y: float,
-    visible_start: float | None,
-    visible_end: float,
-    duration: float,
-    indent: str,
-) -> str:
-    """Small SVG-native pixel brain used only by the surviving critical zombie."""
-    if visible_start is None or visible_start >= visible_end - 0.001:
-        return ""
-    fade_in = min(visible_end - 0.001, visible_start + 0.01)
-    fade_out = min(duration, visible_end + 0.01)
-    return "\n".join(
-        [
-            f'{indent}<g id="{prefix}" opacity="0" style="image-rendering:pixelated">',
-            f'{indent}  <animate attributeName="opacity" values="0;0;1;1;0;0" '
-            f'keyTimes="0;{key(visible_start, duration)};{key(fade_in, duration)};{key(visible_end, duration)};{key(fade_out, duration)};1" '
-            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            f'{indent}  <path d="M{fmt(x + 3)} {fmt(y + 3)}h4v-3h11v2h5v4h3v10h-4v5h-5v3h-13v-3h-5v-5h-3v-8h4z" fill="#4b0710"/>',
-            f'{indent}  <rect x="{fmt(x + 4)}" y="{fmt(y + 4)}" width="7" height="7" fill="#d45c78"/>',
-            f'{indent}  <rect x="{fmt(x + 12)}" y="{fmt(y + 3)}" width="8" height="6" fill="#ed8797"/>',
-            f'{indent}  <rect x="{fmt(x + 8)}" y="{fmt(y + 10)}" width="12" height="7" fill="#b83e62"/>',
-            f'{indent}  <rect x="{fmt(x + 17)}" y="{fmt(y + 9)}" width="6" height="8" fill="#f0a1a9"/>',
-            f'{indent}  <path d="M{fmt(x + 6)} {fmt(y + 6)}h3v4h4v-5h3v5h4v4h-3v4h-4v-4h-4v5h-3z" fill="#76203b"/>',
-            f'{indent}  <rect x="{fmt(x + 21)}" y="{fmt(y + 18)}" width="3" height="7" fill="#8e111d">',
-            f'{indent}    <animate attributeName="height" values="3;7;4;7;3" dur="0.72s" repeatCount="indefinite"/>',
-            f'{indent}  </rect>',
-            f'{indent}</g>',
-        ]
-    )
-
-
 def headless_success_events(
     phases: CombatPhases,
     timings: list[Timing],
@@ -858,18 +824,6 @@ def zombie_generated_combat(
                     ),
                 ]
             )
-            if not success:
-                parts.append(
-                    critical_brain_patch(
-                        "zombie-critical-walk-exposed-brain",
-                        CRITICAL_WALK_ZOMBIE_X + GENERATED_ZOMBIE_WIDTH * 0.40,
-                        GENERATED_ZOMBIE_Y + GENERATED_ZOMBIE_HEIGHT * 0.15,
-                        critical_start,
-                        critical_end,
-                        duration,
-                        "    ",
-                    )
-                )
 
     if success and head_loss is not None and phases.lethal is not None:
         parts.extend(
@@ -1220,18 +1174,6 @@ def zombie_imagegen_attack(
             "    ",
         ),
     ]
-    if phase_label == "critical":
-        layers.append(
-            critical_brain_patch(
-                "zombie-critical-bite-exposed-brain",
-                attack_x + FAILURE_TRANSLATE + GENERATED_ZOMBIE_WIDTH * 0.40,
-                GENERATED_ZOMBIE_Y + GENERATED_ZOMBIE_HEIGHT * 0.15,
-                visible_start,
-                visible_end,
-                duration,
-                "    ",
-            )
-        )
     layers.append("  </g>")
     return "\n".join(layer for layer in layers if layer)
 
@@ -1819,13 +1761,13 @@ def main() -> None:
         args.sprite_dir / f"zombie-damaged-bite-imagegen-{index}.png" for index in range(6)
     ]
     zombie_critical_bite_frames = [
-        args.sprite_dir / f"zombie-critical-bite-imagegen-{index}.png" for index in range(6)
+        args.sprite_dir / f"zombie-critical-bite-integrated-{index}.png" for index in range(6)
     ]
     zombie_damaged_walk_frames = [
         args.sprite_dir / f"zombie-damaged-walk-imagegen-{index}.png" for index in range(4)
     ]
     zombie_critical_walk_frames = [
-        args.sprite_dir / f"zombie-critical-walk-imagegen-{index}.png" for index in range(4)
+        args.sprite_dir / f"zombie-critical-walk-integrated-{index}.png" for index in range(4)
     ]
     zombie_headless_success_frames = [
         args.sprite_dir / f"zombie-headless-success-imagegen-{index}.png" for index in range(8)
