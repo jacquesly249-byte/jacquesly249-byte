@@ -113,7 +113,9 @@ RESET_TIME = 1.5
 SUCCESS_TRANSLATE = -620.0
 FAILURE_TRANSLATE = -895.0
 ARM_LOSS_RATIO = 0.50
-CRITICAL_RATIO = 0.85
+CRITICAL_RATIO = 0.82
+HEAD_LOSS_RATIO = 0.88
+MIN_POST_HEAD_HITS = 3
 # Sprite sheets use different canvas sizes and transparent padding, so matching
 # their outer <image> boxes makes the character visibly change size.  These
 # placements are derived from the alpha bounds of the neutral reference poses:
@@ -134,6 +136,7 @@ GENERATED_ZOMBIE_WIDTH = 240 * GENERATED_ZOMBIE_SCALE
 GENERATED_ZOMBIE_HEIGHT = 230 * GENERATED_ZOMBIE_SCALE
 DAMAGED_WALK_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 124.5 * GENERATED_ZOMBIE_SCALE
 CRITICAL_WALK_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 120.0 * GENERATED_ZOMBIE_SCALE
+HEADLESS_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 124.5 * GENERATED_ZOMBIE_SCALE
 INTACT_BITE_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 128.5 * GENERATED_ZOMBIE_SCALE
 DAMAGED_BITE_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 137.5 * GENERATED_ZOMBIE_SCALE
 CRITICAL_BITE_ZOMBIE_X = ZOMBIE_REFERENCE_CENTER_X - 138.0 * GENERATED_ZOMBIE_SCALE
@@ -197,6 +200,7 @@ class Timing:
 class CombatPhases:
     arm_loss: float | None
     critical: float | None
+    head_loss: float | None
     lethal: float | None
     failure_state: str
 
@@ -277,14 +281,33 @@ def combat_phases(
     cumulative = 0.0
     arm_loss: float | None = None
     critical: float | None = None
+    arm_loss_index: int | None = None
+    head_loss_candidate_index: int | None = None
 
-    for day, timing in zip(ordered_active, timings):
+    for index, (day, timing) in enumerate(zip(ordered_active, timings)):
         cumulative += day.count * scale
         ratio = cumulative / max(1.0, damage_budget)
         if arm_loss is None and ratio >= ARM_LOSS_RATIO:
             arm_loss = timing.impact
+            arm_loss_index = index
         if critical is None and ratio >= CRITICAL_RATIO:
             critical = timing.impact
+        if head_loss_candidate_index is None and ratio >= HEAD_LOSS_RATIO:
+            head_loss_candidate_index = index
+
+    head_loss: float | None = None
+    if success and timings:
+        latest_head_index = max(0, len(timings) - MIN_POST_HEAD_HITS - 1)
+        candidate_index = (
+            head_loss_candidate_index
+            if head_loss_candidate_index is not None
+            else latest_head_index
+        )
+        head_index = min(candidate_index, latest_head_index)
+        if arm_loss_index is not None and len(timings) > MIN_POST_HEAD_HITS + 1:
+            head_index = max(arm_loss_index + 1, head_index)
+            head_index = min(head_index, latest_head_index)
+        head_loss = timings[head_index].impact
 
     progress = total / max(1.0, float(target))
     failure_state = (
@@ -298,6 +321,7 @@ def combat_phases(
     return CombatPhases(
         arm_loss=arm_loss,
         critical=critical,
+        head_loss=head_loss,
         lethal=lethal,
         failure_state=failure_state,
     )
@@ -585,31 +609,106 @@ def cycling_events(
     return events
 
 
+def append_frame_event(
+    events: list[tuple[float, int | None]], moment: float, frame: int | None
+) -> None:
+    """Append a strictly ordered discrete-frame event, replacing same-time events."""
+    if events and abs(events[-1][0] - moment) < 0.0005:
+        events[-1] = (moment, frame)
+    elif not events or moment > events[-1][0]:
+        events.append((moment, frame))
+
+
+def critical_brain_patch(
+    prefix: str,
+    x: float,
+    y: float,
+    visible_start: float | None,
+    visible_end: float,
+    duration: float,
+    indent: str,
+) -> str:
+    """Small SVG-native pixel brain used only by the surviving critical zombie."""
+    if visible_start is None or visible_start >= visible_end - 0.001:
+        return ""
+    fade_in = min(visible_end - 0.001, visible_start + 0.01)
+    fade_out = min(duration, visible_end + 0.01)
+    return "\n".join(
+        [
+            f'{indent}<g id="{prefix}" opacity="0" style="image-rendering:pixelated">',
+            f'{indent}  <animate attributeName="opacity" values="0;0;1;1;0;0" '
+            f'keyTimes="0;{key(visible_start, duration)};{key(fade_in, duration)};{key(visible_end, duration)};{key(fade_out, duration)};1" '
+            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            f'{indent}  <path d="M{fmt(x + 3)} {fmt(y + 3)}h4v-3h11v2h5v4h3v10h-4v5h-5v3h-13v-3h-5v-5h-3v-8h4z" fill="#4b0710"/>',
+            f'{indent}  <rect x="{fmt(x + 4)}" y="{fmt(y + 4)}" width="7" height="7" fill="#d45c78"/>',
+            f'{indent}  <rect x="{fmt(x + 12)}" y="{fmt(y + 3)}" width="8" height="6" fill="#ed8797"/>',
+            f'{indent}  <rect x="{fmt(x + 8)}" y="{fmt(y + 10)}" width="12" height="7" fill="#b83e62"/>',
+            f'{indent}  <rect x="{fmt(x + 17)}" y="{fmt(y + 9)}" width="6" height="8" fill="#f0a1a9"/>',
+            f'{indent}  <path d="M{fmt(x + 6)} {fmt(y + 6)}h3v4h4v-5h3v5h4v4h-3v4h-4v-4h-4v5h-3z" fill="#76203b"/>',
+            f'{indent}  <rect x="{fmt(x + 21)}" y="{fmt(y + 18)}" width="3" height="7" fill="#8e111d">',
+            f'{indent}    <animate attributeName="height" values="3;7;4;7;3" dur="0.72s" repeatCount="indefinite"/>',
+            f'{indent}  </rect>',
+            f'{indent}</g>',
+        ]
+    )
+
+
+def headless_success_events(
+    phases: CombatPhases,
+    timings: list[Timing],
+    outcome_end: float,
+    duration: float,
+) -> list[tuple[float, int | None]]:
+    events: list[tuple[float, int | None]] = [(0.0, None)]
+    if phases.head_loss is None or phases.lethal is None:
+        events.append((duration, None))
+        return events
+
+    head_loss = phases.head_loss
+    lethal = phases.lethal
+    post_hits = [timing.impact for timing in timings if timing.impact > head_loss + 0.001]
+    append_frame_event(events, head_loss, 2)
+    first_post = post_hits[0] if post_hits else lethal
+    append_frame_event(events, min(head_loss + 0.14, first_post - 0.02), 0)
+
+    nonlethal_hits = [moment for moment in post_hits if moment < lethal - 0.001]
+    for index, moment in enumerate(nonlethal_hits):
+        next_moment = (
+            nonlethal_hits[index + 1]
+            if index + 1 < len(nonlethal_hits)
+            else lethal
+        )
+        append_frame_event(events, moment, 2 if index % 2 == 0 else 3)
+        recover = min(moment + 0.14, next_moment - 0.02)
+        append_frame_event(events, recover, index % 2)
+
+    append_frame_event(events, lethal, 4)
+    append_frame_event(events, lethal + 0.16, 5)
+    append_frame_event(events, lethal + 0.40, 6)
+    append_frame_event(events, lethal + 0.68, 7)
+    append_frame_event(events, outcome_end, None)
+    append_frame_event(events, duration, None)
+    return events
+
+
 def zombie_generated_combat(
     damaged_walk_frames: list[Path],
     critical_walk_frames: list[Path],
-    death_frames: list[Path],
+    headless_frames: list[Path],
     phases: CombatPhases,
+    timings: list[Timing],
     success: bool,
     battle_end: float,
     failure_attack_start: float,
     outcome_end: float,
     duration: float,
 ) -> str:
-    """Render hit-triggered damage states on the same path as the moving zombie."""
+    """Render body damage while detached parts remain in world coordinates."""
     motion_end = phases.lethal if success and phases.lethal is not None else battle_end
     translate = SUCCESS_TRANSLATE if success else FAILURE_TRANSLATE
-    walk_end = (
-        phases.lethal
-        if success and phases.lethal is not None
-        else failure_attack_start
-    )
+    walk_end = phases.lethal if success and phases.lethal is not None else failure_attack_start
     arm_loss = phases.arm_loss
-    full_death = bool(
-        success
-        and phases.lethal is not None
-        and (arm_loss is None or phases.lethal - arm_loss < 0.36)
-    )
+    head_loss = phases.head_loss if success else None
     parts = [
         '  <g id="zombie-generated-combat" filter="url(#shadow)" style="image-rendering:pixelated">',
         '    <animateTransform attributeName="transform" type="translate" '
@@ -618,69 +717,28 @@ def zombie_generated_combat(
         f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
     ]
 
-    walk_start: float | None = None
-    if arm_loss is not None and not full_death:
-        transition_end = min(walk_end, arm_loss + 0.30)
-        if transition_end - arm_loss >= 0.16:
-            arm_events = [
-                (0.0, None),
-                (arm_loss, 0),
-                (min(arm_loss + 0.12, transition_end - 0.01), 1),
-                (transition_end, None),
-                (duration, None),
-            ]
-            parts.extend(
-                [
-                    '    <!-- The 50% hit visibly tears off the arm while the battle is still running. -->',
-                    scheduled_frame_images(
-                        "zombie-arm-loss",
-                        death_frames[:2],
-                        arm_events,
-                        DISMEMBER_ZOMBIE_X,
-                        DISMEMBER_ZOMBIE_Y,
-                        DISMEMBER_ZOMBIE_WIDTH,
-                        DISMEMBER_ZOMBIE_HEIGHT,
-                        duration,
-                        "    ",
-                    ),
-                ]
-            )
-            walk_start = transition_end
-        else:
-            walk_start = arm_loss
-
+    walk_start = arm_loss
     if walk_start is not None and walk_start < walk_end - 0.001:
         critical_start = (
             phases.critical
             if phases.critical is not None and phases.critical > walk_start + 0.001
             else None
         )
-        damaged_end = critical_start if critical_start is not None else walk_end
-        parts.extend(
-            [
-                '    <!-- Half-health zombie keeps advancing with the detached arm still missing. -->',
-                scheduled_frame_images(
-                    "zombie-damaged-walk",
-                    damaged_walk_frames,
-                    cycling_events(walk_start, damaged_end, len(damaged_walk_frames), duration, 0.24),
-                    DAMAGED_WALK_ZOMBIE_X,
-                    GENERATED_ZOMBIE_Y,
-                    GENERATED_ZOMBIE_WIDTH,
-                    GENERATED_ZOMBIE_HEIGHT,
-                    duration,
-                    "    ",
-                ),
-            ]
-        )
-        if critical_start is not None and critical_start < walk_end - 0.001:
+        damaged_end_candidates = [walk_end]
+        if critical_start is not None:
+            damaged_end_candidates.append(critical_start)
+        if head_loss is not None:
+            damaged_end_candidates.append(head_loss)
+        damaged_end = min(damaged_end_candidates)
+        if walk_start < damaged_end - 0.001:
             parts.extend(
                 [
-                    '    <!-- At 85% damage the attached head bruises and the walk becomes a stagger. -->',
+                    '    <!-- The severed arm is now a world-space prop; the one-armed body keeps advancing. -->',
                     scheduled_frame_images(
-                        "zombie-critical-walk",
-                        critical_walk_frames,
-                        cycling_events(critical_start, walk_end, len(critical_walk_frames), duration, 0.30),
-                        CRITICAL_WALK_ZOMBIE_X,
+                        "zombie-damaged-walk",
+                        damaged_walk_frames,
+                        cycling_events(walk_start, damaged_end, len(damaged_walk_frames), duration, 0.24),
+                        DAMAGED_WALK_ZOMBIE_X,
                         GENERATED_ZOMBIE_Y,
                         GENERATED_ZOMBIE_WIDTH,
                         GENERATED_ZOMBIE_HEIGHT,
@@ -690,52 +748,142 @@ def zombie_generated_combat(
                 ]
             )
 
-    if success and phases.lethal is not None:
-        death_time = phases.lethal
-        if full_death:
-            final_frames = death_frames
-            death_y_offsets = (0.0, 0.0, 0.0, 15.0, 15.0, 15.0, 15.0, 15.0)
-            death_events: list[tuple[float, int | None]] = [
-                (0.0, None),
-                (death_time, 0),
-                (death_time + 0.12, 1),
-                (death_time + 0.26, 2),
-                (death_time + 0.42, 3),
-                (death_time + 0.60, 4),
-                (death_time + 0.82, 5),
-                (death_time + 1.08, 6),
-                (death_time + 1.36, 7),
-                (death_time + 2.02, None),
-                (duration, None),
-            ]
-        else:
-            final_frames = death_frames[3:]
-            death_y_offsets = (15.0,) * len(final_frames)
-            death_events = [
-                (0.0, None),
-                (death_time, 0),
-                (death_time + 0.18, 1),
-                (death_time + 0.42, 2),
-                (death_time + 0.72, 3),
-                (death_time + 1.04, 4),
-                (death_time + 2.02, None),
-                (duration, None),
-            ]
+        critical_end = min(walk_end, head_loss) if head_loss is not None else walk_end
+        if critical_start is not None and critical_start < critical_end - 0.001:
+            parts.extend(
+                [
+                    '    <!-- Critical body staggers before success decapitation or a failure-state bite. -->',
+                    scheduled_frame_images(
+                        "zombie-critical-walk",
+                        critical_walk_frames,
+                        cycling_events(critical_start, critical_end, len(critical_walk_frames), duration, 0.30),
+                        CRITICAL_WALK_ZOMBIE_X,
+                        GENERATED_ZOMBIE_Y,
+                        GENERATED_ZOMBIE_WIDTH,
+                        GENERATED_ZOMBIE_HEIGHT,
+                        duration,
+                        "    ",
+                    ),
+                ]
+            )
+            if not success:
+                parts.append(
+                    critical_brain_patch(
+                        "zombie-critical-walk-exposed-brain",
+                        CRITICAL_WALK_ZOMBIE_X + GENERATED_ZOMBIE_WIDTH * 0.40,
+                        GENERATED_ZOMBIE_Y + GENERATED_ZOMBIE_HEIGHT * 0.15,
+                        critical_start,
+                        critical_end,
+                        duration,
+                        "    ",
+                    )
+                )
+
+    if success and head_loss is not None and phases.lethal is not None:
         parts.extend(
             [
-                '    <!-- Only the lethal final pea removes the head and drives the body to the ground. -->',
+                '    <!-- The head drops before the last three impacts; the headless body visibly absorbs them. -->',
                 scheduled_frame_images(
-                    "zombie-lethal-hit",
-                    final_frames,
-                    death_events,
-                    DISMEMBER_ZOMBIE_X,
-                    DISMEMBER_ZOMBIE_Y,
-                    DISMEMBER_ZOMBIE_WIDTH,
-                    DISMEMBER_ZOMBIE_HEIGHT,
+                    "zombie-headless-success",
+                    headless_frames,
+                    headless_success_events(phases, timings, outcome_end, duration),
+                    HEADLESS_ZOMBIE_X,
+                    GENERATED_ZOMBIE_Y,
+                    GENERATED_ZOMBIE_WIDTH,
+                    GENERATED_ZOMBIE_HEIGHT,
                     duration,
                     "    ",
-                    frame_y_offsets=death_y_offsets,
                 ),
+            ]
+        )
+
+    parts.append("  </g>")
+    return "\n".join(part for part in parts if part)
+
+
+def detached_parts_markup(
+    arm_air_path: Path,
+    arm_ground_path: Path,
+    head_air_path: Path,
+    head_ground_path: Path,
+    phases: CombatPhases,
+    success: bool,
+    battle_end: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
+    """Animate severed parts in world space so they never follow the body again."""
+    motion_end = phases.lethal if success and phases.lethal is not None else battle_end
+    translate = SUCCESS_TRANSLATE if success else FAILURE_TRANSLATE
+
+    def body_center(moment: float) -> float:
+        progress = min(1.0, max(0.0, moment / max(0.001, motion_end)))
+        return ZOMBIE_REFERENCE_CENTER_X + translate * progress
+
+    parts = ['  <g id="detached-zombie-parts" style="image-rendering:pixelated">']
+    if phases.arm_loss is not None:
+        start = phases.arm_loss
+        land = min(outcome_end - 0.02, start + 0.58)
+        origin_x = body_center(start) - 56
+        origin_y = 68.0
+        land_x = origin_x + 58
+        land_y = 170.0
+        flight_times = [0.0, start, start + 0.12, start + 0.32, land, duration]
+        parts.extend(
+            [
+                '    <g id="detached-arm-flight" opacity="0">',
+                '      <animate attributeName="opacity" values="0;0;1;1;0;0" '
+                f'keyTimes="0;{key(start, duration)};{key(start + 0.01, duration)};{key(land - 0.01, duration)};{key(land, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'      <g transform="translate({fmt(origin_x)} {fmt(origin_y)})">',
+                '        <g>',
+                '          <animateTransform attributeName="transform" type="translate" values="0 0;0 0;14 -22;39 2;58 95;0 0" '
+                f'keyTimes="{";".join(key(moment, duration) for moment in flight_times)}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '          <g>',
+                '            <animateTransform attributeName="transform" type="rotate" values="0 60 45;0 60 45;78 60 45;205 60 45;322 60 45;0 60 45" '
+                f'keyTimes="{";".join(key(moment, duration) for moment in flight_times)}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'            <image x="0" y="0" width="120" height="90" preserveAspectRatio="none" href="{image_data_uri(arm_air_path)}"/>',
+                '          </g>',
+                '        </g>',
+                '      </g>',
+                '    </g>',
+                f'    <image id="detached-arm-ground" x="{fmt(land_x)}" y="{fmt(land_y)}" width="120" height="90" preserveAspectRatio="none" href="{image_data_uri(arm_ground_path)}" opacity="0">',
+                '      <animate attributeName="opacity" values="0;0;1;1;0" '
+                f'keyTimes="0;{key(land, duration)};{key(land + 0.01, duration)};{key(outcome_end, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '    </image>',
+            ]
+        )
+
+    if success and phases.head_loss is not None:
+        start = phases.head_loss
+        land = min(outcome_end - 0.02, start + 0.68)
+        origin_x = body_center(start) - 62
+        origin_y = 22.0
+        land_x = origin_x + 75
+        land_y = 166.0
+        flight_times = [0.0, start, start + 0.15, start + 0.38, land, duration]
+        parts.extend(
+            [
+                '    <g id="detached-head-flight" opacity="0">',
+                '      <animate attributeName="opacity" values="0;0;1;1;0;0" '
+                f'keyTimes="0;{key(start, duration)};{key(start + 0.01, duration)};{key(land - 0.01, duration)};{key(land, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'      <g transform="translate({fmt(origin_x)} {fmt(origin_y)})">',
+                '        <g>',
+                '          <animateTransform attributeName="transform" type="translate" values="0 0;0 0;25 -24;62 16;75 136;0 0" '
+                f'keyTimes="{";".join(key(moment, duration) for moment in flight_times)}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '          <g>',
+                '            <animateTransform attributeName="transform" type="rotate" values="0 60 45;0 60 45;96 60 45;238 60 45;372 60 45;0 60 45" '
+                f'keyTimes="{";".join(key(moment, duration) for moment in flight_times)}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'            <image x="0" y="0" width="120" height="90" preserveAspectRatio="none" href="{image_data_uri(head_air_path)}"/>',
+                '          </g>',
+                '        </g>',
+                '      </g>',
+                '    </g>',
+                f'    <image id="detached-head-ground" x="{fmt(land_x)}" y="{fmt(land_y)}" width="120" height="90" preserveAspectRatio="none" href="{image_data_uri(head_ground_path)}" opacity="0">',
+                '      <animate attributeName="opacity" values="0;0;1;1;0" '
+                f'keyTimes="0;{key(land, duration)};{key(land + 0.01, duration)};{key(outcome_end, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'      <animate attributeName="y" values="{fmt(land_y)};{fmt(land_y)};{fmt(land_y - 6)};{fmt(land_y)};{fmt(land_y)};{fmt(land_y)}" '
+                f'keyTimes="0;{key(land, duration)};{key(land + 0.07, duration)};{key(land + 0.16, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '    </image>',
             ]
         )
 
@@ -908,26 +1056,37 @@ def zombie_imagegen_attack(
         "damaged": DAMAGED_BITE_ZOMBIE_X,
         "critical": CRITICAL_BITE_ZOMBIE_X,
     }[phase_label]
-    return "\n".join(
-        [
-            f'  <!-- ImageGen {phase_label} bite: anticipation, open jaw, lunge, chew, pull, recovery. -->',
-            f'  <g id="zombie-{phase_label}-bite-lunge">',
-            '    <animateTransform attributeName="transform" type="translate" '
-            f'values="{lunge_values}" keyTimes="{lunge_times}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            scheduled_frame_images(
-                f"zombie-{phase_label}-bite",
-                attack_frames,
-                events,
-                attack_x + FAILURE_TRANSLATE,
-                GENERATED_ZOMBIE_Y,
-                GENERATED_ZOMBIE_WIDTH,
-                GENERATED_ZOMBIE_HEIGHT,
+    layers = [
+        f'  <!-- ImageGen {phase_label} bite: anticipation, open jaw, lunge, chew, pull, recovery. -->',
+        f'  <g id="zombie-{phase_label}-bite-lunge">',
+        '    <animateTransform attributeName="transform" type="translate" '
+        f'values="{lunge_values}" keyTimes="{lunge_times}" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+        scheduled_frame_images(
+            f"zombie-{phase_label}-bite",
+            attack_frames,
+            events,
+            attack_x + FAILURE_TRANSLATE,
+            GENERATED_ZOMBIE_Y,
+            GENERATED_ZOMBIE_WIDTH,
+            GENERATED_ZOMBIE_HEIGHT,
+            duration,
+            "    ",
+        ),
+    ]
+    if phase_label == "critical":
+        layers.append(
+            critical_brain_patch(
+                "zombie-critical-bite-exposed-brain",
+                attack_x + FAILURE_TRANSLATE + GENERATED_ZOMBIE_WIDTH * 0.40,
+                GENERATED_ZOMBIE_Y + GENERATED_ZOMBIE_HEIGHT * 0.15,
+                visible_start,
+                blackout,
                 duration,
                 "    ",
-            ),
-            "  </g>",
-        ]
-    )
+            )
+        )
+    layers.append("  </g>")
+    return "\n".join(layer for layer in layers if layer)
 
 
 def zombie_shadow(
@@ -1421,6 +1580,11 @@ def main() -> None:
         type=float,
         default=float(os.getenv("BATTLE_SECONDS", "18")),
     )
+    parser.add_argument(
+        "--calendar-json",
+        type=Path,
+        help="Optional GraphQL response fixture for deterministic offline visual QA.",
+    )
     parser.add_argument("--force-total", type=int, help="Preview-only override for the displayed total and outcome.")
     args = parser.parse_args()
 
@@ -1445,8 +1609,14 @@ def main() -> None:
     zombie_critical_walk_frames = [
         args.sprite_dir / f"zombie-critical-walk-imagegen-{index}.png" for index in range(4)
     ]
+    zombie_headless_success_frames = [
+        args.sprite_dir / f"zombie-headless-success-imagegen-{index}.png" for index in range(8)
+    ]
+    detached_arm_air_path = args.sprite_dir / "zombie-detached-arm-air.png"
+    detached_arm_ground_path = args.sprite_dir / "zombie-detached-arm-ground.png"
+    detached_head_air_path = args.sprite_dir / "zombie-detached-head-air.png"
+    detached_head_ground_path = args.sprite_dir / "zombie-detached-head-ground.png"
     failure_title_path = args.sprite_dir / "failure-title-imagegen.png"
-    zombie_death_frames = [args.sprite_dir / f"zombie-dismember-imagegen-{index}.png" for index in range(8)]
     success_title_path = args.sprite_dir / "success-title-lawn-clear-imagegen.png"
     for sprite_path in (
         *plant_cry_frames,
@@ -1456,8 +1626,12 @@ def main() -> None:
         *zombie_critical_bite_frames,
         *zombie_damaged_walk_frames,
         *zombie_critical_walk_frames,
+        *zombie_headless_success_frames,
+        detached_arm_air_path,
+        detached_arm_ground_path,
+        detached_head_air_path,
+        detached_head_ground_path,
         failure_title_path,
-        *zombie_death_frames,
         success_title_path,
     ):
         if not sprite_path.is_file():
@@ -1468,18 +1642,21 @@ def main() -> None:
     from_date = today - timedelta(days=args.window_days - 1)
     from_iso = f"{from_date.isoformat()}T00:00:00Z"
     to_iso = f"{today.isoformat()}T23:59:59Z"
-    payload = gh_json(
-        "api",
-        "graphql",
-        "-f",
-        f"query={QUERY}",
-        "-F",
-        f"login={login}",
-        "-F",
-        f"from={from_iso}",
-        "-F",
-        f"to={to_iso}",
-    )
+    if args.calendar_json is not None:
+        payload = json.loads(args.calendar_json.read_text(encoding="utf-8"))
+    else:
+        payload = gh_json(
+            "api",
+            "graphql",
+            "-f",
+            f"query={QUERY}",
+            "-F",
+            f"login={login}",
+            "-F",
+            f"from={from_iso}",
+            "-F",
+            f"to={to_iso}",
+        )
     calendar = payload["data"]["user"]["contributionsCollection"]["contributionCalendar"]
     days = load_days(calendar)
     ordered_active = sorted(
@@ -1502,7 +1679,11 @@ def main() -> None:
     )
     ammo_out = timings[-1].impact if timings else INTRO_TIME + 0.9
     board_empty_at = timings[-1].loaded if timings else INTRO_TIME + 0.9
-    zombie_original_hide = phases.arm_loss if phases.arm_loss is not None else battle_end
+    zombie_original_hide = min(
+        moment
+        for moment in (phases.arm_loss, phases.head_loss, battle_end)
+        if moment is not None
+    )
     failure_attack_start = (
         battle_end + 0.30
         if not success
@@ -1593,11 +1774,23 @@ def main() -> None:
     combat_layers = zombie_generated_combat(
         zombie_damaged_walk_frames,
         zombie_critical_walk_frames,
-        zombie_death_frames,
+        zombie_headless_success_frames,
         phases,
+        timings,
         success,
         battle_end,
         failure_attack_start,
+        outcome_end,
+        duration,
+    )
+    combat_layers += "\n" + detached_parts_markup(
+        detached_arm_air_path,
+        detached_arm_ground_path,
+        detached_head_air_path,
+        detached_head_ground_path,
+        phases,
+        success,
+        battle_end,
         outcome_end,
         duration,
     )
@@ -1665,7 +1858,7 @@ def main() -> None:
     )
     source = re.sub(
         r'<desc id="desc">.*?</desc>',
-        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. Every non-empty contribution cell pulses in place during the Peashooter anticipation, disappears at muzzle flash, and stays empty until the loop resets; the pea itself is born at the muzzle. At half damage the zombie loses an arm; at critical damage it staggers; {"the final pea removes its head and knocks the body down before LAWN CLEAR" if success else f"the surviving {phases.failure_state} zombie uses a matching three-bite eating animation"}. Only contribution dates and counts are used.</desc>',
+        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. Every non-empty contribution cell pulses in place during the Peashooter anticipation, disappears at muzzle flash, and stays empty until the loop resets; the pea itself is born at the muzzle. At half damage the arm tears free and remains where it lands. {"Before the final three impacts the head is knocked off, remains on the lawn, and the headless body absorbs more hits before collapsing into LAWN CLEAR" if success else f"The surviving {phases.failure_state} zombie keeps its head for the three-bite failure sequence; critical failures expose a bloody half-brain"}. Only contribution dates and counts are used.</desc>',
         source,
     )
 
@@ -1684,6 +1877,7 @@ def main() -> None:
                 "damagePhase": "lethal" if success else phases.failure_state,
                 "armLossAt": phases.arm_loss,
                 "criticalAt": phases.critical,
+                "headLossAt": phases.head_loss,
                 "lethalAt": phases.lethal,
                 "ammoDots": len(ordered_active),
                 "cycleSeconds": duration,
