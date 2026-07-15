@@ -155,6 +155,7 @@ BITE_PHASES = (
     (1.78, 1.98, 2.12, 2.35),
 )
 BLACKOUT_OFFSET = 2.52
+SUCCESS_BITE_SAFETY = 0.05
 
 
 @dataclass(frozen=True)
@@ -201,8 +202,23 @@ class CombatPhases:
     arm_loss: float | None
     critical: float | None
     head_loss: float | None
+    target_reached: float | None
     lethal: float | None
     failure_state: str
+
+
+@dataclass(frozen=True)
+class BattlePlan:
+    approach_end: float
+    attack_anchor: float
+    attack_visible_start: float
+    attack_visible_end: float
+    bite_phases: tuple[tuple[float, float, float, float], ...]
+    attack_state: str
+
+    @property
+    def damage_times(self) -> tuple[float, ...]:
+        return tuple(self.attack_anchor + phase[2] for phase in self.bite_phases)
 
 
 def gh_json(*args: str) -> dict:
@@ -277,10 +293,11 @@ def combat_phases(
     """Map cumulative contribution damage to PvZ-like visible degradation."""
     actual_sum = sum(day.count for day in ordered_active)
     scale = total / actual_sum if actual_sum else 0.0
-    damage_budget = float(total if success and total > 0 else target)
+    damage_budget = float(target)
     cumulative = 0.0
     arm_loss: float | None = None
     critical: float | None = None
+    target_reached: float | None = None
     arm_loss_index: int | None = None
     head_loss_candidate_index: int | None = None
 
@@ -292,6 +309,8 @@ def combat_phases(
             arm_loss_index = index
         if critical is None and ratio >= CRITICAL_RATIO:
             critical = timing.impact
+        if target_reached is None and ratio >= 1.0:
+            target_reached = timing.impact
         if head_loss_candidate_index is None and ratio >= HEAD_LOSS_RATIO:
             head_loss_candidate_index = index
 
@@ -309,6 +328,12 @@ def combat_phases(
             head_index = min(head_index, latest_head_index)
         head_loss = timings[head_index].impact
 
+    # A high-count calendar cell can cross several thresholds at once. Preserve
+    # the authored single-arm finale by staging the tear just before decapitation
+    # when there was no earlier impact available to carry that transition.
+    if success and head_loss is not None and (arm_loss is None or arm_loss >= head_loss):
+        arm_loss = max(INTRO_TIME + 0.45, head_loss - 1.40)
+
     progress = total / max(1.0, float(target))
     failure_state = (
         "critical"
@@ -322,9 +347,77 @@ def combat_phases(
         arm_loss=arm_loss,
         critical=critical,
         head_loss=head_loss,
+        target_reached=target_reached,
         lethal=lethal,
         failure_state=failure_state,
     )
+
+
+def battle_plan(
+    phases: CombatPhases,
+    success: bool,
+    battle_end: float,
+) -> BattlePlan:
+    """Turn contribution thresholds into approach, bite, and last-stand stages."""
+    if not success or phases.head_loss is None:
+        return BattlePlan(
+            approach_end=battle_end,
+            attack_anchor=battle_end,
+            attack_visible_start=battle_end,
+            attack_visible_end=battle_end + BLACKOUT_OFFSET,
+            bite_phases=BITE_PHASES,
+            attack_state=phases.failure_state,
+        )
+
+    # A successful run still lets the one-armed zombie reach the plant and land
+    # one bite. The head-loss contribution then interrupts recovery, followed by
+    # the final three headless impacts. Compress only when sparse calendars leave
+    # less than the authored 0.91-second bite window.
+    authored_phase = BITE_PHASES[0]
+    head_loss = phases.head_loss
+    desired_start = head_loss - authored_phase[3] - SUCCESS_BITE_SAFETY
+    arm_ready = (
+        phases.arm_loss + 0.08
+        if phases.arm_loss is not None and phases.arm_loss < head_loss
+        else desired_start
+    )
+    latest_start = head_loss - 0.42
+    attack_start = min(latest_start, max(desired_start, arm_ready))
+    available = max(0.34, head_loss - attack_start - SUCCESS_BITE_SAFETY)
+    phase_scale = min(1.0, available / authored_phase[3])
+    bite_phase = tuple(value * phase_scale for value in authored_phase)
+    attack_state = (
+        "critical"
+        if phases.critical is not None and phases.critical < head_loss - 0.001
+        else "damaged"
+        if phases.arm_loss is not None and phases.arm_loss < head_loss - 0.001
+        else "intact"
+    )
+    return BattlePlan(
+        approach_end=attack_start,
+        attack_anchor=attack_start,
+        attack_visible_start=attack_start,
+        attack_visible_end=head_loss,
+        bite_phases=(bite_phase,),
+        attack_state=attack_state,
+    )
+
+
+def retarget_timings(timings: list[Timing], approach_end: float) -> list[Timing]:
+    """Keep every pea aimed at a zombie that stops at the plant before the finale."""
+    retargeted: list[Timing] = []
+    for timing in timings:
+        progress = min(1.0, max(0.0, timing.impact / max(0.001, approach_end)))
+        retargeted.append(
+            Timing(
+                take=timing.take,
+                loaded=timing.loaded,
+                impact=timing.impact,
+                impact_x=ZOMBIE_X + FAILURE_TRANSLATE * progress,
+                impact_y=timing.impact_y,
+            )
+        )
+    return retargeted
 
 
 def month_labels(days: list[Day]) -> list[str]:
@@ -544,10 +637,10 @@ def plant_frame_animation(timings: list[Timing], duration: float) -> str:
     )
 
 
-def zombie_frame_animation(battle_end: float, duration: float) -> str:
+def zombie_frame_animation(approach_end: float, duration: float) -> str:
     # Walking ends when the zombie reaches its attack position; the bite pose is
     # then supplied by the ImageGen attack frames.
-    return frame_animation((1030, 790, 550, 310, 70, -170), 0.2, battle_end, duration, 1030)
+    return frame_animation((1030, 790, 550, 310, 70, -170), 0.2, approach_end, duration, 1030)
 
 
 def original_sprite_visibility(hide_at: float, outcome_end: float, duration: float) -> str:
@@ -698,15 +791,14 @@ def zombie_generated_combat(
     phases: CombatPhases,
     timings: list[Timing],
     success: bool,
-    battle_end: float,
-    failure_attack_start: float,
+    plan: BattlePlan,
     outcome_end: float,
     duration: float,
 ) -> str:
     """Render body damage while detached parts remain in world coordinates."""
-    motion_end = phases.lethal if success and phases.lethal is not None else battle_end
-    translate = SUCCESS_TRANSLATE if success else FAILURE_TRANSLATE
-    walk_end = phases.lethal if success and phases.lethal is not None else failure_attack_start
+    motion_end = plan.approach_end
+    translate = FAILURE_TRANSLATE
+    walk_end = plan.attack_visible_start
     arm_loss = phases.arm_loss
     head_loss = phases.head_loss if success else None
     parts = [
@@ -808,13 +900,13 @@ def detached_parts_markup(
     head_ground_path: Path,
     phases: CombatPhases,
     success: bool,
-    battle_end: float,
+    plan: BattlePlan,
     outcome_end: float,
     duration: float,
 ) -> str:
     """Animate severed parts in world space so they never follow the body again."""
-    motion_end = phases.lethal if success and phases.lethal is not None else battle_end
-    translate = SUCCESS_TRANSLATE if success else FAILURE_TRANSLATE
+    motion_end = plan.approach_end
+    translate = FAILURE_TRANSLATE
 
     def body_center(moment: float) -> float:
         progress = min(1.0, max(0.0, moment / max(0.001, motion_end)))
@@ -900,45 +992,97 @@ def detached_parts_markup(
 def plant_imagegen_sprites(
     cry_frames: list[Path],
     damage_frames: list[Path],
+    timings: list[Timing],
+    success: bool,
     ammo_out: float,
+    plan: BattlePlan,
     battle_end: float,
     outcome_end: float,
     duration: float,
 ) -> str:
-    damage_times = [battle_end + phase[2] for phase in BITE_PHASES]
+    damage_times = list(plan.damage_times)
     blackout = battle_end + BLACKOUT_OFFSET
-    cry_start = ammo_out + 0.01
-    cry_events = [
-        (0.0, None),
-        (cry_start, 0),
-        (cry_start + 0.28, 1),
-        (cry_start + 0.52, 2),
-        (damage_times[0], None),
-        (duration, None),
-    ]
-    damage_events = [
-        (0.0, None),
-        (damage_times[0], 1),
-        (damage_times[1], 2),
-        (damage_times[2], 3),
-        (damage_times[2] + 0.13, 4),
-        (blackout - 0.18, 5),
-        (blackout, None),
-        (duration, None),
-    ]
-    return "\n".join(
+    layers = ['  <g id="plant-generated-states" style="image-rendering:pixelated">']
+
+    motion_events: list[tuple[float, str]] = [(0.0, "0 0"), (damage_times[0], "0 0")]
+    for timing in timings:
+        if timing.loaded <= damage_times[0] + 0.001:
+            continue
+        motion_events.extend(
+            [
+                (max(damage_times[0], timing.take), "0 0"),
+                (timing.loaded, "-3 0"),
+                (timing.loaded + 0.08, "2 -2"),
+                (timing.loaded + 0.18, "0 0"),
+            ]
+        )
+    motion_events.extend([(outcome_end, "0 0"), (duration, "0 0")])
+    motion_events.sort(key=lambda event: event[0])
+    compact_motion: list[tuple[float, str]] = []
+    for moment, transform in motion_events:
+        if compact_motion and abs(compact_motion[-1][0] - moment) < 0.0005:
+            compact_motion[-1] = (moment, transform)
+        else:
+            compact_motion.append((moment, transform))
+    layers.append(
+        '    <animateTransform attributeName="transform" type="translate" '
+        f'values="{";".join(transform for _, transform in compact_motion)}" '
+        f'keyTimes="{";".join(key(moment, duration) for moment, _ in compact_motion)}" '
+        f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
+    )
+
+    if not success:
+        cry_start = ammo_out + 0.01
+        cry_events = [
+            (0.0, None),
+            (cry_start, 0),
+            (cry_start + 0.28, 1),
+            (cry_start + 0.52, 2),
+            (damage_times[0], None),
+            (duration, None),
+        ]
+        layers.extend(
+            [
+                '    <!-- ImageGen: six-frame out-of-ammo and crying sequence. -->',
+                scheduled_frame_images(
+                    "plant-cry-imagegen", cry_frames, cry_events, 4, 30, 230, 230, duration, "    "
+                ),
+            ]
+        )
+        damage_events = [
+            (0.0, None),
+            (damage_times[0], 1),
+            (damage_times[1], 2),
+            (damage_times[2], 3),
+            (damage_times[2] + 0.13, 4),
+            (blackout - 0.18, 5),
+            (blackout, None),
+            (duration, None),
+        ]
+    else:
+        damage_events = [
+            (0.0, None),
+            (damage_times[0], 1),
+            (outcome_end, None),
+            (duration, None),
+        ]
+
+    layers.extend(
         [
-            '    <!-- ImageGen: six-frame out-of-ammo and crying sequence. -->',
-            scheduled_frame_images("plant-cry-imagegen", cry_frames, cry_events, 4, 30, 230, 230, duration, "    "),
-            '    <!-- ImageGen: each bite switches to a genuinely damaged plant frame. -->',
-            scheduled_frame_images("plant-damage-imagegen", damage_frames, damage_events, 4, 30, 230, 230, duration, "    "),
+            '    <!-- Each landed bite switches to a persistent damaged-plant frame. -->',
+            scheduled_frame_images(
+                "plant-damage-imagegen", damage_frames, damage_events, 4, 30, 230, 230, duration, "    "
+            ),
+            "  </g>",
         ]
     )
+    return "\n".join(layers)
 
 
 def plant_group_open(
     success: bool,
     ammo_out: float,
+    plan: BattlePlan,
     battle_end: float,
     outcome_end: float,
     duration: float,
@@ -950,15 +1094,21 @@ def plant_group_open(
         cry_settle = min(battle_end + BITE_PHASES[0][0] - 0.08, ammo_out + 0.32)
         phase_times: list[float] = [0.0, ammo_out, cry_settle]
         transforms = ["0 0", "0 0", "-2 5"]
-        for anticipation, snap, _damage, recovery in BITE_PHASES:
-            phase_times.extend(
-                [
-                    battle_end + anticipation,
-                    battle_end + snap,
-                    battle_end + recovery,
-                ]
-            )
-            transforms.extend(["-2 5", "-12 4", "-2 7"])
+    else:
+        phase_times = [0.0, plan.attack_anchor]
+        transforms = ["0 0", "0 0"]
+
+    for anticipation, snap, _damage, recovery in plan.bite_phases:
+        phase_times.extend(
+            [
+                plan.attack_anchor + anticipation,
+                plan.attack_anchor + snap,
+                plan.attack_anchor + recovery,
+            ]
+        )
+        transforms.extend(["-2 5", "-12 4", "-2 7"])
+
+    if not success:
         blackout = battle_end + BLACKOUT_OFFSET
         phase_times.extend([blackout, outcome_end, duration])
         transforms.extend(["-2 10", "-2 10", "0 0"])
@@ -973,13 +1123,13 @@ def plant_group_open(
             ]
         )
     else:
-        lines.extend(
-            [
-                '    <animateTransform attributeName="transform" type="translate" '
-                'values="0 0;0 0;-7 1;2 -5;-2 0;0 -3;0 -3;0 0" '
-                f'keyTimes="0;{key(battle_end, duration)};{key(battle_end + 0.12, duration)};{key(battle_end + 0.30, duration)};{key(battle_end + 0.48, duration)};{key(battle_end + 0.70, duration)};{key(outcome_end, duration)};1" '
-                f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            ]
+        settle = plan.attack_anchor + plan.bite_phases[-1][3] + 0.10
+        phase_times.extend([settle, outcome_end, duration])
+        transforms.extend(["0 0", "0 0", "0 0"])
+        lines.append(
+            '    <animateTransform attributeName="transform" type="translate" '
+            f'values="{";".join(transforms)}" keyTimes="{";".join(key(value, duration) for value in phase_times)}" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
         )
     return "\n".join(lines)
 
@@ -992,24 +1142,15 @@ def plant_emotion_markup(
     duration: float,
 ) -> str:
     if success:
-        return "  <!-- The successful plant recoils from the final shot, then celebrates the zombie defeat. -->"
+        return "  <!-- The plant survives one visible bite and keeps firing the comeback contributions. -->"
     return "  <!-- ImageGen crying frames communicate that the plant has run out of contribution dots. -->"
 
 
-def zombie_animation(success: bool, battle_end: float, outcome_end: float, duration: float) -> str:
-    if success:
-        return (
-            '    <animateTransform attributeName="transform" type="translate" '
-            f'values="0 0;{fmt(SUCCESS_TRANSLATE)} 0;{fmt(SUCCESS_TRANSLATE)} 0;0 0" '
-            f'keyTimes="0;{key(battle_end, duration)};{key(outcome_end, duration)};1" '
-            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
-        )
-
-    blackout = battle_end + BLACKOUT_OFFSET
+def zombie_animation(plan: BattlePlan, outcome_end: float, duration: float) -> str:
     return (
         '    <animateTransform attributeName="transform" type="translate" '
-        f'values="0 0;{fmt(FAILURE_TRANSLATE)} 0;{fmt(FAILURE_TRANSLATE)} 0;{fmt(FAILURE_TRANSLATE)} 0;0 0" '
-        f'keyTimes="0;{key(battle_end, duration)};{key(blackout, duration)};{key(outcome_end, duration)};1" '
+        f'values="0 0;{fmt(FAILURE_TRANSLATE)} 0;{fmt(FAILURE_TRANSLATE)} 0;0 0" '
+        f'keyTimes="0;{key(plan.approach_end, duration)};{key(outcome_end, duration)};1" '
         f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
     )
 
@@ -1018,43 +1159,43 @@ def zombie_imagegen_attack(
     attack_frames: list[Path],
     frame_order: tuple[int, int, int, int, int, int],
     phase_label: str,
-    battle_end: float,
+    attack_anchor: float,
+    bite_phases: tuple[tuple[float, float, float, float], ...],
     visible_start: float,
-    outcome_end: float,
+    visible_end: float,
     duration: float,
 ) -> str:
-    blackout = battle_end + BLACKOUT_OFFSET
     events: list[tuple[float, int | None]] = [
         (0.0, None),
         (visible_start, frame_order[0]),
     ]
-    for anticipation, snap, damage, recovery in BITE_PHASES:
-        pre = battle_end + anticipation
+    for anticipation, snap, damage, recovery in bite_phases:
+        pre = attack_anchor + anticipation
         events.extend(
             [
                 (pre, frame_order[0]),
                 (pre + 0.06, frame_order[1]),
-                (battle_end + snap, frame_order[2]),
-                (battle_end + damage, frame_order[3]),
-                (battle_end + recovery - 0.05, frame_order[4]),
-                (battle_end + recovery, frame_order[5]),
+                (attack_anchor + snap, frame_order[2]),
+                (attack_anchor + damage, frame_order[3]),
+                (attack_anchor + recovery - 0.05, frame_order[4]),
+                (attack_anchor + recovery, frame_order[5]),
             ]
         )
-    events.extend([(blackout, None), (duration, None)])
+    events.extend([(visible_end, None), (duration, None)])
     lunge_events: list[tuple[float, float]] = [(0.0, 0.0), (visible_start, 0.0)]
-    for anticipation, snap, damage, recovery in BITE_PHASES:
-        pre = battle_end + anticipation
+    for anticipation, snap, damage, recovery in bite_phases:
+        pre = attack_anchor + anticipation
         lunge_events.extend(
             [
                 (pre, 0.0),
                 (pre + 0.06, 0.0),
-                (battle_end + snap, -24.0),
-                (battle_end + damage, -38.0),
-                (battle_end + recovery - 0.05, -12.0),
-                (battle_end + recovery, 0.0),
+                (attack_anchor + snap, -24.0),
+                (attack_anchor + damage, -38.0),
+                (attack_anchor + recovery - 0.05, -12.0),
+                (attack_anchor + recovery, 0.0),
             ]
         )
-    lunge_events.extend([(blackout, 0.0), (duration, 0.0)])
+    lunge_events.extend([(visible_end, 0.0), (duration, 0.0)])
     lunge_values = ";".join(f"{fmt(offset)} 0" for _, offset in lunge_events)
     lunge_times = ";".join(key(moment, duration) for moment, _ in lunge_events)
     attack_x = {
@@ -1086,7 +1227,7 @@ def zombie_imagegen_attack(
                 attack_x + FAILURE_TRANSLATE + GENERATED_ZOMBIE_WIDTH * 0.40,
                 GENERATED_ZOMBIE_Y + GENERATED_ZOMBIE_HEIGHT * 0.15,
                 visible_start,
-                blackout,
+                visible_end,
                 duration,
                 "    ",
             )
@@ -1097,30 +1238,33 @@ def zombie_imagegen_attack(
 
 def zombie_shadow(
     success: bool,
+    plan: BattlePlan,
     battle_end: float,
     death_time: float | None,
     outcome_end: float,
     duration: float,
 ) -> str:
+    end_x = 1150 + FAILURE_TRANSLATE
+    cx_animation = (
+        f'  <animate attributeName="cx" values="1150;{fmt(end_x)};{fmt(end_x)};1150" '
+        f'keyTimes="0;{key(plan.approach_end, duration)};{key(outcome_end, duration)};1" '
+        f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
+    )
     if success:
         collapse_start = death_time if death_time is not None else battle_end
-        end_x = 1150 + SUCCESS_TRANSLATE
         return "\n".join(
             [
                 '<ellipse cy="247" rx="80" ry="12" fill="#020a09" opacity=".55">',
-                f'  <animate attributeName="cx" values="1150;{fmt(end_x)};{fmt(end_x)};{fmt(end_x)};1150" keyTimes="0;{key(collapse_start, duration)};{key(collapse_start + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                cx_animation,
                 f'  <animate attributeName="rx" values="80;80;70;52;29;12;0;0;80" keyTimes="0;{key(collapse_start, duration)};{key(collapse_start + 0.42, duration)};{key(collapse_start + 0.72, duration)};{key(collapse_start + 1.04, duration)};{key(collapse_start + 1.36, duration)};{key(collapse_start + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 f'  <animate attributeName="opacity" values=".55;.55;.48;.34;.20;.12;0;0;.55" keyTimes="0;{key(collapse_start, duration)};{key(collapse_start + 0.42, duration)};{key(collapse_start + 0.72, duration)};{key(collapse_start + 1.04, duration)};{key(collapse_start + 1.36, duration)};{key(collapse_start + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 "</ellipse>",
             ]
         )
-    end_translate = SUCCESS_TRANSLATE if success else FAILURE_TRANSLATE
-    end_x = 1150 + end_translate
-    values = f"1150;{fmt(end_x)};{fmt(end_x)};1150"
     return (
         '<ellipse cy="247" rx="80" ry="12" fill="#020a09" opacity=".55">'
-        f'<animate attributeName="cx" values="{values}" keyTimes="0;{key(battle_end, duration)};{key(outcome_end, duration)};1" '
-        f'dur="{fmt(duration)}s" repeatCount="indefinite"/>'
+        + cx_animation
+        +
         '</ellipse>'
     )
 
@@ -1129,7 +1273,7 @@ def bite_action_markup(success: bool, battle_end: float, outcome_end: float, dur
     return (
         "  <!-- Bite poses and plant damage are rendered entirely from ImageGen sprite frames. -->"
         if not success
-        else "  <!-- The target was reached: the final pea triggers the ImageGen zombie death sequence. -->"
+        else "  <!-- The one-armed zombie lands one bite; later commits interrupt it, detach the head, and finish the body. -->"
     )
 
 
@@ -1145,7 +1289,7 @@ def health_markup(
 ) -> str:
     actual_sum = sum(day.count for day in ordered_active)
     scale = total / actual_sum if actual_sum else 0.0
-    effective_target = max(1.0, float(total if success and total > 0 else target))
+    effective_target = max(1.0, float(target))
     cumulative = 0.0
     widths = [96.0]
     times = [0.0]
@@ -1186,6 +1330,61 @@ def health_markup(
             *impacts,
         ]
     )
+
+
+def stage_status_markup(
+    phases: CombatPhases,
+    success: bool,
+    outcome_end: float,
+    duration: float,
+) -> str:
+    """Show which commit band is currently driving the zombie state."""
+    events: list[tuple[float, int]] = [(0.0, 0)]
+    if phases.arm_loss is not None:
+        events.append((phases.arm_loss, 1))
+    if phases.critical is not None:
+        events.append((phases.critical, 2))
+    if success and phases.target_reached is not None:
+        events.append((phases.target_reached, 3))
+    compact_events: list[tuple[float, int]] = []
+    for moment, stage in sorted(events, key=lambda event: event[0]):
+        if compact_events and abs(compact_events[-1][0] - moment) < 0.0005:
+            compact_events[-1] = (moment, stage)
+        else:
+            compact_events.append((moment, stage))
+    events = compact_events
+    current_stage = events[-1][1]
+    events.extend([(outcome_end, current_stage), (duration, 0)])
+    key_times = ";".join(key(moment, duration) for moment, _stage in events)
+    labels = (
+        ("STAGE 1 · INTACT", "#8b949e"),
+        ("STAGE 2 · ARM LOST", "#f0c35a"),
+        ("STAGE 3 · CRITICAL", "#ff7b72"),
+        ("STAGE 4 · COMEBACK", "#7ee787"),
+    )
+    parts = [
+        '  <g id="commit-stage-status" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="9" font-weight="700" text-anchor="middle">',
+        '    <title>Commit stages: intact below 50%, arm lost at 50%, critical at 82%, comeback at 100%</title>',
+    ]
+    for stage_index, (label, color) in enumerate(labels):
+        display_values = ";".join(
+            "inline" if active_stage == stage_index else "none"
+            for _moment, active_stage in events
+        )
+        parts.extend(
+            [
+                f'    <text x="1154" y="78" fill="{color}" display="none">{label}',
+                f'      <animate attributeName="display" values="{display_values}" keyTimes="{key_times}" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                '    </text>',
+            ]
+        )
+    parts.extend(
+        [
+            '    <path d="M1154 50v14M1123 50v14" stroke="#d29922" stroke-width="1" opacity=".65"/>',
+            '  </g>',
+        ]
+    )
+    return "\n".join(parts)
 
 
 def message_points(line: str, y: float, step: float = 5.0) -> list[tuple[float, float, int, int]]:
@@ -1310,7 +1509,7 @@ def success_title_imagegen(
 
 def success_stats(total: int, target: int, battle_end: float, outcome_end: float, duration: float) -> str:
     reveal = battle_end + 3.14
-    label = f"{total} / {target} CONTRIBUTIONS  ·  LAWN CLEAR"
+    label = f"{total} / {target}  ·  STAGE 4 COMEBACK  ·  LAWN CLEAR"
     return "\n".join(
         [
             '  <g id="success-dynamic-stats" opacity="0">',
@@ -1439,9 +1638,21 @@ def failure_title_imagegen(
     )
 
 
-def failure_stats(total: int, target: int, battle_end: float, outcome_end: float, duration: float) -> str:
+def failure_stats(
+    total: int,
+    target: int,
+    failure_state: str,
+    battle_end: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
     reveal = battle_end + BLACKOUT_OFFSET + 1.18
-    label = f"{total} / {target} CONTRIBUTIONS  ·  RUN TERMINATED"
+    stage_labels = {
+        "intact": "STAGE 1 INTACT",
+        "damaged": "STAGE 2 ARM LOST",
+        "critical": "STAGE 3 CRITICAL",
+    }
+    label = f"{total} / {target}  ·  {stage_labels[failure_state]}  ·  PLANT LOST"
     return "\n".join(
         [
             '  <g id="failure-dynamic-stats" opacity="0">',
@@ -1517,6 +1728,7 @@ def outcome_markup(
     duration: float,
     failure_title_path: Path,
     success_title_path: Path,
+    failure_state: str,
 ) -> str:
     if success:
         parts = [
@@ -1528,7 +1740,7 @@ def outcome_markup(
         parts = [
             failure_atmosphere(battle_end, outcome_end, duration),
             failure_title_imagegen(failure_title_path, battle_end, outcome_end, duration),
-            failure_stats(total, target, battle_end, outcome_end, duration),
+            failure_stats(total, target, failure_state, battle_end, outcome_end, duration),
         ]
     return "\n".join(parts)
 
@@ -1671,9 +1883,8 @@ def main() -> None:
     api_total = int(calendar["totalContributions"])
     total = args.force_total if args.force_total is not None else api_total
     success = total >= args.target_contributions
-    zombie_translate = SUCCESS_TRANSLATE if success else FAILURE_TRANSLATE
     timings, duration, battle_end, outcome_end = timeline(
-        len(ordered_active), args.battle_seconds, zombie_translate
+        len(ordered_active), args.battle_seconds, FAILURE_TRANSLATE
     )
     phases = combat_phases(
         ordered_active,
@@ -1683,19 +1894,19 @@ def main() -> None:
         success,
         battle_end,
     )
+    plan = battle_plan(phases, success, battle_end)
+    timings = retarget_timings(timings, plan.approach_end)
     ammo_out = timings[-1].impact if timings else INTRO_TIME + 0.9
     board_empty_at = timings[-1].loaded if timings else INTRO_TIME + 0.9
     zombie_original_hide = min(
         moment
-        for moment in (phases.arm_loss, phases.head_loss, battle_end)
+        for moment in (
+            phases.arm_loss,
+            phases.head_loss,
+            plan.attack_visible_start,
+            battle_end,
+        )
         if moment is not None
-    )
-    failure_attack_start = (
-        battle_end + 0.30
-        if not success
-        and phases.arm_loss is not None
-        and battle_end - phases.arm_loss < 0.30
-        else battle_end
     )
 
     source = args.base_svg.read_text(encoding="utf-8")
@@ -1721,7 +1932,7 @@ def main() -> None:
     )
     source = source.replace(
         '  <g clip-path="url(#plant-window)" filter="url(#shadow)" style="image-rendering:pixelated">',
-        plant_group_open(success, ammo_out, battle_end, outcome_end, duration),
+        plant_group_open(success, ammo_out, plan, battle_end, outcome_end, duration),
         1,
     )
     if not success:
@@ -1733,45 +1944,47 @@ def main() -> None:
     source = re.sub(
         r'<animate attributeName="x" values="4;-226;-456;-686;-916;-1146" calcMode="discrete" dur="2s" repeatCount="indefinite"/>',
         plant_frame_animation(timings, duration)
-        + (
-            "\n" + original_sprite_visibility(ammo_out + 0.01, outcome_end, duration)
-            if not success
-            else ""
+        + "\n"
+        + original_sprite_visibility(
+            plan.damage_times[0] if success else ammo_out + 0.01,
+            outcome_end,
+            duration,
         ),
         source,
         count=1,
     )
-    if not success:
-        source = source.replace(
-            "    </image>\n  </g>",
-            "    </image>\n  </g>\n"
-            + plant_imagegen_sprites(
-                plant_cry_frames,
-                plant_damage_frames,
-                ammo_out,
-                battle_end,
-                outcome_end,
-                duration,
-            )
-            + "",
-            1,
-        )
+    source = source.replace(
+        "    </image>\n  </g>",
+        "    </image>\n  </g>\n"
+        + plant_imagegen_sprites(
+            plant_cry_frames,
+            plant_damage_frames,
+            timings,
+            success,
+            ammo_out,
+            plan,
+            battle_end,
+            outcome_end,
+            duration,
+        ),
+        1,
+    )
     source = source.replace(
         '<ellipse cx="1150" cy="247" rx="72" ry="11" fill="#020a09" opacity=".55"/>',
         plant_emotion_markup(success, ammo_out, battle_end, outcome_end, duration)
         + "\n"
-        + zombie_shadow(success, battle_end, phases.lethal, outcome_end, duration),
+        + zombie_shadow(success, plan, battle_end, phases.lethal, outcome_end, duration),
         1,
     )
     source = re.sub(
         r'    <animateTransform attributeName="transform" type="translate" values="8 0;-12 0;8 0" keyTimes="0;.52;1" dur="6s" repeatCount="indefinite"/>',
-        zombie_animation(success, battle_end, outcome_end, duration),
+        zombie_animation(plan, outcome_end, duration),
         source,
         count=1,
     )
     source = re.sub(
         r'<animate attributeName="x" values="1030;790;550;310;70;-170" calcMode="discrete" dur="1\.2s" repeatCount="indefinite"/>',
-        zombie_frame_animation(battle_end, duration)
+        zombie_frame_animation(plan.approach_end, duration)
         + "\n"
         + original_sprite_visibility(zombie_original_hide, outcome_end, duration),
         source,
@@ -1784,8 +1997,7 @@ def main() -> None:
         phases,
         timings,
         success,
-        battle_end,
-        failure_attack_start,
+        plan,
         outcome_end,
         duration,
     )
@@ -1796,29 +2008,29 @@ def main() -> None:
         detached_head_ground_path,
         phases,
         success,
-        battle_end,
+        plan,
         outcome_end,
         duration,
     )
-    if not success:
-        if phases.failure_state == "critical":
-            attack_frames = zombie_critical_bite_frames
-            attack_order = (0, 1, 2, 2, 4, 5)
-        elif phases.failure_state == "damaged":
-            attack_frames = zombie_damaged_bite_frames
-            attack_order = (0, 1, 2, 2, 4, 5)
-        else:
-            attack_frames = zombie_bite_frames
-            attack_order = (0, 1, 2, 3, 4, 5)
-        combat_layers += "\n" + zombie_imagegen_attack(
-            attack_frames,
-            attack_order,
-            phases.failure_state,
-            battle_end,
-            failure_attack_start,
-            outcome_end,
-            duration,
-        )
+    if plan.attack_state == "critical":
+        attack_frames = zombie_critical_bite_frames
+        attack_order = (0, 1, 2, 2, 4, 5)
+    elif plan.attack_state == "damaged":
+        attack_frames = zombie_damaged_bite_frames
+        attack_order = (0, 1, 2, 2, 4, 5)
+    else:
+        attack_frames = zombie_bite_frames
+        attack_order = (0, 1, 2, 3, 4, 5)
+    combat_layers += "\n" + zombie_imagegen_attack(
+        attack_frames,
+        attack_order,
+        plan.attack_state,
+        plan.attack_anchor,
+        plan.bite_phases,
+        plan.attack_visible_start,
+        plan.attack_visible_end,
+        duration,
+    )
     source = source.replace(
         "      </image>\n    </g>\n  </g>",
         "      </image>\n    </g>\n  </g>\n" + combat_layers,
@@ -1843,6 +2055,8 @@ def main() -> None:
             duration,
         )
         + "\n\n"
+        + stage_status_markup(phases, success, outcome_end, duration)
+        + "\n\n"
         + outcome_markup(
             total,
             args.target_contributions,
@@ -1852,6 +2066,7 @@ def main() -> None:
             duration,
             failure_title_path,
             success_title_path,
+            phases.failure_state,
         )
         + "\n\n",
         source,
@@ -1864,7 +2079,7 @@ def main() -> None:
     )
     source = re.sub(
         r'<desc id="desc">.*?</desc>',
-        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. Every non-empty contribution cell pulses in place during the Peashooter anticipation, disappears at muzzle flash, and stays empty until the loop resets; the pea itself is born at the muzzle. At half damage the arm tears free and remains where it lands. {"Before the final three impacts the head is knocked off, remains on the lawn, and the headless body absorbs more hits before collapsing into LAWN CLEAR" if success else f"The surviving {phases.failure_state} zombie keeps its head for the three-bite failure sequence; critical failures expose a bloody half-brain"}. Only contribution dates and counts are used.</desc>',
+        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. Commits drive four stages: intact below 50 percent, arm lost from 50 percent, critical from 82 percent, and comeback at the target. The detached arm remains on the lawn and never regrows. {"The one-armed zombie reaches the plant and lands one bite before a later contribution knocks off its head; the head remains on the lawn while three more impacts finish the body" if success else f"The surviving {phases.failure_state} zombie completes a three-bite failure sequence; critical failures expose a bloody half-brain"}. Only contribution dates and counts are used.</desc>',
         source,
     )
 
@@ -1881,9 +2096,18 @@ def main() -> None:
                 "battleSeconds": args.battle_seconds,
                 "outcome": "success" if success else "failure",
                 "damagePhase": "lethal" if success else phases.failure_state,
+                "commitStage": 4
+                if success
+                else {"intact": 1, "damaged": 2, "critical": 3}[phases.failure_state],
+                "stageThresholds": {"armLost": 0.50, "critical": 0.82, "comeback": 1.0},
+                "approachEnd": plan.approach_end,
+                "attackState": plan.attack_state,
+                "biteCount": len(plan.bite_phases),
+                "plantDamageAt": list(plan.damage_times),
                 "armLossAt": phases.arm_loss,
                 "criticalAt": phases.critical,
                 "headLossAt": phases.head_loss,
+                "targetReachedAt": phases.target_reached,
                 "lethalAt": phases.lethal,
                 "ammoDots": len(ordered_active),
                 "cycleSeconds": duration,
