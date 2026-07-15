@@ -698,7 +698,7 @@
     </g>
     <rect x="1002" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-06: 0 contributions</title></rect>
     <g id="contribution-ammo-2026-07-07" transform="translate(1007.5 142.5)">
-      <title>2026-07-07: 5 contributions; pulses in place while the Peashooter prepares shot 20</title>
+      <title>2026-07-07: 4 contributions; pulses in place while the Peashooter prepares shot 20</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
           <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.61196;0.61585;0.61974;0.62363;0.62635;0.62947;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
@@ -713,9 +713,9 @@
       </g>
     </g>
     <g id="contribution-ammo-2026-07-08" transform="translate(1007.5 157.5)">
-      <title>2026-07-08: 2 contributions; pulses in place while the Peashooter prepares shot 19</title>
+      <title>2026-07-08: 3 contributions; pulses in place while the Peashooter prepares shot 19</title>
       <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
           <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.58313;0.58702;0.59091;0.5948;0.59752;0.60064;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
           <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.58313;0.58702;0.59091;0.5948;0.59752;0.60064;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
@@ -972,7 +972,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.58313;0.59091;0.59908;0.60064;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-19" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-07-08: 2 contributions launched from the muzzle as pea 19</title>
+      <title>2026-07-08: 3 contributions launched from the muzzle as pea 19</title>
       <animate attributeName="cx" values="198;198;570.70076;570.70076;198" keyTimes="0;0.60064;0.63177;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;144;144;151" keyTimes="0;0.60064;0.63177;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.60025;0.60064;0.63138;0.63177;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -982,7 +982,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.61196;0.61974;0.62791;0.62947;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-20" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-07-07: 5 contributions launched from the muzzle as pea 20</title>
+      <title>2026-07-07: 4 contributions launched from the muzzle as pea 20</title>
       <animate attributeName="cx" values="198;198;546.77557;546.77557;198" keyTimes="0;0.62947;0.66059;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;151;151;151" keyTimes="0;0.62947;0.66059;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.62908;0.62947;0.66021;0.66059;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1102,7 +1102,7 @@
   <text x="1098" y="42" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11">GOAL 72 / 60</text>
   <rect x="1100" y="48" width="108" height="17" rx="7" fill="#08100d" stroke="#9bb39b" stroke-width="2"/>
   <rect x="1106" y="53" width="96" height="7" rx="3.5" fill="url(#health)">
-    <animate attributeName="width" values="96;94.66667;88;84;78.66667;77.33333;74.66667;72;69.33333;62.66667;61.33333;60;57.33333;56;54.66667;53.33333;45.33333;41.33333;37.33333;34.66667;28;26.66667;13.33333;0;0;0;96" keyTimes="0;0.11284;0.14167;0.1705;0.19933;0.22816;0.25699;0.28582;0.31464;0.34347;0.3723;0.40113;0.42996;0.45879;0.48762;0.51645;0.54528;0.57411;0.60294;0.63177;0.66059;0.68942;0.71825;0.74708;0.74708;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
+    <animate attributeName="width" values="96;94.66667;88;84;78.66667;77.33333;74.66667;72;69.33333;62.66667;61.33333;60;57.33333;56;54.66667;53.33333;45.33333;41.33333;37.33333;33.33333;28;26.66667;13.33333;0;0;0;96" keyTimes="0;0.11284;0.14167;0.1705;0.19933;0.22816;0.25699;0.28582;0.31464;0.34347;0.3723;0.40113;0.42996;0.45879;0.48762;0.51645;0.54528;0.57411;0.60294;0.63177;0.66059;0.68942;0.71825;0.74708;0.74708;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
   </rect>
   <circle cx="1001.35417" cy="144" r="12" fill="#b7ff72" opacity="0" filter="url(#glow)">
     <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.11128;0.11284;0.11868;1" dur="25.7s" repeatCount="indefinite"/>
