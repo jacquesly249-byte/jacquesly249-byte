@@ -9,5 +9,5 @@
 </p>
 
 <p align="center">
-  <sub>Reach the contribution target before the zombie reaches the plant. Inspired by <a href="https://github.com/Platane/snk">Platane/snk</a>.</sub>
+  <sub>Commit stages: intact → arm lost at 50% → critical at 82% → comeback at the target. Inspired by <a href="https://github.com/Platane/snk">Platane/snk</a>.</sub>
 </p>
