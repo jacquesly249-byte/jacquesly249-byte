@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300" role="img" aria-labelledby="title desc">
-  <title id="title">Contribution brain defense: 66 of 60</title>
-  <desc id="desc">@jacquesly249-byte has 66 contributions in the last 365 days against a target of 60. The plant stops after its final contribution dot. The zombie plays a six-frame ImageGen defeat sequence before an animated ImageGen victory title card. Only contribution dates and counts are used.</desc>
+  <title id="title">Contribution brain defense: 68 of 60</title>
+  <desc id="desc">@jacquesly249-byte has 68 contributions in the last 365 days against a target of 60. The plant stops after its final contribution dot. The zombie plays a six-frame ImageGen defeat sequence before an animated ImageGen victory title card. Only contribution dates and counts are used.</desc>
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#050a18"/><stop offset=".62" stop-color="#0a1c2b"/><stop offset="1" stop-color="#12342e"/>
@@ -52,7 +52,7 @@
   </g>
 
   <!-- GitHub Contribution Calendar UI: 11px cells with 4px border spacing. -->
-  <text x="190" y="77" fill="#c9d1d9" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13">66 contributions in the last year</text>
+  <text x="190" y="77" fill="#c9d1d9" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13">68 contributions in the last year</text>
   <rect x="190" y="84" width="891" height="143" rx="6" fill="#0d1117" fill-opacity=".9" stroke="#30363d"/>
   <g id="github-month-labels">
     <text x="237" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jul</text>
@@ -505,8 +505,8 @@
       <title>2026-07-14: 10 contributions</title>
       <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.51284;0.51362;0.99922;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
     </rect>
-    <rect x="1017" y="152" width="11" height="11" rx="2" fill="#006d32">
-      <title>2026-07-15: 4 contributions</title>
+    <rect x="1017" y="152" width="11" height="11" rx="2" fill="#26a641">
+      <title>2026-07-15: 6 contributions</title>
       <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.53424;0.53502;0.99922;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
     </rect>
   </g>
@@ -659,7 +659,7 @@
       <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.51362;0.53113;0.56226;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-23" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-07-15: 4 contributions loaded as pea 23</title>
+      <title>2026-07-15: 6 contributions loaded as pea 23</title>
       <animate attributeName="cx" values="1022.5;1022.5;198;610.625;610.625" keyTimes="0;0.53502;0.55253;0.58366;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="157.5;157.5;151;151;151" keyTimes="0;0.53502;0.55253;0.58366;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.53502;0.55253;0.58366;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -713,10 +713,10 @@
   <!-- The target was reached: the final pea triggers the ImageGen zombie death sequence. -->
 
   <!-- Health represents progress toward the configurable contribution target. -->
-  <text x="1098" y="42" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11">GOAL 66 / 60</text>
+  <text x="1098" y="42" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11">GOAL 68 / 60</text>
   <rect x="1100" y="48" width="108" height="17" rx="7" fill="#08100d" stroke="#9bb39b" stroke-width="2"/>
   <rect x="1106" y="53" width="96" height="7" rx="3.5" fill="url(#health)">
-    <animate attributeName="width" values="96;94.54545;87.27273;82.90909;77.09091;75.63636;72.72727;69.81818;66.90909;59.63636;58.18182;56.72727;53.81818;52.36364;50.90909;49.45455;40.72727;36.36364;32;29.09091;21.81818;20.36364;5.81818;0;0;0;96" keyTimes="0;0.11284;0.13424;0.15564;0.17704;0.19844;0.21984;0.24125;0.26265;0.28405;0.30545;0.32685;0.34825;0.36965;0.39105;0.41245;0.43385;0.45525;0.47665;0.49805;0.51946;0.54086;0.56226;0.58366;0.74708;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
+    <animate attributeName="width" values="96;94.58824;87.52941;83.29412;77.64706;76.23529;73.41176;70.58824;67.76471;60.70588;59.29412;57.88235;55.05882;53.64706;52.23529;50.82353;42.35294;38.11765;33.88235;31.05882;24;22.58824;8.47059;0;0;0;96" keyTimes="0;0.11284;0.13424;0.15564;0.17704;0.19844;0.21984;0.24125;0.26265;0.28405;0.30545;0.32685;0.34825;0.36965;0.39105;0.41245;0.43385;0.45525;0.47665;0.49805;0.51946;0.54086;0.56226;0.58366;0.74708;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
   </rect>
   <circle cx="1001.35417" cy="144" r="12" fill="#b7ff72" opacity="0" filter="url(#glow)">
     <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.11128;0.11284;0.11868;1" dur="25.7s" repeatCount="indefinite"/>
@@ -985,7 +985,7 @@
     <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.85136;0.85759;0.94163;1" dur="25.7s" repeatCount="indefinite"/>
     <animateTransform attributeName="transform" type="translate" values="0 9;0 9;0 0;0 0;0 9" keyTimes="0;0.85136;0.85759;0.94163;1" dur="25.7s" repeatCount="indefinite"/>
     <rect x="407" y="268" width="466" height="25" rx="3" fill="#010b05" stroke="#39d353" stroke-width="1.5"/>
-    <text x="640" y="285" text-anchor="middle" fill="#b7ffbf" font-family="Courier New,monospace" font-size="13" font-weight="700" letter-spacing="1.15">66 / 60 CONTRIBUTIONS  ·  BRAIN SECURED</text>
+    <text x="640" y="285" text-anchor="middle" fill="#b7ffbf" font-family="Courier New,monospace" font-size="13" font-weight="700" letter-spacing="1.15">68 / 60 CONTRIBUTIONS  ·  BRAIN SECURED</text>
   </g>
 
   <rect x="1.5" y="1.5" width="1277" height="297" rx="17" fill="none" stroke="#315047" stroke-width="3" opacity=".55"/>
