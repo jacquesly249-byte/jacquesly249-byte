@@ -733,60 +733,137 @@ def victory_message(
     return "\n".join(dots)
 
 
-def failure_message(total: int, target: int, battle_end: float, outcome_end: float, duration: float) -> str:
-    lines = ["YOUR BRAIN WAS EATEN", f"{total} OF {target} CONTRIBUTIONS", "RUN TERMINATED"]
-    line_palettes = (
-        ("#fff0ee", "#ffb3ad", "#ff7b72", "#fff0ee"),
-        ("#f0f6fc", "#ffb3ad", "#f0f6fc", "#ff7b72"),
-        ("#ff7b72", "#f85149", "#ffb3ad", "#f85149"),
-    )
+def failure_title_imagegen(
+    image_path: Path,
+    battle_end: float,
+    outcome_end: float,
+    duration: float,
+) -> str:
+    """Animate one ImageGen title card as independently timed cinematic layers."""
     blackout = battle_end + BLACKOUT_OFFSET
-    dots: list[str] = []
-    dot_index = 0
-    for line_index, (line, y) in enumerate(zip(lines, (91.0, 148.0, 205.0))):
-        for x, target_y, row, col in message_points(line, y):
-            start = blackout + 0.16 + (dot_index % 26) * 0.019
-            settled = start + 0.28
-            color = line_palettes[line_index][(row + col) % 4]
-            dots.extend(
-                [
-                    f'    <rect x="{fmt(x)}" y="{fmt(target_y - 17)}" width="5" height="5" fill="#4c0710" opacity="0">',
-                    f'      <animate attributeName="y" values="{fmt(target_y - 17)};{fmt(target_y - 17)};{fmt(target_y + 2)};{fmt(target_y + 2)};{fmt(target_y + 2)}" keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                    '      <animate attributeName="opacity" values="0;0;.88;.88;0" '
-                    f'keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                    "    </rect>",
-                    f'    <rect x="{fmt(x - 2)}" y="{fmt(target_y - 19)}" width="4" height="4" rx=".35" fill="{color}" stroke="#6e0f14" stroke-width=".4" opacity="0">',
-                    f'      <animate attributeName="y" values="{fmt(target_y - 19)};{fmt(target_y - 19)};{fmt(target_y)};{fmt(target_y)};{fmt(target_y)}" keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                    '      <animate attributeName="opacity" values="0;0;1;1;0" '
-                    f'keyTimes="0;{key(start, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                    "    </rect>",
-                ]
-            )
-            dot_index += 1
+    top_reveal = blackout + 0.06
+    top_land = blackout + 0.35
+    top_rebound = blackout + 0.48
+    top_settle = blackout + 0.60
+    bottom_reveal = blackout + 0.20
+    bottom_land = blackout + 0.55
+    bottom_rebound = blackout + 0.70
+    bottom_settle = blackout + 0.84
+    hands_start = blackout + 0.45
+    hands_arrive = blackout + 0.98
+    drip_start = blackout + 0.96
+    drip_end = blackout + 1.78
+    source = image_data_uri(image_path)
 
-    drip_specs = (
-        (274, 238, 26),
-        (340, 231, 14),
-        (421, 239, 31),
-        (503, 232, 18),
-        (578, 237, 34),
-        (650, 234, 22),
-        (727, 239, 29),
-        (806, 231, 17),
-        (884, 238, 32),
-        (963, 233, 20),
+    return "\n".join(
+        [
+            "  <!-- ImageGen failure typography, split into animated crops without duplicating the bitmap. -->",
+            "  <defs>",
+            f'    <image id="failure-title-imagegen-source" x="220" y="0" width="840" height="280" preserveAspectRatio="none" href="{source}"/>',
+            '    <clipPath id="failure-title-top-clip"><rect x="270" y="0" width="740" height="140"/></clipPath>',
+            '    <clipPath id="failure-title-bottom-clip"><rect x="270" y="140" width="740" height="128"/></clipPath>',
+            '    <clipPath id="failure-left-hand-clip"><rect x="220" y="45" width="100" height="220"/></clipPath>',
+            '    <clipPath id="failure-right-hand-clip"><rect x="960" y="45" width="100" height="220"/></clipPath>',
+            '    <clipPath id="failure-glitch-a-clip"><rect x="220" y="72" width="840" height="15"/></clipPath>',
+            '    <clipPath id="failure-glitch-b-clip"><rect x="220" y="184" width="840" height="14"/></clipPath>',
+            '    <clipPath id="failure-drip-clip"><rect x="250" y="236" width="780" height="48"/></clipPath>',
+            "  </defs>",
+            '  <rect id="failure-red-flash" x="0" y="0" width="1280" height="300" fill="#a9000b" opacity="0">',
+            '    <animate attributeName="opacity" values="0;0;.88;.16;0;0" '
+            f'keyTimes="0;{key(blackout, duration)};{key(blackout + 0.035, duration)};{key(blackout + 0.09, duration)};{key(blackout + 0.18, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            "  </rect>",
+            '  <g id="failure-title-imagegen" opacity="0" style="image-rendering:pixelated">',
+            '    <animate attributeName="opacity" values="0;0;1;1;0" '
+            f'keyTimes="0;{key(top_reveal, duration)};{key(top_reveal + 0.02, duration)};{key(outcome_end, duration)};1" '
+            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '    <g id="failure-title-impact-shake">',
+            '      <animateTransform attributeName="transform" type="translate" '
+            'values="0 0;0 0;-8 3;6 -2;-3 1;0 0;7 2;-5 -2;0 0;0 0;0 0" '
+            f'keyTimes="0;{key(top_land, duration)};{key(top_land + 0.04, duration)};{key(top_land + 0.08, duration)};{key(top_land + 0.12, duration)};{key(bottom_land, duration)};{key(bottom_land + 0.04, duration)};{key(bottom_land + 0.08, duration)};{key(bottom_land + 0.13, duration)};{key(outcome_end, duration)};1" '
+            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '      <g clip-path="url(#failure-title-top-clip)">',
+            "        <g>",
+            '          <animateTransform attributeName="transform" type="translate" values="0 -150;0 -150;0 13;0 -5;0 0;0 0;0 -150" '
+            f'keyTimes="0;{key(top_reveal, duration)};{key(top_land, duration)};{key(top_rebound, duration)};{key(top_settle, duration)};{key(outcome_end, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '          <g clip-path="url(#failure-title-top-clip)"><use href="#failure-title-imagegen-source"/></g>',
+            "        </g>",
+            "      </g>",
+            '      <g clip-path="url(#failure-title-bottom-clip)">',
+            "        <g>",
+            '          <animateTransform attributeName="transform" type="translate" values="0 150;0 150;0 -11;0 4;0 0;0 0;0 150" '
+            f'keyTimes="0;{key(bottom_reveal, duration)};{key(bottom_land, duration)};{key(bottom_rebound, duration)};{key(bottom_settle, duration)};{key(outcome_end, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '          <g clip-path="url(#failure-title-bottom-clip)"><use href="#failure-title-imagegen-source"/></g>',
+            "        </g>",
+            "      </g>",
+            '      <g clip-path="url(#failure-left-hand-clip)">',
+            "        <g>",
+            '          <animateTransform attributeName="transform" type="translate" values="-125 0;-125 0;8 0;-3 0;0 0;0 0;-125 0" '
+            f'keyTimes="0;{key(hands_start, duration)};{key(hands_arrive, duration)};{key(hands_arrive + 0.10, duration)};{key(hands_arrive + 0.20, duration)};{key(outcome_end, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '          <g clip-path="url(#failure-left-hand-clip)"><use href="#failure-title-imagegen-source"/></g>',
+            "        </g>",
+            "      </g>",
+            '      <g clip-path="url(#failure-right-hand-clip)">',
+            "        <g>",
+            '          <animateTransform attributeName="transform" type="translate" values="125 0;125 0;-8 0;3 0;0 0;0 0;125 0" '
+            f'keyTimes="0;{key(hands_start, duration)};{key(hands_arrive, duration)};{key(hands_arrive + 0.10, duration)};{key(hands_arrive + 0.20, duration)};{key(outcome_end, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '          <g clip-path="url(#failure-right-hand-clip)"><use href="#failure-title-imagegen-source"/></g>',
+            "        </g>",
+            "      </g>",
+            "    </g>",
+            '    <g id="failure-title-glitch-a" clip-path="url(#failure-glitch-a-clip)" opacity="0" style="mix-blend-mode:screen">',
+            '      <animate attributeName="opacity" values="0;0;.85;0;.65;0;0" '
+            f'keyTimes="0;{key(blackout + 0.29, duration)};{key(blackout + 0.33, duration)};{key(blackout + 0.39, duration)};{key(blackout + 0.47, duration)};{key(blackout + 0.54, duration)};1" '
+            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '      <animateTransform attributeName="transform" type="translate" values="0 0;0 0;14 0;-10 0;8 0;0 0;0 0" '
+            f'keyTimes="0;{key(blackout + 0.29, duration)};{key(blackout + 0.33, duration)};{key(blackout + 0.39, duration)};{key(blackout + 0.47, duration)};{key(blackout + 0.54, duration)};1" '
+            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '      <use href="#failure-title-imagegen-source"/>',
+            "    </g>",
+            '    <g id="failure-title-glitch-b" clip-path="url(#failure-glitch-b-clip)" opacity="0" style="mix-blend-mode:screen">',
+            '      <animate attributeName="opacity" values="0;0;.8;0;.6;0;0" '
+            f'keyTimes="0;{key(blackout + 0.50, duration)};{key(blackout + 0.55, duration)};{key(blackout + 0.62, duration)};{key(blackout + 0.70, duration)};{key(blackout + 0.78, duration)};1" '
+            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '      <animateTransform attributeName="transform" type="translate" values="0 0;0 0;-13 0;9 0;-7 0;0 0;0 0" '
+            f'keyTimes="0;{key(blackout + 0.50, duration)};{key(blackout + 0.55, duration)};{key(blackout + 0.62, duration)};{key(blackout + 0.70, duration)};{key(blackout + 0.78, duration)};1" '
+            f'calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '      <use href="#failure-title-imagegen-source"/>',
+            "    </g>",
+            '    <g id="failure-title-generated-drips" clip-path="url(#failure-drip-clip)" opacity="0" style="mix-blend-mode:screen">',
+            '      <animate attributeName="opacity" values="0;0;.15;.9;.9;0" '
+            f'keyTimes="0;{key(drip_start, duration)};{key(drip_start + 0.10, duration)};{key(drip_start + 0.32, duration)};{key(outcome_end, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '      <animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 2;0 16;0 16;0 0" '
+            f'keyTimes="0;{key(drip_start, duration)};{key(drip_start + 0.10, duration)};{key(drip_end, duration)};{key(outcome_end, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '      <use href="#failure-title-imagegen-source"/>',
+            "    </g>",
+            "  </g>",
+        ]
     )
-    for index, (x, y, height) in enumerate(drip_specs):
-        start = blackout + 0.55 + index * 0.045
-        dots.extend(
-            [
-                f'    <rect x="{x}" y="{y}" width="4" height="0" rx="1.5" fill="#b62324" opacity="0">',
-                f'      <animate attributeName="height" values="0;0;{height};{height};0" keyTimes="0;{key(start, duration)};{key(start + 0.55, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'      <animate attributeName="opacity" values="0;0;.9;.9;0" keyTimes="0;{key(start, duration)};{key(start + 0.2, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                "    </rect>",
-            ]
-        )
-    return "\n".join(dots)
+
+
+def failure_stats(total: int, target: int, battle_end: float, outcome_end: float, duration: float) -> str:
+    reveal = battle_end + BLACKOUT_OFFSET + 1.18
+    label = f"{total} / {target} CONTRIBUTIONS  ·  RUN TERMINATED"
+    return "\n".join(
+        [
+            '  <g id="failure-dynamic-stats" opacity="0">',
+            '    <animate attributeName="opacity" values="0;0;1;1;0" '
+            f'keyTimes="0;{key(reveal, duration)};{key(reveal + 0.16, duration)};{key(outcome_end, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '    <animateTransform attributeName="transform" type="translate" values="0 9;0 9;0 0;0 0;0 9" '
+            f'keyTimes="0;{key(reveal, duration)};{key(reveal + 0.16, duration)};{key(outcome_end, duration)};1" '
+            f'dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            '    <rect x="407" y="268" width="466" height="25" rx="3" fill="#050001" stroke="#73131b" stroke-width="1.5"/>',
+            f'    <text x="640" y="285" text-anchor="middle" fill="#ffb3ad" font-family="Courier New,monospace" font-size="13" font-weight="700" letter-spacing="1.25">{label}</text>',
+            "  </g>",
+        ]
+    )
 
 
 def failure_atmosphere(battle_end: float, outcome_end: float, duration: float) -> str:
@@ -847,12 +924,8 @@ def outcome_markup(
     battle_end: float,
     outcome_end: float,
     duration: float,
+    failure_title_path: Path,
 ) -> str:
-    message = (
-        victory_message(ordered_active, total, target, battle_end, outcome_end, duration)
-        if success
-        else failure_message(total, target, battle_end, outcome_end, duration)
-    )
     if success:
         overlay_start = battle_end + 0.40
         parts = [
@@ -861,14 +934,16 @@ def outcome_markup(
             f'keyTimes="0;{key(overlay_start, duration)};{key(overlay_start + 0.18, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
             "  </rect>",
             brain_icon_markup(True, overlay_start + 0.16, outcome_end, duration),
+            '  <g id="victory-pixel-message">',
+            victory_message(ordered_active, total, target, battle_end, outcome_end, duration),
+            "  </g>",
         ]
     else:
-        blackout = battle_end + BLACKOUT_OFFSET
         parts = [
             failure_atmosphere(battle_end, outcome_end, duration),
-            brain_icon_markup(False, blackout + 0.12, outcome_end, duration),
+            failure_title_imagegen(failure_title_path, battle_end, outcome_end, duration),
+            failure_stats(total, target, battle_end, outcome_end, duration),
         ]
-    parts.extend([f'  <g id="{"victory" if success else "failure"}-pixel-message">', message, "  </g>"])
     return "\n".join(parts)
 
 
@@ -937,13 +1012,15 @@ def main() -> None:
     plant_cry_frames = [args.sprite_dir / f"plant-cry-imagegen-{index}.gif" for index in range(6)]
     plant_damage_frames = [args.sprite_dir / f"plant-damage-imagegen-{index}.gif" for index in range(6)]
     zombie_bite_frames = [args.sprite_dir / f"zombie-bite-imagegen-{index}.gif" for index in range(6)]
+    failure_title_path = args.sprite_dir / "failure-title-imagegen.png"
     for sprite_path in (
         *plant_cry_frames,
         *plant_damage_frames,
         *zombie_bite_frames,
+        failure_title_path,
     ):
         if not sprite_path.is_file():
-            parser.error(f"missing ImageGen sprite strip: {sprite_path}")
+            parser.error(f"missing ImageGen asset: {sprite_path}")
 
     login = args.login or gh_json("api", "user")["login"]
     today = datetime.now(timezone.utc).date()
@@ -1096,6 +1173,7 @@ def main() -> None:
             battle_end,
             outcome_end,
             duration,
+            failure_title_path,
         )
         + "\n\n",
         source,
@@ -1108,7 +1186,7 @@ def main() -> None:
     )
     source = re.sub(
         r'<desc id="desc">.*?</desc>',
-        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. The plant stops after its final contribution dot. The zombie {"is defeated and the brain is saved" if success else "performs a three-bite ImageGen sprite sequence that progressively eats the plant before a black game-over screen"}. Only contribution dates and counts are used.</desc>',
+        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. The plant stops after its final contribution dot. The zombie {"is defeated and the brain is saved" if success else "performs a three-bite ImageGen sprite sequence that progressively eats the plant before an animated ImageGen horror title card"}. Only contribution dates and counts are used.</desc>',
         source,
     )
 
