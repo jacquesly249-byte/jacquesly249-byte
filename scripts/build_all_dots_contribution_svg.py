@@ -571,25 +571,27 @@ def zombie_imagegen_death(
     events: list[tuple[float, int | None]] = [
         (0.0, None),
         (battle_end, 0),
-        (battle_end + 0.16, 1),
-        (battle_end + 0.38, 2),
-        (battle_end + 0.62, 3),
-        (battle_end + 0.88, 4),
-        (battle_end + 1.16, 5),
-        (battle_end + 1.48, None),
+        (battle_end + 0.14, 1),
+        (battle_end + 0.32, 2),
+        (battle_end + 0.52, 3),
+        (battle_end + 0.74, 4),
+        (battle_end + 0.98, 5),
+        (battle_end + 1.24, 6),
+        (battle_end + 1.52, 7),
+        (battle_end + 2.02, None),
         (duration, None),
     ]
     return "\n".join(
         [
-            "  <!-- ImageGen: impact, recoil, crumble, fall, dissolve, defeated remnant. -->",
+            "  <!-- ImageGen: pea impact, detached arm, decapitation, collapse, bare skull remnant. -->",
             scheduled_frame_images(
                 "zombie-imagegen-death",
                 death_frames,
                 events,
-                int(ZOMBIE_X + SUCCESS_TRANSLATE - 65),
-                22,
+                int(ZOMBIE_X + SUCCESS_TRANSLATE - 82),
+                17,
+                275,
                 240,
-                230,
                 duration,
                 "  ",
             ),
@@ -603,9 +605,9 @@ def zombie_shadow(success: bool, battle_end: float, outcome_end: float, duration
         return "\n".join(
             [
                 '<ellipse cy="247" rx="72" ry="11" fill="#020a09" opacity=".55">',
-                f'  <animate attributeName="cx" values="1150;{fmt(end_x)};{fmt(end_x)};{fmt(end_x)};1150" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 1.35, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'  <animate attributeName="rx" values="72;72;58;18;0;0;72" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 0.45, duration)};{key(battle_end + 0.92, duration)};{key(battle_end + 1.30, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-                f'  <animate attributeName="opacity" values=".55;.55;.45;.18;0;0;.55" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 0.45, duration)};{key(battle_end + 0.92, duration)};{key(battle_end + 1.30, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'  <animate attributeName="cx" values="1150;{fmt(end_x)};{fmt(end_x)};{fmt(end_x)};1150" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'  <animate attributeName="rx" values="72;72;64;48;26;11;0;0;72" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 0.52, duration)};{key(battle_end + 0.98, duration)};{key(battle_end + 1.24, duration)};{key(battle_end + 1.52, duration)};{key(battle_end + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+                f'  <animate attributeName="opacity" values=".55;.55;.48;.34;.20;.12;0;0;.55" keyTimes="0;{key(battle_end, duration)};{key(battle_end + 0.52, duration)};{key(battle_end + 0.98, duration)};{key(battle_end + 1.24, duration)};{key(battle_end + 1.52, duration)};{key(battle_end + 2.02, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
                 "</ellipse>",
             ]
         )
@@ -761,17 +763,18 @@ def victory_energy_stream(
     for index, source in enumerate(sources):
         source_x = source.cx if source else PLANT_X
         source_y = source.cy if source else PLANT_Y
-        start = battle_end + 0.64 + (index % 12) * 0.025
-        bend = start + 0.24
-        gather = battle_end + 1.46 + (index % 4) * 0.018
-        burst = gather + 0.24
-        fade = battle_end + 1.94
-        gather_x = 640 + ((index % 7) - 3) * 7
-        gather_y = 148 + ((index % 5) - 2) * 6
-        burst_x = 640 + ((index % 9) - 4) * 31
-        burst_y = 148 + ((index % 7) - 3) * 20
-        bend_x = (source_x + gather_x) / 2 + (18 if index % 2 else -18)
-        bend_y = min(source_y, gather_y) - 24 - (index % 3) * 8
+        start = battle_end + 1.18 + (index % 12) * 0.025
+        bend = start + 0.22
+        gather = battle_end + 1.96 + (index % 4) * 0.018
+        burst = battle_end + 2.24 + (index % 5) * 0.012
+        fade = battle_end + 2.72
+        rail_y = 116 if index % 2 == 0 else 196
+        gather_x = 42 + (index % 6) * 6
+        gather_y = rail_y + ((index % 3) - 1) * 4
+        burst_x = 1210 + (index % 7) * 10
+        burst_y = rail_y + ((index % 5) - 2) * 3
+        bend_x = (source_x + gather_x) / 2 - 24 - (index % 3) * 8
+        bend_y = min(source_y, gather_y) - 18 - (index % 4) * 7
         color = palette[index % len(palette)]
         particles.extend(
             [
@@ -790,9 +793,9 @@ def victory_energy_stream(
 
 
 def success_atmosphere(battle_end: float, outcome_end: float, duration: float) -> str:
-    # Let all six ImageGen zombie-death frames finish before the victory curtain lands.
-    overlay_start = battle_end + 1.52
-    flash = battle_end + 1.72
+    # The skull gets a readable hold before the left-to-right victory sweep begins.
+    overlay_start = battle_end + 2.02
+    flash = battle_end + 2.18
     return "\n".join(
         [
             '  <g id="success-blackout">',
@@ -801,7 +804,7 @@ def success_atmosphere(battle_end: float, outcome_end: float, duration: float) -
             f'keyTimes="0;{key(overlay_start, duration)};{key(overlay_start + 0.18, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
             "    </rect>",
             '    <rect x="0" y="0" width="1280" height="300" rx="18" fill="#39d353" opacity="0">',
-            '      <animate attributeName="opacity" values="0;0;.58;.10;0;0" '
+            '      <animate attributeName="opacity" values="0;0;.32;.07;0;0" '
             f'keyTimes="0;{key(flash, duration)};{key(flash + 0.035, duration)};{key(flash + 0.11, duration)};{key(flash + 0.24, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
             "    </rect>",
             '    <rect x="1.5" y="1.5" width="1277" height="297" rx="17" fill="none" stroke="#39d353" stroke-width="3" opacity="0">',
@@ -816,43 +819,43 @@ def success_atmosphere(battle_end: float, outcome_end: float, duration: float) -
 def success_title_imagegen(
     image_path: Path, battle_end: float, outcome_end: float, duration: float
 ) -> str:
-    reveal = battle_end + 1.78
-    expanded = battle_end + 2.12
-    settled = battle_end + 2.30
-    shimmer = battle_end + 2.46
+    reveal = battle_end + 2.24
+    expanded = battle_end + 2.72
+    settled = battle_end + 2.90
     source = image_data_uri(image_path)
     return "\n".join(
         [
-            "  <!-- ImageGen victory typography revealed by the converging contribution energy. -->",
+            "  <!-- ImageGen LAWN CLEAR typography is fired onto the screen from left to right. -->",
             "  <defs>",
-            f'    <image id="success-title-imagegen-source" x="190" y="0" width="900" height="300" preserveAspectRatio="none" href="{source}"/>',
-            '    <clipPath id="success-title-reveal-clip"><rect x="640" y="0" width="0" height="300">',
-            f'      <animate attributeName="x" values="640;640;190;190;190;640" keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            f'      <animate attributeName="width" values="0;0;900;900;900;0" keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            f'    <image id="success-title-imagegen-source" x="80" y="0" width="1120" height="300" preserveAspectRatio="none" href="{source}"/>',
+            '    <clipPath id="success-title-reveal-clip"><rect x="80" y="0" width="0" height="300">',
+            f'      <animate attributeName="width" values="0;0;1120;1120;1120;0" keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
             "    </rect></clipPath>",
-            '    <clipPath id="success-title-shimmer-clip"><rect x="190" y="112" width="900" height="35"/></clipPath>',
             "  </defs>",
             '  <g id="success-title-imagegen" clip-path="url(#success-title-reveal-clip)" opacity="0" style="image-rendering:pixelated">',
             '    <animate attributeName="opacity" values="0;0;1;1;0" '
             f'keyTimes="0;{key(reveal, duration)};{key(reveal + 0.02, duration)};{key(outcome_end, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            '    <animateTransform attributeName="transform" type="translate" values="0 12;0 12;0 -4;0 0;0 0;0 12" '
+            '    <animateTransform attributeName="transform" type="translate" values="-36 7;-36 7;8 -2;0 0;0 0;-36 7" '
             f'keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(settled, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
             '    <use href="#success-title-imagegen-source"/>',
             "  </g>",
-            '  <g id="success-title-shimmer" clip-path="url(#success-title-shimmer-clip)" opacity="0" style="mix-blend-mode:screen">',
-            '    <animate attributeName="opacity" values="0;0;.9;0;.55;0;0" '
-            f'keyTimes="0;{key(shimmer, duration)};{key(shimmer + 0.04, duration)};{key(shimmer + 0.12, duration)};{key(shimmer + 0.22, duration)};{key(shimmer + 0.32, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            '    <animateTransform attributeName="transform" type="translate" values="-22 0;-22 0;14 0;-8 0;9 0;0 0;0 0" '
-            f'keyTimes="0;{key(shimmer, duration)};{key(shimmer + 0.04, duration)};{key(shimmer + 0.12, duration)};{key(shimmer + 0.22, duration)};{key(shimmer + 0.32, duration)};1" calcMode="discrete" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
-            '    <use href="#success-title-imagegen-source"/>',
+            '  <g id="success-title-projectiles" filter="url(#glow)">',
+            '    <circle cy="116" r="7" fill="#b7ff72" stroke="#26a641" stroke-width="2" opacity="0">',
+            f'      <animate attributeName="cx" values="-35;-35;1315;1315;-35" keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            f'      <animate attributeName="opacity" values="0;1;0;0;0" keyTimes="0;{key(reveal, duration)};{key(expanded, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            "    </circle>",
+            '    <circle cy="196" r="7" fill="#b7ff72" stroke="#26a641" stroke-width="2" opacity="0">',
+            f'      <animate attributeName="cx" values="-65;-65;1285;1285;-65" keyTimes="0;{key(reveal + 0.06, duration)};{key(expanded + 0.06, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            f'      <animate attributeName="opacity" values="0;1;0;0;0" keyTimes="0;{key(reveal + 0.06, duration)};{key(expanded + 0.06, duration)};{key(outcome_end, duration)};1" dur="{fmt(duration)}s" repeatCount="indefinite"/>',
+            "    </circle>",
             "  </g>",
         ]
     )
 
 
 def success_stats(total: int, target: int, battle_end: float, outcome_end: float, duration: float) -> str:
-    reveal = battle_end + 2.68
-    label = f"{total} / {target} CONTRIBUTIONS  ·  BRAIN SECURED"
+    reveal = battle_end + 3.14
+    label = f"{total} / {target} CONTRIBUTIONS  ·  LAWN CLEAR"
     return "\n".join(
         [
             '  <g id="success-dynamic-stats" opacity="0">',
@@ -1143,8 +1146,8 @@ def main() -> None:
     plant_damage_frames = [args.sprite_dir / f"plant-damage-imagegen-{index}.gif" for index in range(6)]
     zombie_bite_frames = [args.sprite_dir / f"zombie-bite-imagegen-{index}.gif" for index in range(6)]
     failure_title_path = args.sprite_dir / "failure-title-imagegen.png"
-    zombie_death_frames = [args.sprite_dir / f"zombie-death-imagegen-{index}.png" for index in range(6)]
-    success_title_path = args.sprite_dir / "success-title-imagegen.png"
+    zombie_death_frames = [args.sprite_dir / f"zombie-dismember-imagegen-{index}.png" for index in range(8)]
+    success_title_path = args.sprite_dir / "success-title-lawn-clear-imagegen.png"
     for sprite_path in (
         *plant_cry_frames,
         *plant_damage_frames,
@@ -1325,12 +1328,12 @@ def main() -> None:
     )
     source = re.sub(
         r'<title id="title">.*?</title>',
-        f'<title id="title">Contribution brain defense: {total} of {args.target_contributions}</title>',
+        f'<title id="title">Contribution lawn defense: {total} of {args.target_contributions}</title>',
         source,
     )
     source = re.sub(
         r'<desc id="desc">.*?</desc>',
-        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. The plant stops after its final contribution dot. The zombie {"plays a six-frame ImageGen defeat sequence before an animated ImageGen victory title card" if success else "performs a three-bite ImageGen sprite sequence that progressively eats the plant before an animated ImageGen horror title card"}. Only contribution dates and counts are used.</desc>',
+        f'<desc id="desc">@{escape(login)} has {total} contributions in the last {args.window_days} days against a target of {args.target_contributions}. The plant stops after its final contribution dot. The zombie {"plays an eight-frame ImageGen dismemberment sequence—arm, head, body, then skull—before the LAWN CLEAR victory sweep" if success else "performs a three-bite ImageGen sprite sequence that progressively eats the plant before an animated ImageGen horror title card"}. Only contribution dates and counts are used.</desc>',
         source,
     )
 
