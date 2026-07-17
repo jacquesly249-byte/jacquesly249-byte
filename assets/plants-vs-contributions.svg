@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300" role="img" aria-labelledby="title desc">
-  <title id="title">Contribution lawn defense: 82 of 60</title>
-  <desc id="desc">@jacquesly249-byte has 82 contributions in the last 365 days against a target of 60. Commits drive four stages: intact below 50 percent, arm lost from 50 percent, critical from 82 percent, and comeback at the target. The detached arm remains on the lawn and never regrows. The one-armed zombie reaches the plant and lands one bite before a later contribution knocks off its head; the head remains on the lawn while three more impacts finish the body. Only contribution dates and counts are used.</desc>
+  <title id="title">Contribution lawn defense: 83 of 60</title>
+  <desc id="desc">@jacquesly249-byte has 83 contributions in the last 365 days against a target of 60. Commits drive four stages: intact below 50 percent, arm lost from 50 percent, critical from 82 percent, and comeback at the target. The detached arm remains on the lawn and never regrows. The one-armed zombie reaches the plant and lands one bite before a later contribution knocks off its head; the head remains on the lawn while three more impacts finish the body. Only contribution dates and counts are used.</desc>
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#050a18"/><stop offset=".62" stop-color="#0a1c2b"/><stop offset="1" stop-color="#12342e"/>
@@ -52,7 +52,7 @@
   </g>
 
   <!-- GitHub Contribution Calendar UI: 11px cells with 4px border spacing. -->
-  <text x="190" y="77" fill="#c9d1d9" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13">82 contributions in the last year</text>
+  <text x="190" y="77" fill="#c9d1d9" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13">83 contributions in the last year</text>
   <rect x="190" y="84" width="891" height="143" rx="6" fill="#0d1117" fill-opacity=".9" stroke="#30363d"/>
   <g id="github-month-labels">
     <text x="237" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jul</text>
@@ -75,7 +75,6 @@
     <text x="229" y="190.5">Fri</text>
   </g>
   <g id="github-contribution-cells">
-    <rect x="237" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-07-17: 0 contributions</title></rect>
     <rect x="237" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-07-18: 0 contributions</title></rect>
     <rect x="237" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-07-19: 0 contributions</title></rect>
     <rect x="252" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-07-20: 0 contributions</title></rect>
@@ -762,9 +761,9 @@
       </g>
     </g>
     <g id="contribution-ammo-2026-07-16" transform="translate(1022.5 172.5)">
-      <title>2026-07-16: 2 contributions; pulses in place while the Peashooter prepares shot 24</title>
+      <title>2026-07-16: 3 contributions; pulses in place while the Peashooter prepares shot 24</title>
       <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#26a641" stroke="#39d353" stroke-width="1">
           <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.69844;0.70233;0.70623;0.71012;0.71284;0.71595;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
           <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.69844;0.70233;0.70623;0.71012;0.71284;0.71595;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
@@ -776,6 +775,7 @@
         </circle>
       </g>
     </g>
+    <rect x="1017" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-17: 0 contributions</title></rect>
   </g>
   <g id="github-contribution-legend" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10" fill="#8b949e">
     <text x="918" y="220">Less</text>
@@ -1036,7 +1036,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.69844;0.70623;0.7144;0.71595;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-24" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-07-16: 2 contributions launched from the muzzle as pea 24</title>
+      <title>2026-07-16: 3 contributions launched from the muzzle as pea 24</title>
       <animate attributeName="cx" values="198;198;200;200;198" keyTimes="0;0.71595;0.74708;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.71595;0.74708;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.71556;0.71595;0.74669;0.74708;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1190,7 +1190,7 @@
   <!-- The one-armed zombie lands one bite; later commits interrupt it, detach the head, and finish the body. -->
 
   <!-- Health represents progress toward the configurable contribution target. -->
-  <text x="1098" y="42" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11">GOAL 82 / 60</text>
+  <text x="1098" y="42" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11">GOAL 83 / 60</text>
   <rect x="1100" y="48" width="108" height="17" rx="7" fill="#08100d" stroke="#9bb39b" stroke-width="2"/>
   <rect x="1106" y="53" width="96" height="7" rx="3.5" fill="url(#health)">
     <animate attributeName="width" values="96;94.4;86.4;81.6;75.2;73.6;70.4;67.2;64;56;54.4;52.8;49.6;48;46.4;44.8;35.2;30.4;25.6;22.4;14.4;12.8;0;0;0;0;0;96" keyTimes="0;0.11284;0.14042;0.16799;0.19557;0.22314;0.25072;0.27829;0.30587;0.33345;0.36102;0.3886;0.41617;0.44375;0.47132;0.4989;0.52648;0.55405;0.58163;0.6092;0.63678;0.66435;0.69193;0.71951;0.74708;0.74708;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1336,7 +1336,7 @@
     <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.86926;0.87549;0.94163;1" dur="25.7s" repeatCount="indefinite"/>
     <animateTransform attributeName="transform" type="translate" values="0 9;0 9;0 0;0 0;0 9" keyTimes="0;0.86926;0.87549;0.94163;1" dur="25.7s" repeatCount="indefinite"/>
     <rect x="407" y="268" width="466" height="25" rx="3" fill="#010b05" stroke="#39d353" stroke-width="1.5"/>
-    <text x="640" y="285" text-anchor="middle" fill="#b7ffbf" font-family="Courier New,monospace" font-size="13" font-weight="700" letter-spacing="1.15">82 / 60  ·  STAGE 4 COMEBACK  ·  LAWN CLEAR</text>
+    <text x="640" y="285" text-anchor="middle" fill="#b7ffbf" font-family="Courier New,monospace" font-size="13" font-weight="700" letter-spacing="1.15">83 / 60  ·  STAGE 4 COMEBACK  ·  LAWN CLEAR</text>
   </g>
 
   <rect x="1.5" y="1.5" width="1277" height="297" rx="17" fill="none" stroke="#315047" stroke-width="3" opacity=".55"/>
