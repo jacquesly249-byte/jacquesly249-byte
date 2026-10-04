@@ -56,17 +56,18 @@
   <rect x="190" y="84" width="891" height="143" rx="6" fill="#0d1117" fill-opacity=".9" stroke="#30363d"/>
   <g id="github-month-labels">
     <text x="237" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Oct</text>
-    <text x="312" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Nov</text>
-    <text x="387" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Dec</text>
-    <text x="447" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jan</text>
-    <text x="507" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Feb</text>
-    <text x="567" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Mar</text>
-    <text x="642" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Apr</text>
-    <text x="702" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">May</text>
-    <text x="777" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jun</text>
-    <text x="837" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jul</text>
-    <text x="897" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Aug</text>
-    <text x="972" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Sep</text>
+    <text x="297" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Nov</text>
+    <text x="372" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Dec</text>
+    <text x="432" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jan</text>
+    <text x="492" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Feb</text>
+    <text x="552" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Mar</text>
+    <text x="627" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Apr</text>
+    <text x="687" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">May</text>
+    <text x="762" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jun</text>
+    <text x="822" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Jul</text>
+    <text x="882" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Aug</text>
+    <text x="957" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Sep</text>
+    <text x="1017" y="101" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10">Oct</text>
   </g>
   <g id="github-weekday-labels" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10" text-anchor="end">
     <text x="229" y="130.5">Mon</text>
@@ -74,177 +75,176 @@
     <text x="229" y="190.5">Fri</text>
   </g>
   <g id="github-contribution-cells">
-    <rect x="237" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-04: 0 contributions</title></rect>
-    <rect x="252" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-05: 0 contributions</title></rect>
-    <rect x="252" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-06: 0 contributions</title></rect>
-    <rect x="252" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-07: 0 contributions</title></rect>
-    <rect x="252" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-08: 0 contributions</title></rect>
-    <rect x="252" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-09: 0 contributions</title></rect>
-    <rect x="252" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-10: 0 contributions</title></rect>
-    <rect x="252" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-11: 0 contributions</title></rect>
-    <rect x="267" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-12: 0 contributions</title></rect>
-    <rect x="267" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-13: 0 contributions</title></rect>
-    <rect x="267" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-14: 0 contributions</title></rect>
-    <rect x="267" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-15: 0 contributions</title></rect>
-    <rect x="267" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-16: 0 contributions</title></rect>
-    <rect x="267" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-17: 0 contributions</title></rect>
-    <rect x="267" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-18: 0 contributions</title></rect>
-    <rect x="282" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-19: 0 contributions</title></rect>
-    <rect x="282" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-20: 0 contributions</title></rect>
-    <rect x="282" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-21: 0 contributions</title></rect>
-    <rect x="282" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-22: 0 contributions</title></rect>
-    <rect x="282" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-23: 0 contributions</title></rect>
-    <rect x="282" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-24: 0 contributions</title></rect>
-    <rect x="282" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-25: 0 contributions</title></rect>
-    <rect x="297" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-26: 0 contributions</title></rect>
-    <rect x="297" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-27: 0 contributions</title></rect>
-    <rect x="297" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-28: 0 contributions</title></rect>
-    <rect x="297" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-29: 0 contributions</title></rect>
-    <rect x="297" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-30: 0 contributions</title></rect>
-    <rect x="297" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-31: 0 contributions</title></rect>
-    <rect x="297" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-01: 0 contributions</title></rect>
-    <rect x="312" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-02: 0 contributions</title></rect>
-    <rect x="312" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-03: 0 contributions</title></rect>
-    <rect x="312" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-04: 0 contributions</title></rect>
-    <rect x="312" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-05: 0 contributions</title></rect>
-    <rect x="312" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-06: 0 contributions</title></rect>
-    <rect x="312" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-07: 0 contributions</title></rect>
-    <rect x="312" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-08: 0 contributions</title></rect>
-    <rect x="327" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-09: 0 contributions</title></rect>
-    <rect x="327" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-10: 0 contributions</title></rect>
-    <rect x="327" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-11: 0 contributions</title></rect>
-    <rect x="327" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-12: 0 contributions</title></rect>
-    <rect x="327" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-13: 0 contributions</title></rect>
-    <rect x="327" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-14: 0 contributions</title></rect>
-    <rect x="327" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-15: 0 contributions</title></rect>
-    <rect x="342" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-16: 0 contributions</title></rect>
-    <rect x="342" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-17: 0 contributions</title></rect>
-    <rect x="342" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-18: 0 contributions</title></rect>
-    <rect x="342" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-19: 0 contributions</title></rect>
-    <rect x="342" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-20: 0 contributions</title></rect>
-    <rect x="342" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-21: 0 contributions</title></rect>
-    <rect x="342" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-22: 0 contributions</title></rect>
-    <rect x="357" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-23: 0 contributions</title></rect>
-    <rect x="357" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-24: 0 contributions</title></rect>
-    <rect x="357" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-25: 0 contributions</title></rect>
-    <rect x="357" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-26: 0 contributions</title></rect>
-    <rect x="357" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-27: 0 contributions</title></rect>
-    <rect x="357" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-28: 0 contributions</title></rect>
-    <rect x="357" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-29: 0 contributions</title></rect>
-    <rect x="372" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-30: 0 contributions</title></rect>
-    <rect x="372" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-01: 0 contributions</title></rect>
-    <rect x="372" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-02: 0 contributions</title></rect>
-    <rect x="372" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-03: 0 contributions</title></rect>
-    <rect x="372" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-04: 0 contributions</title></rect>
-    <rect x="372" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-05: 0 contributions</title></rect>
-    <rect x="372" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-06: 0 contributions</title></rect>
-    <rect x="387" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-07: 0 contributions</title></rect>
-    <rect x="387" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-08: 0 contributions</title></rect>
-    <rect x="387" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-09: 0 contributions</title></rect>
-    <rect x="387" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-10: 0 contributions</title></rect>
-    <rect x="387" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-11: 0 contributions</title></rect>
-    <rect x="387" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-12: 0 contributions</title></rect>
-    <rect x="387" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-13: 0 contributions</title></rect>
-    <rect x="402" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-14: 0 contributions</title></rect>
-    <rect x="402" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-15: 0 contributions</title></rect>
-    <rect x="402" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-16: 0 contributions</title></rect>
-    <rect x="402" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-17: 0 contributions</title></rect>
-    <rect x="402" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-18: 0 contributions</title></rect>
-    <rect x="402" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-19: 0 contributions</title></rect>
-    <rect x="402" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-20: 0 contributions</title></rect>
-    <rect x="417" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-21: 0 contributions</title></rect>
-    <rect x="417" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-22: 0 contributions</title></rect>
-    <rect x="417" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-23: 0 contributions</title></rect>
-    <rect x="417" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-24: 0 contributions</title></rect>
-    <rect x="417" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-25: 0 contributions</title></rect>
-    <rect x="417" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-26: 0 contributions</title></rect>
-    <rect x="417" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-27: 0 contributions</title></rect>
-    <rect x="432" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-28: 0 contributions</title></rect>
-    <rect x="432" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-29: 0 contributions</title></rect>
-    <rect x="432" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-30: 0 contributions</title></rect>
-    <rect x="432" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-31: 0 contributions</title></rect>
-    <rect x="432" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-01: 0 contributions</title></rect>
-    <rect x="432" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-02: 0 contributions</title></rect>
-    <rect x="432" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-03: 0 contributions</title></rect>
-    <rect x="447" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-04: 0 contributions</title></rect>
-    <rect x="447" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-05: 0 contributions</title></rect>
-    <rect x="447" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-06: 0 contributions</title></rect>
-    <rect x="447" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-07: 0 contributions</title></rect>
-    <rect x="447" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-08: 0 contributions</title></rect>
-    <rect x="447" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-09: 0 contributions</title></rect>
-    <rect x="447" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-10: 0 contributions</title></rect>
-    <rect x="462" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-11: 0 contributions</title></rect>
-    <rect x="462" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-12: 0 contributions</title></rect>
-    <rect x="462" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-13: 0 contributions</title></rect>
-    <rect x="462" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-14: 0 contributions</title></rect>
-    <rect x="462" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-15: 0 contributions</title></rect>
-    <rect x="462" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-16: 0 contributions</title></rect>
-    <rect x="462" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-17: 0 contributions</title></rect>
-    <rect x="477" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-18: 0 contributions</title></rect>
-    <rect x="477" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-19: 0 contributions</title></rect>
-    <rect x="477" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-20: 0 contributions</title></rect>
-    <rect x="477" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-21: 0 contributions</title></rect>
-    <rect x="477" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-22: 0 contributions</title></rect>
-    <rect x="477" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-23: 0 contributions</title></rect>
-    <rect x="477" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-24: 0 contributions</title></rect>
-    <rect x="492" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-25: 0 contributions</title></rect>
-    <rect x="492" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-26: 0 contributions</title></rect>
-    <rect x="492" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-27: 0 contributions</title></rect>
-    <rect x="492" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-28: 0 contributions</title></rect>
-    <rect x="492" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-29: 0 contributions</title></rect>
-    <rect x="492" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-30: 0 contributions</title></rect>
-    <rect x="492" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-31: 0 contributions</title></rect>
-    <rect x="507" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-01: 0 contributions</title></rect>
-    <rect x="507" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-02: 0 contributions</title></rect>
-    <rect x="507" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-03: 0 contributions</title></rect>
-    <rect x="507" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-04: 0 contributions</title></rect>
-    <rect x="507" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-05: 0 contributions</title></rect>
-    <rect x="507" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-06: 0 contributions</title></rect>
-    <rect x="507" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-07: 0 contributions</title></rect>
-    <rect x="522" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-08: 0 contributions</title></rect>
-    <rect x="522" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-09: 0 contributions</title></rect>
-    <rect x="522" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-10: 0 contributions</title></rect>
-    <rect x="522" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-11: 0 contributions</title></rect>
-    <rect x="522" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-12: 0 contributions</title></rect>
-    <rect x="522" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-13: 0 contributions</title></rect>
-    <rect x="522" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-14: 0 contributions</title></rect>
-    <rect x="537" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-15: 0 contributions</title></rect>
-    <rect x="537" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-16: 0 contributions</title></rect>
-    <rect x="537" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-17: 0 contributions</title></rect>
-    <rect x="537" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-18: 0 contributions</title></rect>
-    <rect x="537" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-19: 0 contributions</title></rect>
-    <rect x="537" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-20: 0 contributions</title></rect>
-    <rect x="537" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-21: 0 contributions</title></rect>
-    <rect x="552" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-22: 0 contributions</title></rect>
-    <rect x="552" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-23: 0 contributions</title></rect>
-    <rect x="552" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-24: 0 contributions</title></rect>
-    <rect x="552" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-25: 0 contributions</title></rect>
-    <rect x="552" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-26: 0 contributions</title></rect>
-    <rect x="552" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-27: 0 contributions</title></rect>
-    <rect x="552" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-28: 0 contributions</title></rect>
-    <rect x="567" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-01: 0 contributions</title></rect>
-    <rect x="567" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-02: 0 contributions</title></rect>
-    <rect x="567" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-03: 0 contributions</title></rect>
-    <rect x="567" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-04: 0 contributions</title></rect>
-    <rect x="567" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-05: 0 contributions</title></rect>
-    <rect x="567" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-06: 0 contributions</title></rect>
-    <rect x="567" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-07: 0 contributions</title></rect>
-    <rect x="582" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-08: 0 contributions</title></rect>
-    <rect x="582" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-09: 0 contributions</title></rect>
-    <rect x="582" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-10: 0 contributions</title></rect>
-    <rect x="582" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-11: 0 contributions</title></rect>
-    <rect x="582" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-12: 0 contributions</title></rect>
-    <rect x="582" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-13: 0 contributions</title></rect>
-    <rect x="582" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-14: 0 contributions</title></rect>
-    <rect x="597" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-15: 0 contributions</title></rect>
-    <rect x="597" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-16: 0 contributions</title></rect>
-    <rect x="597" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-17: 0 contributions</title></rect>
-    <rect x="597" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-18: 0 contributions</title></rect>
-    <rect x="597" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-19: 0 contributions</title></rect>
-    <rect x="597" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-20: 0 contributions</title></rect>
-    <rect x="597" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-21: 0 contributions</title></rect>
-    <rect x="612" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-22: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-03-23" transform="translate(617.5 127.5)">
+    <rect x="237" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-05: 0 contributions</title></rect>
+    <rect x="237" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-06: 0 contributions</title></rect>
+    <rect x="237" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-07: 0 contributions</title></rect>
+    <rect x="237" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-08: 0 contributions</title></rect>
+    <rect x="237" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-09: 0 contributions</title></rect>
+    <rect x="237" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-10: 0 contributions</title></rect>
+    <rect x="237" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-11: 0 contributions</title></rect>
+    <rect x="252" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-12: 0 contributions</title></rect>
+    <rect x="252" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-13: 0 contributions</title></rect>
+    <rect x="252" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-14: 0 contributions</title></rect>
+    <rect x="252" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-15: 0 contributions</title></rect>
+    <rect x="252" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-16: 0 contributions</title></rect>
+    <rect x="252" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-17: 0 contributions</title></rect>
+    <rect x="252" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-18: 0 contributions</title></rect>
+    <rect x="267" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-19: 0 contributions</title></rect>
+    <rect x="267" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-20: 0 contributions</title></rect>
+    <rect x="267" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-21: 0 contributions</title></rect>
+    <rect x="267" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-22: 0 contributions</title></rect>
+    <rect x="267" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-23: 0 contributions</title></rect>
+    <rect x="267" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-24: 0 contributions</title></rect>
+    <rect x="267" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-25: 0 contributions</title></rect>
+    <rect x="282" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-26: 0 contributions</title></rect>
+    <rect x="282" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-27: 0 contributions</title></rect>
+    <rect x="282" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-28: 0 contributions</title></rect>
+    <rect x="282" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-29: 0 contributions</title></rect>
+    <rect x="282" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-30: 0 contributions</title></rect>
+    <rect x="282" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-10-31: 0 contributions</title></rect>
+    <rect x="282" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-01: 0 contributions</title></rect>
+    <rect x="297" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-02: 0 contributions</title></rect>
+    <rect x="297" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-03: 0 contributions</title></rect>
+    <rect x="297" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-04: 0 contributions</title></rect>
+    <rect x="297" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-05: 0 contributions</title></rect>
+    <rect x="297" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-06: 0 contributions</title></rect>
+    <rect x="297" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-07: 0 contributions</title></rect>
+    <rect x="297" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-08: 0 contributions</title></rect>
+    <rect x="312" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-09: 0 contributions</title></rect>
+    <rect x="312" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-10: 0 contributions</title></rect>
+    <rect x="312" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-11: 0 contributions</title></rect>
+    <rect x="312" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-12: 0 contributions</title></rect>
+    <rect x="312" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-13: 0 contributions</title></rect>
+    <rect x="312" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-14: 0 contributions</title></rect>
+    <rect x="312" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-15: 0 contributions</title></rect>
+    <rect x="327" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-16: 0 contributions</title></rect>
+    <rect x="327" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-17: 0 contributions</title></rect>
+    <rect x="327" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-18: 0 contributions</title></rect>
+    <rect x="327" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-19: 0 contributions</title></rect>
+    <rect x="327" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-20: 0 contributions</title></rect>
+    <rect x="327" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-21: 0 contributions</title></rect>
+    <rect x="327" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-22: 0 contributions</title></rect>
+    <rect x="342" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-23: 0 contributions</title></rect>
+    <rect x="342" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-24: 0 contributions</title></rect>
+    <rect x="342" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-25: 0 contributions</title></rect>
+    <rect x="342" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-26: 0 contributions</title></rect>
+    <rect x="342" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-27: 0 contributions</title></rect>
+    <rect x="342" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-28: 0 contributions</title></rect>
+    <rect x="342" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-29: 0 contributions</title></rect>
+    <rect x="357" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-11-30: 0 contributions</title></rect>
+    <rect x="357" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-01: 0 contributions</title></rect>
+    <rect x="357" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-02: 0 contributions</title></rect>
+    <rect x="357" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-03: 0 contributions</title></rect>
+    <rect x="357" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-04: 0 contributions</title></rect>
+    <rect x="357" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-05: 0 contributions</title></rect>
+    <rect x="357" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-06: 0 contributions</title></rect>
+    <rect x="372" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-07: 0 contributions</title></rect>
+    <rect x="372" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-08: 0 contributions</title></rect>
+    <rect x="372" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-09: 0 contributions</title></rect>
+    <rect x="372" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-10: 0 contributions</title></rect>
+    <rect x="372" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-11: 0 contributions</title></rect>
+    <rect x="372" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-12: 0 contributions</title></rect>
+    <rect x="372" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-13: 0 contributions</title></rect>
+    <rect x="387" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-14: 0 contributions</title></rect>
+    <rect x="387" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-15: 0 contributions</title></rect>
+    <rect x="387" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-16: 0 contributions</title></rect>
+    <rect x="387" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-17: 0 contributions</title></rect>
+    <rect x="387" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-18: 0 contributions</title></rect>
+    <rect x="387" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-19: 0 contributions</title></rect>
+    <rect x="387" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-20: 0 contributions</title></rect>
+    <rect x="402" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-21: 0 contributions</title></rect>
+    <rect x="402" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-22: 0 contributions</title></rect>
+    <rect x="402" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-23: 0 contributions</title></rect>
+    <rect x="402" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-24: 0 contributions</title></rect>
+    <rect x="402" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-25: 0 contributions</title></rect>
+    <rect x="402" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-26: 0 contributions</title></rect>
+    <rect x="402" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-27: 0 contributions</title></rect>
+    <rect x="417" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-28: 0 contributions</title></rect>
+    <rect x="417" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-29: 0 contributions</title></rect>
+    <rect x="417" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-30: 0 contributions</title></rect>
+    <rect x="417" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2025-12-31: 0 contributions</title></rect>
+    <rect x="417" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-01: 0 contributions</title></rect>
+    <rect x="417" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-02: 0 contributions</title></rect>
+    <rect x="417" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-03: 0 contributions</title></rect>
+    <rect x="432" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-04: 0 contributions</title></rect>
+    <rect x="432" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-05: 0 contributions</title></rect>
+    <rect x="432" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-06: 0 contributions</title></rect>
+    <rect x="432" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-07: 0 contributions</title></rect>
+    <rect x="432" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-08: 0 contributions</title></rect>
+    <rect x="432" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-09: 0 contributions</title></rect>
+    <rect x="432" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-10: 0 contributions</title></rect>
+    <rect x="447" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-11: 0 contributions</title></rect>
+    <rect x="447" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-12: 0 contributions</title></rect>
+    <rect x="447" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-13: 0 contributions</title></rect>
+    <rect x="447" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-14: 0 contributions</title></rect>
+    <rect x="447" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-15: 0 contributions</title></rect>
+    <rect x="447" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-16: 0 contributions</title></rect>
+    <rect x="447" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-17: 0 contributions</title></rect>
+    <rect x="462" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-18: 0 contributions</title></rect>
+    <rect x="462" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-19: 0 contributions</title></rect>
+    <rect x="462" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-20: 0 contributions</title></rect>
+    <rect x="462" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-21: 0 contributions</title></rect>
+    <rect x="462" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-22: 0 contributions</title></rect>
+    <rect x="462" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-23: 0 contributions</title></rect>
+    <rect x="462" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-24: 0 contributions</title></rect>
+    <rect x="477" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-25: 0 contributions</title></rect>
+    <rect x="477" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-26: 0 contributions</title></rect>
+    <rect x="477" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-27: 0 contributions</title></rect>
+    <rect x="477" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-28: 0 contributions</title></rect>
+    <rect x="477" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-29: 0 contributions</title></rect>
+    <rect x="477" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-30: 0 contributions</title></rect>
+    <rect x="477" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-01-31: 0 contributions</title></rect>
+    <rect x="492" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-01: 0 contributions</title></rect>
+    <rect x="492" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-02: 0 contributions</title></rect>
+    <rect x="492" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-03: 0 contributions</title></rect>
+    <rect x="492" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-04: 0 contributions</title></rect>
+    <rect x="492" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-05: 0 contributions</title></rect>
+    <rect x="492" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-06: 0 contributions</title></rect>
+    <rect x="492" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-07: 0 contributions</title></rect>
+    <rect x="507" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-08: 0 contributions</title></rect>
+    <rect x="507" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-09: 0 contributions</title></rect>
+    <rect x="507" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-10: 0 contributions</title></rect>
+    <rect x="507" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-11: 0 contributions</title></rect>
+    <rect x="507" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-12: 0 contributions</title></rect>
+    <rect x="507" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-13: 0 contributions</title></rect>
+    <rect x="507" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-14: 0 contributions</title></rect>
+    <rect x="522" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-15: 0 contributions</title></rect>
+    <rect x="522" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-16: 0 contributions</title></rect>
+    <rect x="522" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-17: 0 contributions</title></rect>
+    <rect x="522" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-18: 0 contributions</title></rect>
+    <rect x="522" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-19: 0 contributions</title></rect>
+    <rect x="522" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-20: 0 contributions</title></rect>
+    <rect x="522" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-21: 0 contributions</title></rect>
+    <rect x="537" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-22: 0 contributions</title></rect>
+    <rect x="537" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-23: 0 contributions</title></rect>
+    <rect x="537" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-24: 0 contributions</title></rect>
+    <rect x="537" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-25: 0 contributions</title></rect>
+    <rect x="537" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-26: 0 contributions</title></rect>
+    <rect x="537" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-27: 0 contributions</title></rect>
+    <rect x="537" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-02-28: 0 contributions</title></rect>
+    <rect x="552" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-01: 0 contributions</title></rect>
+    <rect x="552" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-02: 0 contributions</title></rect>
+    <rect x="552" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-03: 0 contributions</title></rect>
+    <rect x="552" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-04: 0 contributions</title></rect>
+    <rect x="552" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-05: 0 contributions</title></rect>
+    <rect x="552" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-06: 0 contributions</title></rect>
+    <rect x="552" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-07: 0 contributions</title></rect>
+    <rect x="567" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-08: 0 contributions</title></rect>
+    <rect x="567" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-09: 0 contributions</title></rect>
+    <rect x="567" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-10: 0 contributions</title></rect>
+    <rect x="567" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-11: 0 contributions</title></rect>
+    <rect x="567" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-12: 0 contributions</title></rect>
+    <rect x="567" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-13: 0 contributions</title></rect>
+    <rect x="567" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-14: 0 contributions</title></rect>
+    <rect x="582" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-15: 0 contributions</title></rect>
+    <rect x="582" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-16: 0 contributions</title></rect>
+    <rect x="582" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-17: 0 contributions</title></rect>
+    <rect x="582" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-18: 0 contributions</title></rect>
+    <rect x="582" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-19: 0 contributions</title></rect>
+    <rect x="582" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-20: 0 contributions</title></rect>
+    <rect x="582" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-21: 0 contributions</title></rect>
+    <rect x="597" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-22: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-03-23" transform="translate(602.5 127.5)">
       <title>2026-03-23: 1 contributions; pulses in place while the Peashooter prepares shot 1</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
@@ -259,30 +259,30 @@
         </circle>
       </g>
     </g>
-    <rect x="612" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-24: 0 contributions</title></rect>
-    <rect x="612" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-25: 0 contributions</title></rect>
-    <rect x="612" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-26: 0 contributions</title></rect>
-    <rect x="612" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-27: 0 contributions</title></rect>
-    <rect x="612" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-28: 0 contributions</title></rect>
-    <rect x="627" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-29: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-03-30" transform="translate(632.5 127.5)">
-      <title>2026-03-30: 4 contributions; pulses in place while the Peashooter prepares shot 2</title>
+    <rect x="597" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-24: 0 contributions</title></rect>
+    <rect x="597" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-25: 0 contributions</title></rect>
+    <rect x="597" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-26: 0 contributions</title></rect>
+    <rect x="597" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-27: 0 contributions</title></rect>
+    <rect x="597" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-28: 0 contributions</title></rect>
+    <rect x="612" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-29: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-03-30" transform="translate(617.5 127.5)">
+      <title>2026-03-30: 4 contributions; pulses in place while the Peashooter prepares shot 4</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.0886;0.09249;0.09638;0.10027;0.10299;0.10611;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.0886;0.09249;0.09638;0.10027;0.10299;0.10611;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.13738;0.14128;0.14517;0.14906;0.15178;0.15489;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.13738;0.14128;0.14517;0.14906;0.15178;0.15489;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.0886;0.09249;0.09638;0.10027;0.10299;0.10611;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.13738;0.14128;0.14517;0.14906;0.15178;0.15489;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.0886;0.09249;0.09638;0.10027;0.10299;0.10611;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.13738;0.14128;0.14517;0.14906;0.15178;0.15489;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <rect x="627" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-31: 0 contributions</title></rect>
-    <rect x="627" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-01: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-04-02" transform="translate(632.5 172.5)">
+    <rect x="612" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-03-31: 0 contributions</title></rect>
+    <rect x="612" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-01: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-04-02" transform="translate(617.5 172.5)">
       <title>2026-04-02: 3 contributions; pulses in place while the Peashooter prepares shot 3</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#26a641" stroke="#39d353" stroke-width="1">
@@ -297,82 +297,82 @@
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-04-03" transform="translate(632.5 187.5)">
-      <title>2026-04-03: 5 contributions; pulses in place while the Peashooter prepares shot 4</title>
+    <g id="contribution-ammo-2026-04-03" transform="translate(617.5 187.5)">
+      <title>2026-04-03: 5 contributions; pulses in place while the Peashooter prepares shot 2</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.13738;0.14128;0.14517;0.14906;0.15178;0.15489;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.13738;0.14128;0.14517;0.14906;0.15178;0.15489;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.0886;0.09249;0.09638;0.10027;0.10299;0.10611;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.0886;0.09249;0.09638;0.10027;0.10299;0.10611;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.13738;0.14128;0.14517;0.14906;0.15178;0.15489;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.0886;0.09249;0.09638;0.10027;0.10299;0.10611;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.13738;0.14128;0.14517;0.14906;0.15178;0.15489;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.0886;0.09249;0.09638;0.10027;0.10299;0.10611;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <rect x="627" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-04: 0 contributions</title></rect>
-    <rect x="642" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-05: 0 contributions</title></rect>
-    <rect x="642" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-06: 0 contributions</title></rect>
-    <rect x="642" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-07: 0 contributions</title></rect>
-    <rect x="642" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-08: 0 contributions</title></rect>
-    <rect x="642" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-09: 0 contributions</title></rect>
-    <rect x="642" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-10: 0 contributions</title></rect>
-    <rect x="642" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-11: 0 contributions</title></rect>
-    <rect x="657" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-12: 0 contributions</title></rect>
-    <rect x="657" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-13: 0 contributions</title></rect>
-    <rect x="657" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-14: 0 contributions</title></rect>
-    <rect x="657" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-15: 0 contributions</title></rect>
-    <rect x="657" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-16: 0 contributions</title></rect>
-    <rect x="657" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-17: 0 contributions</title></rect>
-    <rect x="657" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-18: 0 contributions</title></rect>
-    <rect x="672" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-19: 0 contributions</title></rect>
-    <rect x="672" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-20: 0 contributions</title></rect>
-    <rect x="672" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-21: 0 contributions</title></rect>
-    <rect x="672" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-22: 0 contributions</title></rect>
-    <rect x="672" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-23: 0 contributions</title></rect>
-    <rect x="672" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-24: 0 contributions</title></rect>
-    <rect x="672" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-25: 0 contributions</title></rect>
-    <rect x="687" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-26: 0 contributions</title></rect>
-    <rect x="687" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-27: 0 contributions</title></rect>
-    <rect x="687" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-28: 0 contributions</title></rect>
-    <rect x="687" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-29: 0 contributions</title></rect>
-    <rect x="687" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-30: 0 contributions</title></rect>
-    <rect x="687" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-01: 0 contributions</title></rect>
-    <rect x="687" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-02: 0 contributions</title></rect>
-    <rect x="702" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-03: 0 contributions</title></rect>
-    <rect x="702" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-04: 0 contributions</title></rect>
-    <rect x="702" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-05: 0 contributions</title></rect>
-    <rect x="702" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-06: 0 contributions</title></rect>
-    <rect x="702" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-07: 0 contributions</title></rect>
-    <rect x="702" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-08: 0 contributions</title></rect>
-    <rect x="702" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-09: 0 contributions</title></rect>
-    <rect x="717" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-10: 0 contributions</title></rect>
-    <rect x="717" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-11: 0 contributions</title></rect>
-    <rect x="717" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-12: 0 contributions</title></rect>
-    <rect x="717" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-13: 0 contributions</title></rect>
-    <rect x="717" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-14: 0 contributions</title></rect>
-    <rect x="717" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-15: 0 contributions</title></rect>
-    <rect x="717" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-16: 0 contributions</title></rect>
-    <rect x="732" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-17: 0 contributions</title></rect>
-    <rect x="732" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-18: 0 contributions</title></rect>
-    <rect x="732" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-19: 0 contributions</title></rect>
-    <rect x="732" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-20: 0 contributions</title></rect>
-    <rect x="732" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-21: 0 contributions</title></rect>
-    <rect x="732" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-22: 0 contributions</title></rect>
-    <rect x="732" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-23: 0 contributions</title></rect>
-    <rect x="747" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-24: 0 contributions</title></rect>
-    <rect x="747" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-25: 0 contributions</title></rect>
-    <rect x="747" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-26: 0 contributions</title></rect>
-    <rect x="747" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-27: 0 contributions</title></rect>
-    <rect x="747" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-28: 0 contributions</title></rect>
-    <rect x="747" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-29: 0 contributions</title></rect>
-    <rect x="747" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-30: 0 contributions</title></rect>
-    <rect x="762" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-31: 0 contributions</title></rect>
-    <rect x="762" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-01: 0 contributions</title></rect>
-    <rect x="762" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-02: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-06-03" transform="translate(767.5 157.5)">
+    <rect x="612" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-04: 0 contributions</title></rect>
+    <rect x="627" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-05: 0 contributions</title></rect>
+    <rect x="627" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-06: 0 contributions</title></rect>
+    <rect x="627" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-07: 0 contributions</title></rect>
+    <rect x="627" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-08: 0 contributions</title></rect>
+    <rect x="627" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-09: 0 contributions</title></rect>
+    <rect x="627" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-10: 0 contributions</title></rect>
+    <rect x="627" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-11: 0 contributions</title></rect>
+    <rect x="642" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-12: 0 contributions</title></rect>
+    <rect x="642" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-13: 0 contributions</title></rect>
+    <rect x="642" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-14: 0 contributions</title></rect>
+    <rect x="642" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-15: 0 contributions</title></rect>
+    <rect x="642" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-16: 0 contributions</title></rect>
+    <rect x="642" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-17: 0 contributions</title></rect>
+    <rect x="642" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-18: 0 contributions</title></rect>
+    <rect x="657" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-19: 0 contributions</title></rect>
+    <rect x="657" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-20: 0 contributions</title></rect>
+    <rect x="657" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-21: 0 contributions</title></rect>
+    <rect x="657" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-22: 0 contributions</title></rect>
+    <rect x="657" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-23: 0 contributions</title></rect>
+    <rect x="657" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-24: 0 contributions</title></rect>
+    <rect x="657" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-25: 0 contributions</title></rect>
+    <rect x="672" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-26: 0 contributions</title></rect>
+    <rect x="672" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-27: 0 contributions</title></rect>
+    <rect x="672" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-28: 0 contributions</title></rect>
+    <rect x="672" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-29: 0 contributions</title></rect>
+    <rect x="672" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-04-30: 0 contributions</title></rect>
+    <rect x="672" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-01: 0 contributions</title></rect>
+    <rect x="672" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-02: 0 contributions</title></rect>
+    <rect x="687" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-03: 0 contributions</title></rect>
+    <rect x="687" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-04: 0 contributions</title></rect>
+    <rect x="687" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-05: 0 contributions</title></rect>
+    <rect x="687" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-06: 0 contributions</title></rect>
+    <rect x="687" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-07: 0 contributions</title></rect>
+    <rect x="687" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-08: 0 contributions</title></rect>
+    <rect x="687" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-09: 0 contributions</title></rect>
+    <rect x="702" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-10: 0 contributions</title></rect>
+    <rect x="702" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-11: 0 contributions</title></rect>
+    <rect x="702" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-12: 0 contributions</title></rect>
+    <rect x="702" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-13: 0 contributions</title></rect>
+    <rect x="702" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-14: 0 contributions</title></rect>
+    <rect x="702" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-15: 0 contributions</title></rect>
+    <rect x="702" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-16: 0 contributions</title></rect>
+    <rect x="717" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-17: 0 contributions</title></rect>
+    <rect x="717" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-18: 0 contributions</title></rect>
+    <rect x="717" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-19: 0 contributions</title></rect>
+    <rect x="717" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-20: 0 contributions</title></rect>
+    <rect x="717" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-21: 0 contributions</title></rect>
+    <rect x="717" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-22: 0 contributions</title></rect>
+    <rect x="717" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-23: 0 contributions</title></rect>
+    <rect x="732" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-24: 0 contributions</title></rect>
+    <rect x="732" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-25: 0 contributions</title></rect>
+    <rect x="732" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-26: 0 contributions</title></rect>
+    <rect x="732" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-27: 0 contributions</title></rect>
+    <rect x="732" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-28: 0 contributions</title></rect>
+    <rect x="732" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-29: 0 contributions</title></rect>
+    <rect x="732" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-30: 0 contributions</title></rect>
+    <rect x="747" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-05-31: 0 contributions</title></rect>
+    <rect x="747" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-01: 0 contributions</title></rect>
+    <rect x="747" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-02: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-06-03" transform="translate(752.5 157.5)">
       <title>2026-06-03: 1 contributions; pulses in place while the Peashooter prepares shot 5</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
@@ -387,29 +387,14 @@
         </circle>
       </g>
     </g>
-    <rect x="762" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-04: 0 contributions</title></rect>
-    <rect x="762" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-05: 0 contributions</title></rect>
-    <rect x="762" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-06: 0 contributions</title></rect>
-    <rect x="777" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-07: 0 contributions</title></rect>
-    <rect x="777" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-08: 0 contributions</title></rect>
-    <rect x="777" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-09: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-06-10" transform="translate(782.5 157.5)">
-      <title>2026-06-10: 2 contributions; pulses in place while the Peashooter prepares shot 6</title>
-      <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.18617;0.19006;0.19395;0.19784;0.20057;0.20368;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.18617;0.19006;0.19395;0.19784;0.20057;0.20368;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </rect>
-      </g>
-      <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.18617;0.19006;0.19395;0.19784;0.20057;0.20368;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.18617;0.19006;0.19395;0.19784;0.20057;0.20368;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </circle>
-      </g>
-    </g>
-    <g id="contribution-ammo-2026-06-11" transform="translate(782.5 172.5)">
-      <title>2026-06-11: 2 contributions; pulses in place while the Peashooter prepares shot 7</title>
+    <rect x="747" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-04: 0 contributions</title></rect>
+    <rect x="747" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-05: 0 contributions</title></rect>
+    <rect x="747" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-06: 0 contributions</title></rect>
+    <rect x="762" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-07: 0 contributions</title></rect>
+    <rect x="762" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-08: 0 contributions</title></rect>
+    <rect x="762" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-09: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-06-10" transform="translate(767.5 157.5)">
+      <title>2026-06-10: 2 contributions; pulses in place while the Peashooter prepares shot 7</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
           <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.21057;0.21446;0.21835;0.22224;0.22496;0.22808;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
@@ -423,29 +408,29 @@
         </circle>
       </g>
     </g>
-    <rect x="777" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-12: 0 contributions</title></rect>
-    <rect x="777" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-13: 0 contributions</title></rect>
-    <rect x="792" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-14: 0 contributions</title></rect>
-    <rect x="792" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-15: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-06-16" transform="translate(797.5 142.5)">
-      <title>2026-06-16: 2 contributions; pulses in place while the Peashooter prepares shot 9</title>
+    <g id="contribution-ammo-2026-06-11" transform="translate(767.5 172.5)">
+      <title>2026-06-11: 2 contributions; pulses in place while the Peashooter prepares shot 6</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.25935;0.26324;0.26714;0.27103;0.27375;0.27686;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.25935;0.26324;0.26714;0.27103;0.27375;0.27686;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.18617;0.19006;0.19395;0.19784;0.20057;0.20368;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.18617;0.19006;0.19395;0.19784;0.20057;0.20368;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.25935;0.26324;0.26714;0.27103;0.27375;0.27686;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.18617;0.19006;0.19395;0.19784;0.20057;0.20368;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.25935;0.26324;0.26714;0.27103;0.27375;0.27686;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.18617;0.19006;0.19395;0.19784;0.20057;0.20368;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-06-17" transform="translate(797.5 157.5)">
-      <title>2026-06-17: 5 contributions; pulses in place while the Peashooter prepares shot 8</title>
+    <rect x="762" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-12: 0 contributions</title></rect>
+    <rect x="762" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-13: 0 contributions</title></rect>
+    <rect x="777" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-14: 0 contributions</title></rect>
+    <rect x="777" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-15: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-06-16" transform="translate(782.5 142.5)">
+      <title>2026-06-16: 2 contributions; pulses in place while the Peashooter prepares shot 8</title>
       <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
           <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.23496;0.23885;0.24274;0.24663;0.24936;0.25247;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
           <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.23496;0.23885;0.24274;0.24663;0.24936;0.25247;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
@@ -457,86 +442,26 @@
         </circle>
       </g>
     </g>
-    <rect x="792" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-18: 0 contributions</title></rect>
-    <rect x="792" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-19: 0 contributions</title></rect>
-    <rect x="792" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-20: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-06-21" transform="translate(812.5 112.5)">
-      <title>2026-06-21: 1 contributions; pulses in place while the Peashooter prepares shot 10</title>
+    <g id="contribution-ammo-2026-06-17" transform="translate(782.5 157.5)">
+      <title>2026-06-17: 5 contributions; pulses in place while the Peashooter prepares shot 9</title>
       <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.28375;0.28764;0.29153;0.29542;0.29814;0.30126;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.28375;0.28764;0.29153;0.29542;0.29814;0.30126;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.25935;0.26324;0.26714;0.27103;0.27375;0.27686;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.25935;0.26324;0.26714;0.27103;0.27375;0.27686;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.28375;0.28764;0.29153;0.29542;0.29814;0.30126;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.25935;0.26324;0.26714;0.27103;0.27375;0.27686;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.28375;0.28764;0.29153;0.29542;0.29814;0.30126;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.25935;0.26324;0.26714;0.27103;0.27375;0.27686;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-06-22" transform="translate(812.5 127.5)">
-      <title>2026-06-22: 1 contributions; pulses in place while the Peashooter prepares shot 11</title>
-      <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.30814;0.31203;0.31592;0.31981;0.32254;0.32565;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.30814;0.31203;0.31592;0.31981;0.32254;0.32565;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </rect>
-      </g>
-      <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.30814;0.31203;0.31592;0.31981;0.32254;0.32565;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.30814;0.31203;0.31592;0.31981;0.32254;0.32565;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </circle>
-      </g>
-    </g>
-    <g id="contribution-ammo-2026-06-23" transform="translate(812.5 142.5)">
-      <title>2026-06-23: 1 contributions; pulses in place while the Peashooter prepares shot 12</title>
-      <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.33254;0.33643;0.34032;0.34421;0.34693;0.35004;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.33254;0.33643;0.34032;0.34421;0.34693;0.35004;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </rect>
-      </g>
-      <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.33254;0.33643;0.34032;0.34421;0.34693;0.35004;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.33254;0.33643;0.34032;0.34421;0.34693;0.35004;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </circle>
-      </g>
-    </g>
-    <g id="contribution-ammo-2026-06-24" transform="translate(812.5 157.5)">
-      <title>2026-06-24: 2 contributions; pulses in place while the Peashooter prepares shot 13</title>
-      <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.35693;0.36082;0.36471;0.3686;0.37133;0.37444;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.35693;0.36082;0.36471;0.3686;0.37133;0.37444;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </rect>
-      </g>
-      <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.35693;0.36082;0.36471;0.3686;0.37133;0.37444;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.35693;0.36082;0.36471;0.3686;0.37133;0.37444;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </circle>
-      </g>
-    </g>
-    <g id="contribution-ammo-2026-06-25" transform="translate(812.5 172.5)">
-      <title>2026-06-25: 1 contributions; pulses in place while the Peashooter prepares shot 14</title>
-      <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.38132;0.38521;0.38911;0.393;0.39572;0.39883;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.38132;0.38521;0.38911;0.393;0.39572;0.39883;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </rect>
-      </g>
-      <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.38132;0.38521;0.38911;0.393;0.39572;0.39883;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.38132;0.38521;0.38911;0.393;0.39572;0.39883;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </circle>
-      </g>
-    </g>
-    <g id="contribution-ammo-2026-06-26" transform="translate(812.5 187.5)">
-      <title>2026-06-26: 1 contributions; pulses in place while the Peashooter prepares shot 15</title>
+    <rect x="777" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-18: 0 contributions</title></rect>
+    <rect x="777" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-19: 0 contributions</title></rect>
+    <rect x="777" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-20: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-06-21" transform="translate(797.5 112.5)">
+      <title>2026-06-21: 1 contributions; pulses in place while the Peashooter prepares shot 15</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
           <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.40572;0.40961;0.4135;0.41739;0.42011;0.42323;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
@@ -550,23 +475,98 @@
         </circle>
       </g>
     </g>
-    <rect x="807" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-27: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-06-28" transform="translate(827.5 112.5)">
-      <title>2026-06-28: 6 contributions; pulses in place while the Peashooter prepares shot 18</title>
+    <g id="contribution-ammo-2026-06-22" transform="translate(797.5 127.5)">
+      <title>2026-06-22: 1 contributions; pulses in place while the Peashooter prepares shot 14</title>
       <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.4789;0.48279;0.48668;0.49057;0.4933;0.49641;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.4789;0.48279;0.48668;0.49057;0.4933;0.49641;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.38132;0.38521;0.38911;0.393;0.39572;0.39883;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.38132;0.38521;0.38911;0.393;0.39572;0.39883;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.4789;0.48279;0.48668;0.49057;0.4933;0.49641;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.38132;0.38521;0.38911;0.393;0.39572;0.39883;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.4789;0.48279;0.48668;0.49057;0.4933;0.49641;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.38132;0.38521;0.38911;0.393;0.39572;0.39883;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-06-29" transform="translate(827.5 127.5)">
+    <g id="contribution-ammo-2026-06-23" transform="translate(797.5 142.5)">
+      <title>2026-06-23: 1 contributions; pulses in place while the Peashooter prepares shot 13</title>
+      <g>
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.35693;0.36082;0.36471;0.3686;0.37133;0.37444;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.35693;0.36082;0.36471;0.3686;0.37133;0.37444;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.35693;0.36082;0.36471;0.3686;0.37133;0.37444;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.35693;0.36082;0.36471;0.3686;0.37133;0.37444;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>
+    <g id="contribution-ammo-2026-06-24" transform="translate(797.5 157.5)">
+      <title>2026-06-24: 2 contributions; pulses in place while the Peashooter prepares shot 12</title>
+      <g>
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.33254;0.33643;0.34032;0.34421;0.34693;0.35004;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.33254;0.33643;0.34032;0.34421;0.34693;0.35004;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.33254;0.33643;0.34032;0.34421;0.34693;0.35004;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.33254;0.33643;0.34032;0.34421;0.34693;0.35004;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>
+    <g id="contribution-ammo-2026-06-25" transform="translate(797.5 172.5)">
+      <title>2026-06-25: 1 contributions; pulses in place while the Peashooter prepares shot 11</title>
+      <g>
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.30814;0.31203;0.31592;0.31981;0.32254;0.32565;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.30814;0.31203;0.31592;0.31981;0.32254;0.32565;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.30814;0.31203;0.31592;0.31981;0.32254;0.32565;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.30814;0.31203;0.31592;0.31981;0.32254;0.32565;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>
+    <g id="contribution-ammo-2026-06-26" transform="translate(797.5 187.5)">
+      <title>2026-06-26: 1 contributions; pulses in place while the Peashooter prepares shot 10</title>
+      <g>
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.28375;0.28764;0.29153;0.29542;0.29814;0.30126;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.28375;0.28764;0.29153;0.29542;0.29814;0.30126;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.28375;0.28764;0.29153;0.29542;0.29814;0.30126;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.28375;0.28764;0.29153;0.29542;0.29814;0.30126;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>
+    <rect x="792" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-06-27: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-06-28" transform="translate(812.5 112.5)">
+      <title>2026-06-28: 6 contributions; pulses in place while the Peashooter prepares shot 16</title>
+      <g>
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.43011;0.434;0.43789;0.44178;0.44451;0.44762;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.43011;0.434;0.43789;0.44178;0.44451;0.44762;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.43011;0.434;0.43789;0.44178;0.44451;0.44762;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.43011;0.434;0.43789;0.44178;0.44451;0.44762;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>
+    <g id="contribution-ammo-2026-06-29" transform="translate(812.5 127.5)">
       <title>2026-06-29: 3 contributions; pulses in place while the Peashooter prepares shot 17</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#26a641" stroke="#39d353" stroke-width="1">
@@ -581,42 +581,42 @@
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-06-30" transform="translate(827.5 142.5)">
-      <title>2026-06-30: 3 contributions; pulses in place while the Peashooter prepares shot 16</title>
+    <g id="contribution-ammo-2026-06-30" transform="translate(812.5 142.5)">
+      <title>2026-06-30: 3 contributions; pulses in place while the Peashooter prepares shot 18</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#26a641" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.43011;0.434;0.43789;0.44178;0.44451;0.44762;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.43011;0.434;0.43789;0.44178;0.44451;0.44762;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.4789;0.48279;0.48668;0.49057;0.4933;0.49641;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.4789;0.48279;0.48668;0.49057;0.4933;0.49641;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.43011;0.434;0.43789;0.44178;0.44451;0.44762;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.4789;0.48279;0.48668;0.49057;0.4933;0.49641;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.43011;0.434;0.43789;0.44178;0.44451;0.44762;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.4789;0.48279;0.48668;0.49057;0.4933;0.49641;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <rect x="822" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-01: 0 contributions</title></rect>
-    <rect x="822" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-02: 0 contributions</title></rect>
-    <rect x="822" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-03: 0 contributions</title></rect>
-    <rect x="822" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-04: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-07-05" transform="translate(842.5 112.5)">
-      <title>2026-07-05: 1 contributions; pulses in place while the Peashooter prepares shot 19</title>
+    <rect x="807" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-01: 0 contributions</title></rect>
+    <rect x="807" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-02: 0 contributions</title></rect>
+    <rect x="807" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-03: 0 contributions</title></rect>
+    <rect x="807" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-04: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-07-05" transform="translate(827.5 112.5)">
+      <title>2026-07-05: 1 contributions; pulses in place while the Peashooter prepares shot 21</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#0e4429" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.50329;0.50718;0.51107;0.51497;0.51769;0.5208;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.50329;0.50718;0.51107;0.51497;0.51769;0.5208;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.55208;0.55597;0.55986;0.56375;0.56648;0.56959;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.55208;0.55597;0.55986;0.56375;0.56648;0.56959;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.50329;0.50718;0.51107;0.51497;0.51769;0.5208;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.55208;0.55597;0.55986;0.56375;0.56648;0.56959;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.50329;0.50718;0.51107;0.51497;0.51769;0.5208;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.55208;0.55597;0.55986;0.56375;0.56648;0.56959;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <rect x="837" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-06: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-07-07" transform="translate(842.5 142.5)">
+    <rect x="822" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-06: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-07-07" transform="translate(827.5 142.5)">
       <title>2026-07-07: 5 contributions; pulses in place while the Peashooter prepares shot 20</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
@@ -631,42 +631,42 @@
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-07-08" transform="translate(842.5 157.5)">
-      <title>2026-07-08: 2 contributions; pulses in place while the Peashooter prepares shot 21</title>
+    <g id="contribution-ammo-2026-07-08" transform="translate(827.5 157.5)">
+      <title>2026-07-08: 2 contributions; pulses in place while the Peashooter prepares shot 19</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.55208;0.55597;0.55986;0.56375;0.56648;0.56959;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.55208;0.55597;0.55986;0.56375;0.56648;0.56959;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.50329;0.50718;0.51107;0.51497;0.51769;0.5208;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.50329;0.50718;0.51107;0.51497;0.51769;0.5208;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.55208;0.55597;0.55986;0.56375;0.56648;0.56959;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.50329;0.50718;0.51107;0.51497;0.51769;0.5208;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.55208;0.55597;0.55986;0.56375;0.56648;0.56959;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.50329;0.50718;0.51107;0.51497;0.51769;0.5208;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <rect x="837" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-09: 0 contributions</title></rect>
-    <rect x="837" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-10: 0 contributions</title></rect>
-    <rect x="837" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-11: 0 contributions</title></rect>
-    <rect x="852" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-12: 0 contributions</title></rect>
-    <rect x="852" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-13: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-07-14" transform="translate(857.5 142.5)">
-      <title>2026-07-14: 10 contributions; pulses in place while the Peashooter prepares shot 24</title>
+    <rect x="822" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-09: 0 contributions</title></rect>
+    <rect x="822" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-10: 0 contributions</title></rect>
+    <rect x="822" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-11: 0 contributions</title></rect>
+    <rect x="837" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-12: 0 contributions</title></rect>
+    <rect x="837" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-13: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-07-14" transform="translate(842.5 142.5)">
+      <title>2026-07-14: 10 contributions; pulses in place while the Peashooter prepares shot 22</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.62526;0.62915;0.63304;0.63694;0.63966;0.64277;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.62526;0.62915;0.63304;0.63694;0.63966;0.64277;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.57647;0.58037;0.58426;0.58815;0.59087;0.59398;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.57647;0.58037;0.58426;0.58815;0.59087;0.59398;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.62526;0.62915;0.63304;0.63694;0.63966;0.64277;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.57647;0.58037;0.58426;0.58815;0.59087;0.59398;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.62526;0.62915;0.63304;0.63694;0.63966;0.64277;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.57647;0.58037;0.58426;0.58815;0.59087;0.59398;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-07-15" transform="translate(857.5 157.5)">
+    <g id="contribution-ammo-2026-07-15" transform="translate(842.5 157.5)">
       <title>2026-07-15: 18 contributions; pulses in place while the Peashooter prepares shot 23</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
@@ -681,93 +681,93 @@
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-07-16" transform="translate(857.5 172.5)">
-      <title>2026-07-16: 3 contributions; pulses in place while the Peashooter prepares shot 22</title>
+    <g id="contribution-ammo-2026-07-16" transform="translate(842.5 172.5)">
+      <title>2026-07-16: 3 contributions; pulses in place while the Peashooter prepares shot 24</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#26a641" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.57647;0.58037;0.58426;0.58815;0.59087;0.59398;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.57647;0.58037;0.58426;0.58815;0.59087;0.59398;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.62526;0.62915;0.63304;0.63694;0.63966;0.64277;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.62526;0.62915;0.63304;0.63694;0.63966;0.64277;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
       </g>
       <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.57647;0.58037;0.58426;0.58815;0.59087;0.59398;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.62526;0.62915;0.63304;0.63694;0.63966;0.64277;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.57647;0.58037;0.58426;0.58815;0.59087;0.59398;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.62526;0.62915;0.63304;0.63694;0.63966;0.64277;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </circle>
       </g>
     </g>
-    <rect x="852" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-17: 0 contributions</title></rect>
-    <rect x="852" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-18: 0 contributions</title></rect>
-    <rect x="867" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-19: 0 contributions</title></rect>
-    <rect x="867" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-20: 0 contributions</title></rect>
-    <rect x="867" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-21: 0 contributions</title></rect>
-    <rect x="867" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-22: 0 contributions</title></rect>
-    <rect x="867" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-23: 0 contributions</title></rect>
-    <rect x="867" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-24: 0 contributions</title></rect>
-    <rect x="867" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-25: 0 contributions</title></rect>
-    <rect x="882" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-26: 0 contributions</title></rect>
-    <rect x="882" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-27: 0 contributions</title></rect>
-    <rect x="882" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-28: 0 contributions</title></rect>
-    <rect x="882" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-29: 0 contributions</title></rect>
-    <rect x="882" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-30: 0 contributions</title></rect>
-    <rect x="882" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-31: 0 contributions</title></rect>
-    <rect x="882" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-01: 0 contributions</title></rect>
-    <rect x="897" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-02: 0 contributions</title></rect>
-    <rect x="897" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-03: 0 contributions</title></rect>
-    <rect x="897" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-04: 0 contributions</title></rect>
-    <rect x="897" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-05: 0 contributions</title></rect>
-    <rect x="897" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-06: 0 contributions</title></rect>
-    <rect x="897" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-07: 0 contributions</title></rect>
-    <rect x="897" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-08: 0 contributions</title></rect>
-    <rect x="912" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-09: 0 contributions</title></rect>
-    <rect x="912" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-10: 0 contributions</title></rect>
-    <rect x="912" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-11: 0 contributions</title></rect>
-    <rect x="912" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-12: 0 contributions</title></rect>
-    <rect x="912" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-13: 0 contributions</title></rect>
-    <rect x="912" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-14: 0 contributions</title></rect>
-    <rect x="912" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-15: 0 contributions</title></rect>
-    <rect x="927" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-16: 0 contributions</title></rect>
-    <rect x="927" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-17: 0 contributions</title></rect>
-    <rect x="927" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-18: 0 contributions</title></rect>
-    <rect x="927" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-19: 0 contributions</title></rect>
-    <rect x="927" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-20: 0 contributions</title></rect>
-    <rect x="927" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-21: 0 contributions</title></rect>
-    <rect x="927" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-22: 0 contributions</title></rect>
-    <rect x="942" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-23: 0 contributions</title></rect>
-    <rect x="942" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-24: 0 contributions</title></rect>
-    <rect x="942" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-25: 0 contributions</title></rect>
-    <rect x="942" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-26: 0 contributions</title></rect>
-    <rect x="942" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-27: 0 contributions</title></rect>
-    <rect x="942" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-28: 0 contributions</title></rect>
-    <rect x="942" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-29: 0 contributions</title></rect>
-    <rect x="957" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-30: 0 contributions</title></rect>
-    <rect x="957" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-31: 0 contributions</title></rect>
-    <rect x="957" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-01: 0 contributions</title></rect>
-    <rect x="957" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-02: 0 contributions</title></rect>
-    <rect x="957" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-03: 0 contributions</title></rect>
-    <rect x="957" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-04: 0 contributions</title></rect>
-    <rect x="957" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-05: 0 contributions</title></rect>
-    <rect x="972" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-06: 0 contributions</title></rect>
-    <rect x="972" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-07: 0 contributions</title></rect>
-    <rect x="972" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-08: 0 contributions</title></rect>
-    <rect x="972" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-09: 0 contributions</title></rect>
-    <rect x="972" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-10: 0 contributions</title></rect>
-    <rect x="972" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-11: 0 contributions</title></rect>
-    <rect x="972" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-12: 0 contributions</title></rect>
-    <rect x="987" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-13: 0 contributions</title></rect>
-    <rect x="987" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-14: 0 contributions</title></rect>
-    <rect x="987" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-15: 0 contributions</title></rect>
-    <rect x="987" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-16: 0 contributions</title></rect>
-    <rect x="987" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-17: 0 contributions</title></rect>
-    <rect x="987" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-18: 0 contributions</title></rect>
-    <rect x="987" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-19: 0 contributions</title></rect>
-    <rect x="1002" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-20: 0 contributions</title></rect>
-    <rect x="1002" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-21: 0 contributions</title></rect>
-    <rect x="1002" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-22: 0 contributions</title></rect>
-    <rect x="1002" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-23: 0 contributions</title></rect>
-    <rect x="1002" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-24: 0 contributions</title></rect>
-    <rect x="1002" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-25: 0 contributions</title></rect>
-    <g id="contribution-ammo-2026-09-26" transform="translate(1007.5 202.5)">
+    <rect x="837" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-17: 0 contributions</title></rect>
+    <rect x="837" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-18: 0 contributions</title></rect>
+    <rect x="852" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-19: 0 contributions</title></rect>
+    <rect x="852" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-20: 0 contributions</title></rect>
+    <rect x="852" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-21: 0 contributions</title></rect>
+    <rect x="852" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-22: 0 contributions</title></rect>
+    <rect x="852" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-23: 0 contributions</title></rect>
+    <rect x="852" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-24: 0 contributions</title></rect>
+    <rect x="852" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-25: 0 contributions</title></rect>
+    <rect x="867" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-26: 0 contributions</title></rect>
+    <rect x="867" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-27: 0 contributions</title></rect>
+    <rect x="867" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-28: 0 contributions</title></rect>
+    <rect x="867" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-29: 0 contributions</title></rect>
+    <rect x="867" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-30: 0 contributions</title></rect>
+    <rect x="867" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-07-31: 0 contributions</title></rect>
+    <rect x="867" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-01: 0 contributions</title></rect>
+    <rect x="882" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-02: 0 contributions</title></rect>
+    <rect x="882" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-03: 0 contributions</title></rect>
+    <rect x="882" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-04: 0 contributions</title></rect>
+    <rect x="882" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-05: 0 contributions</title></rect>
+    <rect x="882" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-06: 0 contributions</title></rect>
+    <rect x="882" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-07: 0 contributions</title></rect>
+    <rect x="882" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-08: 0 contributions</title></rect>
+    <rect x="897" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-09: 0 contributions</title></rect>
+    <rect x="897" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-10: 0 contributions</title></rect>
+    <rect x="897" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-11: 0 contributions</title></rect>
+    <rect x="897" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-12: 0 contributions</title></rect>
+    <rect x="897" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-13: 0 contributions</title></rect>
+    <rect x="897" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-14: 0 contributions</title></rect>
+    <rect x="897" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-15: 0 contributions</title></rect>
+    <rect x="912" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-16: 0 contributions</title></rect>
+    <rect x="912" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-17: 0 contributions</title></rect>
+    <rect x="912" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-18: 0 contributions</title></rect>
+    <rect x="912" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-19: 0 contributions</title></rect>
+    <rect x="912" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-20: 0 contributions</title></rect>
+    <rect x="912" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-21: 0 contributions</title></rect>
+    <rect x="912" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-22: 0 contributions</title></rect>
+    <rect x="927" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-23: 0 contributions</title></rect>
+    <rect x="927" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-24: 0 contributions</title></rect>
+    <rect x="927" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-25: 0 contributions</title></rect>
+    <rect x="927" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-26: 0 contributions</title></rect>
+    <rect x="927" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-27: 0 contributions</title></rect>
+    <rect x="927" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-28: 0 contributions</title></rect>
+    <rect x="927" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-29: 0 contributions</title></rect>
+    <rect x="942" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-30: 0 contributions</title></rect>
+    <rect x="942" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-08-31: 0 contributions</title></rect>
+    <rect x="942" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-01: 0 contributions</title></rect>
+    <rect x="942" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-02: 0 contributions</title></rect>
+    <rect x="942" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-03: 0 contributions</title></rect>
+    <rect x="942" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-04: 0 contributions</title></rect>
+    <rect x="942" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-05: 0 contributions</title></rect>
+    <rect x="957" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-06: 0 contributions</title></rect>
+    <rect x="957" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-07: 0 contributions</title></rect>
+    <rect x="957" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-08: 0 contributions</title></rect>
+    <rect x="957" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-09: 0 contributions</title></rect>
+    <rect x="957" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-10: 0 contributions</title></rect>
+    <rect x="957" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-11: 0 contributions</title></rect>
+    <rect x="957" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-12: 0 contributions</title></rect>
+    <rect x="972" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-13: 0 contributions</title></rect>
+    <rect x="972" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-14: 0 contributions</title></rect>
+    <rect x="972" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-15: 0 contributions</title></rect>
+    <rect x="972" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-16: 0 contributions</title></rect>
+    <rect x="972" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-17: 0 contributions</title></rect>
+    <rect x="972" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-18: 0 contributions</title></rect>
+    <rect x="972" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-19: 0 contributions</title></rect>
+    <rect x="987" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-20: 0 contributions</title></rect>
+    <rect x="987" y="122" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-21: 0 contributions</title></rect>
+    <rect x="987" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-22: 0 contributions</title></rect>
+    <rect x="987" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-23: 0 contributions</title></rect>
+    <rect x="987" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-24: 0 contributions</title></rect>
+    <rect x="987" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-25: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-09-26" transform="translate(992.5 202.5)">
       <title>2026-09-26: 10 contributions; pulses in place while the Peashooter prepares shot 25</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
@@ -782,25 +782,10 @@
         </circle>
       </g>
     </g>
-    <g id="contribution-ammo-2026-09-27" transform="translate(1022.5 112.5)">
-      <title>2026-09-27: 2 contributions; pulses in place while the Peashooter prepares shot 26</title>
+    <g id="contribution-ammo-2026-09-27" transform="translate(1007.5 112.5)">
+      <title>2026-09-27: 2 contributions; pulses in place while the Peashooter prepares shot 27</title>
       <g>
         <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#006d32" stroke="#39d353" stroke-width="1">
-          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.67405;0.67794;0.68183;0.68572;0.68845;0.69156;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.67405;0.67794;0.68183;0.68572;0.68845;0.69156;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </rect>
-      </g>
-      <g>
-        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.67405;0.67794;0.68183;0.68572;0.68845;0.69156;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
-          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.67405;0.67794;0.68183;0.68572;0.68845;0.69156;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
-        </circle>
-      </g>
-    </g>
-    <g id="contribution-ammo-2026-09-28" transform="translate(1022.5 127.5)">
-      <title>2026-09-28: 4 contributions; pulses in place while the Peashooter prepares shot 27</title>
-      <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
           <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.69844;0.70233;0.70623;0.71012;0.71284;0.71595;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
           <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.69844;0.70233;0.70623;0.71012;0.71284;0.71595;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
         </rect>
@@ -812,11 +797,27 @@
         </circle>
       </g>
     </g>
-    <rect x="1017" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-29: 0 contributions</title></rect>
-    <rect x="1017" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-30: 0 contributions</title></rect>
-    <rect x="1017" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-10-01: 0 contributions</title></rect>
-    <rect x="1017" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-10-02: 0 contributions</title></rect>
-    <rect x="1017" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-10-03: 0 contributions</title></rect>
+    <g id="contribution-ammo-2026-09-28" transform="translate(1007.5 127.5)">
+      <title>2026-09-28: 4 contributions; pulses in place while the Peashooter prepares shot 26</title>
+      <g>
+        <rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#39d353" stroke="#39d353" stroke-width="1">
+          <animate attributeName="opacity" values="1;1;1;1;1;1;0;0;1" keyTimes="0;0.67405;0.67794;0.68183;0.68572;0.68845;0.69156;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0;0;1;.65;.28;0;0;0;0" keyTimes="0;0.67405;0.67794;0.68183;0.68572;0.68845;0.69156;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="scale" values=".8;.8;1.55;2.05;2.3;2.3;2.3;2.3;.8" keyTimes="0;0.67405;0.67794;0.68183;0.68572;0.68845;0.69156;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        <circle r="6.5" fill="none" stroke="#39d353" stroke-width="1.5" opacity="0">
+          <animate attributeName="opacity" values="0;0;.82;.32;0;0;0;0;0" keyTimes="0;0.67405;0.67794;0.68183;0.68572;0.68845;0.69156;0.99922;1" dur="25.7s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>
+    <rect x="1002" y="137" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-29: 0 contributions</title></rect>
+    <rect x="1002" y="152" width="11" height="11" rx="2" fill="#161b22"><title>2026-09-30: 0 contributions</title></rect>
+    <rect x="1002" y="167" width="11" height="11" rx="2" fill="#161b22"><title>2026-10-01: 0 contributions</title></rect>
+    <rect x="1002" y="182" width="11" height="11" rx="2" fill="#161b22"><title>2026-10-02: 0 contributions</title></rect>
+    <rect x="1002" y="197" width="11" height="11" rx="2" fill="#161b22"><title>2026-10-03: 0 contributions</title></rect>
+    <rect x="1017" y="107" width="11" height="11" rx="2" fill="#161b22"><title>2026-10-04: 0 contributions</title></rect>
   </g>
   <g id="github-contribution-legend" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="10" fill="#8b949e">
     <text x="918" y="220">Less</text>
@@ -857,7 +858,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.0886;0.09638;0.10455;0.10611;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-2" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-03-30: 4 contributions launched from the muzzle as pea 2</title>
+      <title>2026-04-03: 5 contributions launched from the muzzle as pea 2</title>
       <animate attributeName="cx" values="198;198;886.02842;886.02842;198" keyTimes="0;0.10611;0.13723;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;151;151;151" keyTimes="0;0.10611;0.13723;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.10572;0.10611;0.13685;0.13723;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -877,7 +878,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.13738;0.14517;0.15334;0.15489;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-4" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-04-03: 5 contributions launched from the muzzle as pea 4</title>
+      <title>2026-03-30: 4 contributions launched from the muzzle as pea 4</title>
       <animate attributeName="cx" values="198;198;811.73754;811.73754;198" keyTimes="0;0.15489;0.18602;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;144;144;151" keyTimes="0;0.15489;0.18602;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.1545;0.15489;0.18563;0.18602;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -897,7 +898,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.18617;0.19395;0.20213;0.20368;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-6" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-10: 2 contributions launched from the muzzle as pea 6</title>
+      <title>2026-06-11: 2 contributions launched from the muzzle as pea 6</title>
       <animate attributeName="cx" values="198;198;737.44666;737.44666;198" keyTimes="0;0.20368;0.23481;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.20368;0.23481;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.20329;0.20368;0.23442;0.23481;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -907,7 +908,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.21057;0.21835;0.22652;0.22808;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-7" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-11: 2 contributions launched from the muzzle as pea 7</title>
+      <title>2026-06-10: 2 contributions launched from the muzzle as pea 7</title>
       <animate attributeName="cx" values="198;198;700.30122;700.30122;198" keyTimes="0;0.22808;0.2592;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;144;144;151" keyTimes="0;0.22808;0.2592;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.22769;0.22808;0.25881;0.2592;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -917,7 +918,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.23496;0.24274;0.25091;0.25247;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-8" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-17: 5 contributions launched from the muzzle as pea 8</title>
+      <title>2026-06-16: 2 contributions launched from the muzzle as pea 8</title>
       <animate attributeName="cx" values="198;198;663.15578;663.15578;198" keyTimes="0;0.25247;0.2836;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;151;151;151" keyTimes="0;0.25247;0.2836;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.25208;0.25247;0.28321;0.2836;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -927,7 +928,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.25935;0.26714;0.27531;0.27686;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-9" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-16: 2 contributions launched from the muzzle as pea 9</title>
+      <title>2026-06-17: 5 contributions launched from the muzzle as pea 9</title>
       <animate attributeName="cx" values="198;198;626.01034;626.01034;198" keyTimes="0;0.27686;0.30799;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.27686;0.30799;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.27647;0.27686;0.3076;0.30799;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -937,7 +938,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.28375;0.29153;0.2997;0.30126;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-10" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-21: 1 contributions launched from the muzzle as pea 10</title>
+      <title>2026-06-26: 1 contributions launched from the muzzle as pea 10</title>
       <animate attributeName="cx" values="198;198;588.8649;588.8649;198" keyTimes="0;0.30126;0.33239;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;144;144;151" keyTimes="0;0.30126;0.33239;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.30087;0.30126;0.332;0.33239;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -947,7 +948,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.30814;0.31592;0.32409;0.32565;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-11" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-22: 1 contributions launched from the muzzle as pea 11</title>
+      <title>2026-06-25: 1 contributions launched from the muzzle as pea 11</title>
       <animate attributeName="cx" values="198;198;551.71946;551.71946;198" keyTimes="0;0.32565;0.35678;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;151;151;151" keyTimes="0;0.32565;0.35678;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.32526;0.32565;0.35639;0.35678;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -957,7 +958,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.33254;0.34032;0.34849;0.35004;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-12" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-23: 1 contributions launched from the muzzle as pea 12</title>
+      <title>2026-06-24: 2 contributions launched from the muzzle as pea 12</title>
       <animate attributeName="cx" values="198;198;514.57402;514.57402;198" keyTimes="0;0.35004;0.38117;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.35004;0.38117;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.34966;0.35004;0.38078;0.38117;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -967,7 +968,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.35693;0.36471;0.37288;0.37444;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-13" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-24: 2 contributions launched from the muzzle as pea 13</title>
+      <title>2026-06-23: 1 contributions launched from the muzzle as pea 13</title>
       <animate attributeName="cx" values="198;198;477.42858;477.42858;198" keyTimes="0;0.37444;0.40557;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;144;144;151" keyTimes="0;0.37444;0.40557;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.37405;0.37444;0.40518;0.40557;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -977,7 +978,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.38132;0.38911;0.39728;0.39883;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-14" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-25: 1 contributions launched from the muzzle as pea 14</title>
+      <title>2026-06-22: 1 contributions launched from the muzzle as pea 14</title>
       <animate attributeName="cx" values="198;198;440.28314;440.28314;198" keyTimes="0;0.39883;0.42996;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;151;151;151" keyTimes="0;0.39883;0.42996;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.39844;0.39883;0.42957;0.42996;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -987,7 +988,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.40572;0.4135;0.42167;0.42323;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-15" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-26: 1 contributions launched from the muzzle as pea 15</title>
+      <title>2026-06-21: 1 contributions launched from the muzzle as pea 15</title>
       <animate attributeName="cx" values="198;198;403.1377;403.1377;198" keyTimes="0;0.42323;0.45435;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.42323;0.45435;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.42284;0.42323;0.45397;0.45435;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -997,7 +998,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.43011;0.43789;0.44606;0.44762;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-16" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-30: 3 contributions launched from the muzzle as pea 16</title>
+      <title>2026-06-28: 6 contributions launched from the muzzle as pea 16</title>
       <animate attributeName="cx" values="198;198;365.99226;365.99226;198" keyTimes="0;0.44762;0.47875;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;144;144;151" keyTimes="0;0.44762;0.47875;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.44723;0.44762;0.47836;0.47875;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1017,7 +1018,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.4789;0.48668;0.49485;0.49641;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-18" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-06-28: 6 contributions launched from the muzzle as pea 18</title>
+      <title>2026-06-30: 3 contributions launched from the muzzle as pea 18</title>
       <animate attributeName="cx" values="198;198;291.70138;291.70138;198" keyTimes="0;0.49641;0.52754;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.49641;0.52754;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.49602;0.49641;0.52715;0.52754;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1027,7 +1028,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.50329;0.51107;0.51925;0.5208;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-19" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-07-05: 1 contributions launched from the muzzle as pea 19</title>
+      <title>2026-07-08: 2 contributions launched from the muzzle as pea 19</title>
       <animate attributeName="cx" values="198;198;254.55594;254.55594;198" keyTimes="0;0.5208;0.55193;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;144;144;151" keyTimes="0;0.5208;0.55193;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.52041;0.5208;0.55154;0.55193;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1047,7 +1048,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.55208;0.55986;0.56803;0.56959;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-21" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-07-08: 2 contributions launched from the muzzle as pea 21</title>
+      <title>2026-07-05: 1 contributions launched from the muzzle as pea 21</title>
       <animate attributeName="cx" values="198;198;200;200;198" keyTimes="0;0.56959;0.60072;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.56959;0.60072;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.5692;0.56959;0.60033;0.60072;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1057,7 +1058,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.57647;0.58426;0.59243;0.59398;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-22" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-07-16: 3 contributions launched from the muzzle as pea 22</title>
+      <title>2026-07-14: 10 contributions launched from the muzzle as pea 22</title>
       <animate attributeName="cx" values="198;198;200;200;198" keyTimes="0;0.59398;0.62511;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;144;144;151" keyTimes="0;0.59398;0.62511;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.59359;0.59398;0.62472;0.62511;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1077,7 +1078,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.62526;0.63304;0.64122;0.64277;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-24" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-07-14: 10 contributions launched from the muzzle as pea 24</title>
+      <title>2026-07-16: 3 contributions launched from the muzzle as pea 24</title>
       <animate attributeName="cx" values="198;198;200;200;198" keyTimes="0;0.64277;0.6739;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.64277;0.6739;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.64238;0.64277;0.67351;0.6739;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1097,7 +1098,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.67405;0.68183;0.69;0.69156;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-26" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-09-27: 2 contributions launched from the muzzle as pea 26</title>
+      <title>2026-09-28: 4 contributions launched from the muzzle as pea 26</title>
       <animate attributeName="cx" values="198;198;200;200;198" keyTimes="0;0.69156;0.72269;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;151;151;151" keyTimes="0;0.69156;0.72269;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.69117;0.69156;0.7223;0.72269;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1107,7 +1108,7 @@
       <animate attributeName="opacity" values="0;0;.72;1;0;0" keyTimes="0;0.69844;0.70623;0.7144;0.71595;1" dur="25.7s" repeatCount="indefinite"/>
     </circle>
     <circle id="ammo-27" r="5.5" fill="#39d353" stroke="#006d32" stroke-width="1" opacity="0">
-      <title>2026-09-28: 4 contributions launched from the muzzle as pea 27</title>
+      <title>2026-09-27: 2 contributions launched from the muzzle as pea 27</title>
       <animate attributeName="cx" values="198;198;200;200;198" keyTimes="0;0.71595;0.74708;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="151;151;158;158;151" keyTimes="0;0.71595;0.74708;0.99922;1" calcMode="linear" dur="25.7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.71556;0.71595;0.74669;0.74708;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
@@ -1277,7 +1278,7 @@
   <text x="1098" y="42" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11">GOAL 99 / 60</text>
   <rect x="1100" y="48" width="108" height="17" rx="7" fill="#08100d" stroke="#9bb39b" stroke-width="2"/>
   <rect x="1106" y="53" width="96" height="7" rx="3.5" fill="url(#health)">
-    <animate attributeName="width" values="96;94.4;88;83.2;75.2;73.6;70.4;67.2;59.2;56;54.4;52.8;51.2;48;46.4;44.8;40;35.2;25.6;24;16;12.8;8;0;0;0;0;0;0;0;96" keyTimes="0;0.11284;0.13723;0.16163;0.18602;0.21042;0.23481;0.2592;0.2836;0.30799;0.33239;0.35678;0.38117;0.40557;0.42996;0.45435;0.47875;0.50314;0.52754;0.55193;0.57632;0.60072;0.62511;0.64951;0.6739;0.69829;0.72269;0.74708;0.74708;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
+    <animate attributeName="width" values="96;94.4;86.4;81.6;75.2;73.6;70.4;67.2;64;56;54.4;52.8;49.6;48;46.4;44.8;35.2;30.4;25.6;22.4;14.4;12.8;0;0;0;0;0;0;0;0;96" keyTimes="0;0.11284;0.13723;0.16163;0.18602;0.21042;0.23481;0.2592;0.2836;0.30799;0.33239;0.35678;0.38117;0.40557;0.42996;0.45435;0.47875;0.50314;0.52754;0.55193;0.57632;0.60072;0.62511;0.64951;0.6739;0.69829;0.72269;0.74708;0.74708;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
   </rect>
   <circle cx="923.17386" cy="144" r="12" fill="#b7ff72" opacity="0" filter="url(#glow)">
     <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.11128;0.11284;0.11868;1" dur="25.7s" repeatCount="indefinite"/>
@@ -1391,16 +1392,16 @@
   <g id="commit-stage-status" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="9" font-weight="700" text-anchor="middle">
     <title>Commit stages: intact below 50%, arm lost at 50%, critical at 82%, comeback at 100%</title>
     <text x="1154" y="78" fill="#8b949e" display="none">STAGE 1 · INTACT
-      <animate attributeName="display" values="inline;none;none;none;none;inline" keyTimes="0;0.40557;0.57632;0.64951;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
+      <animate attributeName="display" values="inline;none;none;none;none;inline" keyTimes="0;0.40557;0.57632;0.62511;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
     </text>
     <text x="1154" y="78" fill="#f0c35a" display="none">STAGE 2 · ARM LOST
-      <animate attributeName="display" values="none;inline;none;none;none;none" keyTimes="0;0.40557;0.57632;0.64951;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
+      <animate attributeName="display" values="none;inline;none;none;none;none" keyTimes="0;0.40557;0.57632;0.62511;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
     </text>
     <text x="1154" y="78" fill="#ff7b72" display="none">STAGE 3 · CRITICAL
-      <animate attributeName="display" values="none;none;inline;none;none;none" keyTimes="0;0.40557;0.57632;0.64951;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
+      <animate attributeName="display" values="none;none;inline;none;none;none" keyTimes="0;0.40557;0.57632;0.62511;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
     </text>
     <text x="1154" y="78" fill="#7ee787" display="none">STAGE 4 · COMEBACK
-      <animate attributeName="display" values="none;none;none;inline;inline;none" keyTimes="0;0.40557;0.57632;0.64951;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
+      <animate attributeName="display" values="none;none;none;inline;inline;none" keyTimes="0;0.40557;0.57632;0.62511;0.94163;1" calcMode="discrete" dur="25.7s" repeatCount="indefinite"/>
     </text>
     <path d="M1154 50v14M1123 50v14" stroke="#d29922" stroke-width="1" opacity=".65"/>
   </g>
